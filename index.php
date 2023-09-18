@@ -3,98 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SSBSS | Home</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Style/style.css">
+    <link rel="icon" type="icon" href="../images/slogo.png">
 <style>
-    .logo{
-        display:flex;
-        flex-direction:row;
-        margin-bottom:2px;
+
+
+
+    .controls{
+        max-height:40px;
+        min-width:45%;
+        background-color:#dbdbdb;
+        overflow: hidden;
     }
-    .logo img{
-        height:10%;
-        margin-right:2%;
-        width:10%;
-        border-radius:100%;
-        border:1px solid black;
+    .circle_image{
+        border-radius: 100%;
+        height: 100px;
+        margin: auto;
+        width: 100px;
     }
-    .headings{
-        font-size:20px;
-        margin-top:3%;
+    .counter_title{
+      font-size: 20px;
+      text-align: center;
     }
-    /* .carousel{
-      height:90%;
-      width:100%;
-    } */
-    .carousel > .carousel-inner > .carousel-item > img{
-    width:240px; /* Yeap you can change the width and height*/
-    height:400px;
-}
-.carousel-caption{
-  position:absolute;
-  top:60%;
-  text-shadow:5px 5px 5px;
-}
-/* .news_btn_container{
-  display:flex;
-  flex-direction:row;
-} */
-/* .tabs{
-  display:flex;
-  flex-direction:row;
-  max-height:40px;
-  background-color:lightgrey;
-  padding-bottom:5px;
-} */
-.controls{
-  display:flex;
-  flex-direction:row;
-  max-height:40px;
-  min-width:45%;
-  background-color:#dbdbdb;
-}
-/* .controls a{
-  position:absolute;
-  right:0px;
-} */
 </style>
 </head>
 <body>
+<!-- navigation bar  -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
 
   <div class="logo text-center">
-    <img src="images/slogo.png" class="logo">
+    <img src="../images/slogo.png" class="logo">
     <p class="headings">Shree Shanti Bhagwati Secondary School</p>
   </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav nav-underline">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link active" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="category/admission.php">Admission</a>
+          <a class="nav-link" href="category/news.php">News</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="category/result.php">Results</a>
+          <a class="nav-link" href="category/contact.php">Contacts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contacts</a>
+          <a class="nav-link" href="category/faculty.php">Faculty</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Authorities</a>
+          <a class="nav-link" href="category/authorities.php">Authorities</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            About Us
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Message From Head Teacher</a></li>
-            <li><a class="dropdown-item" href="#">Faculty</a></li>
-            <li><a class="dropdown-item" href="#">Gallery</a></li>
+            <li><a class="dropdown-item" href="category/admission.php">Admission</a></li>
+            <li><a class="dropdown-item" href="category/gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="category/result.php">Results</a></li>
           </ul>
         </li>
       </ul>
@@ -102,73 +73,261 @@
   </div>
 </nav>
 
-
 <!-- Image carosel section -->
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+<div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
   <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="images/students_with_teachers.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Students With Teachers</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
+    <div class="carousel-item active" data-bs-interval="2000">
       <img src="images/english medium.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Clean School Environment</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+        <h5 class="display-6">Building Of English Medium</h5>
       </div>
     </div>
-    <div class="carousel-item">
+    <div class="carousel-item" data-bs-interval="2000">
       <img src="images/school.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+        <h5 class="display-6">Clean School Environment</h5>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="images/students_with_teachers.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="display-6">Science Students With Teachers</h5>
       </div>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
 
-<!-- news and notice -->\
-<!-- <div class="news_btn_container col">
-  <div class="news_tab tabs position-relative col-9">
-    <p class="display-6" style="margin-bottom:3px;">News</p>
-    <a class="btn btn-warning position-absolute top-0 end-0" href="#">+ More</a>
-  </div>
-  <div class="tabs position-relative col-3">
-    <p class="display-6">Notice</p>
-    <a class="btn btn-warning position-absolute top-0 end-0">+ More</a>
-  </div>
-</div> -->
-<div class="container text-center">
-  <div class="row">
-    <div class="col col-9">
-      <div class="controls">
-      <p class="display-6">News</p>
-      <a class="btn btn-warning">+ More</a>
+<!-- News and notices -->
+  <div class="row w-100" style="margin-top:5px; margin-left:2px;">
+    <div class="gx-5 col-md-8">
+      <div class="controls row">
+          <p class="display-6 col col-9">News</p>
+          <a class="btn btn-warning col col-3">+ More</a>
+      </div><br>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="card">
+            <img src="images/annual_function.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Dancing Competition</h5>
+              <p class="text-body-secondary">May 12, 2021</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="images/smart_board.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">New Smart Board</h5>
+              <p class="text-body-secondary">May 13, 2021</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">New Computers In lab</h5>
+              <p class="text-body-secondary">May 15, 2021</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">New Computers In lab</h5>
+              <p class="text-body-secondary">May 15, 2021</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col col-3">
-      <div class="controls">
-      <p class="display-6">Notice</p>
-      <a href="#" class="btn btn-warning">+More</a>
+    <div class="gx-5 col-md-4">
+      <div class="controls row">
+      <p class="display-6  col-9">Notice</p>
+      <a href="#" class="btn btn-warning col col-3">+More</a>
+      </div><br>
+      <div class="row">
+            <div class="mb-3" style="border: 1px solid lightgrey;max-height:100px;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <!-- Download Section of notice board -->
+      <div class="downloads">
+          <div class="controls row">
+          <p class="display-6  col-9">Downloads</p>
+          <a href="#" class="btn btn-warning col col-3">+More</a>
+          </div><br>
+            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <span class="absolute top-0 start-100 translate-middle badge bg-danger">PDF</span>
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <span class="absolute top-0 start-100 translate-middle badge bg-danger">PDF</span>
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
+              <div class="row">
+                <div class="col-md-4 bg-info text-light">
+                  <span class="absolute top-0 start-100 translate-middle badge bg-danger">PDF</span>
+                  <p class="text-center text-dark">Dates</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text">Third Terminal Examination from 2073</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div><br>
+
+<!-- Counter Section -- Used for counting teachers, students, etc. -->
+<div class="row row-cols-1 row-cols-md-2 g-4" onmouseover="start_counting()">
+  <div class="col">
+    <div class="card h-100">
+      <img src="images/icon/students_icon.png" class="circle_image card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="display-6 text-center">2,723 +</h5>
+        <p class="counter_title">Students</p>
       </div>
     </div>
   </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="images/icon/teachers.jpg" class="circle_image card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="display-6 text-center">100 +</h5>
+        <p class="counter_title">Experience Teachers</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p class="text-center display-6">Our Services</p>
+<!-- Our Services -->
+<div class="row row-cols-1 row-cols-md-3">
+  <div class="col gy-0">
+    <div class="card h-100">
+      <img src="images/english medium.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Clean Environment</h5>
+        <p class="card-text">We provide quality education to our students in a clean school environment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col gy-0">
+    <div class="card h-100">
+      <img src="images/entrance_examination_ce.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Well Furnished Classroom</h5>
+        <p class="card-text">We have well furnished and clean Classroom too. It will help in better learning for students.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col gy-0">
+    <div class="card h-100">
+      <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">ICT Oriented Teaching</h5>
+        <p class="card-text">We are making our students understand the contents with the help of ICT.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Website Footer -->
+<hr>
+<div class="row">
+    <div class="gx-5 gy-5 col-md-4">
+        <p class="foot_title display-6 text-center">INFORMATION OFFICER</p>
+        <img src="images/shree_prashad_dhakal.jpg" style="margin-left: 30%;max-width:40%;">
+        <p class="foot_title display-6 text-center">Homnath Poudyal</p>
+    </div>
+    <div class="col-md-4 gx-5 gy-5">
+        <p class="foot_title display-6 text-center">CONTACT US</p>
+        <p>
+          Address : Letang-4, Morang<br>
+          Phone : 021-560034<br>
+          Email : shantibhagawatiletang2009@gmail.com
+        </p>
+    </div>
+    <div class="col-md-4 gy-5 gx-5">
+        <p class="foot_title display-6 text-center">LOCATION</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2723.4279550372253!2d87.50420574853884!3d26.73830469689345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2snp!4v1695029463556!5m2!1sen!2snp" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>

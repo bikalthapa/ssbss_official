@@ -1,0 +1,44 @@
+    .logo{
+        display:flex;
+        flex-direction:row;
+        margin-bottom:2px;
+    }
+    .logo img{
+        height:10%;
+        margin-right:2%;
+        width:10%;
+        border-radius:100%;
+        border:1px solid black;
+    }    
+    .foot_title{
+      font-size: 20px;
+      margin: 2px;
+    }
+    .headings{
+        font-size:20px;
+        margin-top:3%;
+    }
+    .carousel > .carousel-inner > .carousel-item > img{
+        width:240px; /* Yeap you can change the width and height*/
+        height:490px;
+    }
+    .carousel-caption{
+        position:absolute;
+        top:60%;
+        text-shadow:5px 5px 5px;
+    }
+    @media screen and (max-width: 480px) {
+      .carousel > .carousel-inner > .carousel-item > img{
+          width:240px;
+          height:40%;
+      }
+    }
+    @media screen and (max-width: 713px){
+      .carousel > .carousel-inner > .carousel-item > img{
+          width:240px;
+          height:35%;
+      }
+    }
+    .card{
+        background-color: #F9F9F9;
+    }
