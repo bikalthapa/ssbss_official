@@ -1,3 +1,6 @@
+<?php
+include "connection.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +11,6 @@
     <link rel="stylesheet" type="text/css" href="Style/style.css">
     <link rel="icon" type="icon" href="../images/slogo.png">
 <style>
-
-
-
     .controls{
         max-height:40px;
         min-width:45%;
@@ -18,14 +18,21 @@
         overflow: hidden;
     }
     .circle_image{
+        margin: auto;
+        background-color: white;
         border-radius: 100%;
         height: 100px;
-        margin: auto;
         width: 100px;
     }
     .counter_title{
       font-size: 20px;
       text-align: center;
+    }
+    .counter_div{
+      margin-top: 10px;
+    }
+    .news_cards{
+      box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
     }
 </style>
 </head>
@@ -84,19 +91,19 @@
     <div class="carousel-item active" data-bs-interval="2000">
       <img src="images/english medium.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="display-6">Building Of English Medium</h5>
+        <h5 class="display-6 bg-dark text-light bg-opacity-75">Building Of English Medium</h5>
       </div>
     </div>
     <div class="carousel-item" data-bs-interval="2000">
       <img src="images/school.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="display-6">Clean School Environment</h5>
+        <h5 class="display-6 bg-dark text-light bg-opacity-75">Clean School Environment</h5>
       </div>
     </div>
     <div class="carousel-item" data-bs-interval="2000">
       <img src="images/students_with_teachers.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="display-6">Science Students With Teachers</h5>
+        <h5 class="display-6 bg-dark text-light bg-opacity-75">Science Students With Teachers</h5>
       </div>
     </div>
   </div>
@@ -112,100 +119,72 @@
 
 <!-- News and notices -->
   <div class="row w-100" style="margin-top:5px; margin-left:2px;">
-    <div class="gx-5 col-md-8">
+    <div class="g-5 col-md-8">
       <div class="controls row">
           <p class="display-6 col col-9">News</p>
-          <a class="btn btn-warning col col-3">+ More</a>
+          <a href="category/news.php" class="btn btn-warning col col-3">+ More</a>
       </div><br>
       <div class="row row-cols-1 row-cols-md-2 g-4">
+        <?php
+        $sql = "SELECT * FROM news WHERE type=\"news\" ORDER BY news_id DESC;";
+        $result = mysqli_query($conn, $sql);
+        if($result){
+          while($row = mysqli_fetch_assoc($result)){
+            $title = $row['title'];
+            $thumbnail = $row['thumbnail'];
+            $upload_date = $row['upload_date'];
+        ?>
         <div class="col">
-          <div class="card">
-            <img src="images/annual_function.jpg" class="card-img-top" alt="...">
+          <div class="card news_cards">
+            <img src="uploads/images/<?php echo $thumbnail; ?>" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Dancing Competition</h5>
-              <p class="text-body-secondary">May 12, 2021</p>
+              <h5 class="card-title"><?php echo $title; ?></h5>
+              <p class="text-body-secondary"><?php echo $upload_date; ?></p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <img src="images/smart_board.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">New Smart Board</h5>
-              <p class="text-body-secondary">May 13, 2021</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">New Computers In lab</h5>
-              <p class="text-body-secondary">May 15, 2021</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">New Computers In lab</h5>
-              <p class="text-body-secondary">May 15, 2021</p>
-            </div>
-          </div>
-        </div>
+        <?php
+          }
+        }
+        ?>
       </div>
     </div>
-    <div class="gx-5 col-md-4">
+    <div class="g-5 col-md-4">
       <div class="controls row">
       <p class="display-6  col-9">Notice</p>
-      <a href="#" class="btn btn-warning col col-3">+More</a>
+      <a href="category/notice.php" class="btn btn-warning col col-3">+More</a>
       </div><br>
       <div class="row">
+        <?php
+          $sql = "SELECT * FROM news WHERE type=\"notice\" ORDER BY news_id DESC";
+          $result = mysqli_query($conn,$sql);
+          if($result){
+            while($row = mysqli_fetch_assoc($result)){
+              $date = $row['upload_date'];
+              $title = $row['title'];
+        ?>
             <div class="mb-3" style="border: 1px solid lightgrey;max-height:100px;">
               <div class="row">
                 <div class="col-md-4 bg-info text-light">
-                  <p class="text-center text-dark">Dates</p>
+                  <p class="text-center text-dark"><?php echo $date; ?></p>
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <p class="card-text">Third Terminal Examination from 2073</p>
+                    <p class="card-text"><?php echo $title; ?></p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
-              <div class="row">
-                <div class="col-md-4 bg-info text-light">
-                  <p class="text-center text-dark">Dates</p>
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <p class="card-text">Third Terminal Examination from 2073</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
-              <div class="row">
-                <div class="col-md-4 bg-info text-light">
-                  <p class="text-center text-dark">Dates</p>
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <p class="card-text">Third Terminal Examination from 2073</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <?php
+            }
+          }
+        ?>
       </div>
       <!-- Download Section of notice board -->
       <div class="downloads">
           <div class="controls row">
           <p class="display-6  col-9">Downloads</p>
-          <a href="#" class="btn btn-warning col col-3">+More</a>
+          <a href="category/download.php" class="btn btn-warning col col-3">+More</a>
           </div><br>
             <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
               <div class="row">
@@ -254,9 +233,9 @@
   </div><br>
 
 <!-- Counter Section -- Used for counting teachers, students, etc. -->
-<div class="row row-cols-1 row-cols-md-2 g-4" onmouseover="start_counting()">
-  <div class="col">
-    <div class="card h-100">
+<div class="counter_div row row-cols-1 row-cols-md-2" onmouseover="start_counting()">
+  <div class="col gx-5">
+    <div class="card h-100 news_cards">
       <img src="images/icon/students_icon.png" class="circle_image card-img-top" alt="...">
       <div class="card-body">
         <h5 class="display-6 text-center">2,723 +</h5>
@@ -264,8 +243,8 @@
       </div>
     </div>
   </div>
-  <div class="col">
-    <div class="card h-100">
+  <div class="col gx-5">
+    <div class="card h-100 news_cards">
       <img src="images/icon/teachers.jpg" class="circle_image card-img-top" alt="...">
       <div class="card-body">
         <h5 class="display-6 text-center">100 +</h5>
@@ -279,8 +258,8 @@
 <p class="text-center display-6">Our Services</p>
 <!-- Our Services -->
 <div class="row row-cols-1 row-cols-md-3">
-  <div class="col gy-0">
-    <div class="card h-100">
+  <div class="col">
+    <div class="news_cards card h-100">
       <img src="images/english medium.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Clean Environment</h5>
@@ -288,8 +267,8 @@
       </div>
     </div>
   </div>
-  <div class="col gy-0">
-    <div class="card h-100">
+  <div class="col">
+    <div class="card h-100 news_cards">
       <img src="images/entrance_examination_ce.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Well Furnished Classroom</h5>
@@ -297,8 +276,8 @@
       </div>
     </div>
   </div>
-  <div class="col gy-0">
-    <div class="card h-100">
+  <div class="col">
+    <div class="card h-100 news_cards">
       <img src="images/class_9_c_lab.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">ICT Oriented Teaching</h5>

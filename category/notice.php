@@ -1,12 +1,9 @@
-<?php
-include "../connection.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News | SSBSS</title>
+    <title>Notices | SSBSS</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../Style/style.css">
     <link rel="icon" type="icon" href="../images/slogo.png">
@@ -80,10 +77,10 @@ include "../connection.php";
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="true">News</a>
+        <a class="nav-link" href="news.php">News</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="notice.php">Notice</a>
+        <a class="nav-link active" aria-current="true">Notice</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="download.php">Downloads</a>
@@ -95,59 +92,8 @@ include "../connection.php";
     </ul>
   </div>
   <div class="card-body">
-    <p class="display-6">Recommended</p>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <?php
-            $counter = 0;
-            $sql = "SELECT * FROM news WHERE type=\"news\" ORDER BY news_id DESC;";
-            $result = mysqli_query($conn, $sql);
-            if($result){
-              for($i = 0; $i<2; $i++){
-                $row = mysqli_fetch_assoc($result);
-                $title = $row['title'];
-                $thumbnail = $row['thumbnail'];
-          ?>
 
-          <div class="col" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="max-height:300px; overflow:hidden;">
-            <div class="card news_cards">
-                <div class="card-img-overlay">
-                  <h5 class="display-6 card-title bg-dark text-light bg-opacity-50"><?php echo $title; ?></h5>
-                </div>
-                <img src="../uploads/images/<?php echo $thumbnail; ?>" class="card-img" alt="...">
-            </div>
-          </div>
-          <?php
-              }
-            }
-          ?>
-        </div>
-
-        <p class="display-6">Previously Uploaded</p>
-            <div class="row row-cols-1 row-cols-md-4 g-4">
-                  <?php
-                  if($result){
-                    while($row = mysqli_fetch_assoc($result)){
-                      $title = $row['title'];
-                      $thumbnail = $row['thumbnail'];
-                      $upload_date = $row['upload_date'];
-                  ?>
-              <div class="col" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <div class="news_cards card h-100">
-                  <img src="../uploads/images/<?php echo $thumbnail; ?>" class="h-100 card-img-top" alt="...">
-                  <div class="card-img-overlay">
-                  <p class="bg-dark text-light bg-opacity-50"><?php echo $upload_date; ?></p>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $title; ?></h5>
-                  </div>
-                </div>
-              </div>
-                  <?php
-                      }
-                    }
-                  ?>
-            </div>
-</div>
+  </div>
 </div>
 
 
@@ -158,7 +104,7 @@ include "../connection.php";
   <div class="modal-dialog" style="min-width:70vw;">
     <div class="modal-content" style="min-width:100%;">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">News Title Comes Here</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Notice Title Comes Here</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body row">

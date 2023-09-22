@@ -8,21 +8,10 @@
     <link rel="stylesheet" type="text/css" href="../Style/style.css">
     <link rel="icon" type="icon" href="../images/slogo.png">
 <style>
-    .controls{
-        max-height:40px;
-        min-width:45%;
-        background-color:#dbdbdb;
-        overflow: hidden;
-    }
-    .circle_image{
-        border-radius: 100%;
-        height: 100px;
-        margin: auto;
-        width: 100px;
-    }
-    .counter_title{
-      font-size: 20px;
-      text-align: center;
+    .contact_card{
+      margin: auto;
+      box-shadow: 2px 2px 5px;
+      padding: 15px;
     }
 </style>
 </head>
@@ -71,7 +60,43 @@
 </nav>
 
 
-
+<!-- contact section -->
+<div class="border-primary col-sm-4 card contact_card">
+<div class="mb-3">
+  <label class="form-label">Name</label>
+  <input type="text" class="border-primary form-control" placeholder="Your Name">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control border-primary" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label class="form-label">Phone</label>
+  <input type="number" class="border-primary form-control" placeholder="+977 98..">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Your Messages</label>
+  <textarea class="form-control border-primary" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+<div class="mb-3">
+  <label class="form-label">Your Role</label>
+  <div class="row" style="margin-left:5px;">
+        <div class="col-sm-4 form-check">
+          <input class="form-check-input border-primary" type="radio" id="student" name="role">
+          <label class="form-check-label" for="student">Student</label>
+        </div>
+        <div class="col-sm-4 form-check">
+          <input class="form-check-input border-primary" type="radio" id="parent" name="role" style="border:1px solid black;">
+          <label class="form-check-label" for="parent">Parents</label>
+        </div>
+        <div class="col-sm-4 form-check">
+          <input class="form-check-input border-primary" type="radio" id="guest" name="role" style="border:1px solid black;">
+          <label class="form-check-label" for="guest">Guest</label>
+        </div>
+  </div>
+</div>
+<input type="submit" class="btn btn-primary" name="submit" value="Send">
+</div>
 
 <!-- Website Footer -->
 <hr>
