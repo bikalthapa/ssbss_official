@@ -37,7 +37,7 @@ include "connection.php";
 </style>
 </head>
 <body>
-<!-- navigation bar  -->
+<!-- navigation bar of index page  -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
 

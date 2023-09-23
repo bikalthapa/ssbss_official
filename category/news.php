@@ -30,11 +30,12 @@ include "../connection.php";
     .news_cards{
       box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
     }
+    
 </style>
 </head>
 <body>
 <!-- navigation bar  -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class=" navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
 
   <div class="logo text-center">
@@ -104,17 +105,19 @@ include "../connection.php";
             if($result){
               for($i = 0; $i<2; $i++){
                 $row = mysqli_fetch_assoc($result);
+                $id = $row['news_id'];
                 $title = $row['title'];
                 $thumbnail = $row['thumbnail'];
           ?>
-
-          <div class="col" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="max-height:300px; overflow:hidden;">
+          <div class="col" style="max-height:300px; overflow:hidden;">
+            <a href="news.php?news_id=<?php echo $id; ?>">
             <div class="card news_cards">
                 <div class="card-img-overlay">
                   <h5 class="display-6 card-title bg-dark text-light bg-opacity-50"><?php echo $title; ?></h5>
                 </div>
                 <img src="../uploads/images/<?php echo $thumbnail; ?>" class="card-img" alt="...">
             </div>
+            </a>
           </div>
           <?php
               }
@@ -127,11 +130,13 @@ include "../connection.php";
                   <?php
                   if($result){
                     while($row = mysqli_fetch_assoc($result)){
+                      $id = $row['news_id'];
                       $title = $row['title'];
                       $thumbnail = $row['thumbnail'];
                       $upload_date = $row['upload_date'];
                   ?>
-              <div class="col" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <div class="col">
+                <a href="news.php?news_id=<?php echo $id; ?>" style="text-decoration:none;">
                 <div class="news_cards card h-100">
                   <img src="../uploads/images/<?php echo $thumbnail; ?>" class="h-100 card-img-top" alt="...">
                   <div class="card-img-overlay">
@@ -141,6 +146,7 @@ include "../connection.php";
                     <h5 class="card-title"><?php echo $title; ?></h5>
                   </div>
                 </div>
+                </a>
               </div>
                   <?php
                       }
@@ -154,24 +160,33 @@ include "../connection.php";
 
 
 <!-- Modal for viewing news -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog" style="min-width:70vw;">
+<?php
+if(isset($_GET['news_id'])){
+$id = $_GET['news_id'];
+$sql = "SELECT * FROM news WHERE news_id = '$id';";
+$result = mysqli_query($conn, $sql);
+if($result){
+  $row = mysqli_fetch_assoc($result);
+  $title = $row['title'];
+  $src = $row['src'];
+?>
+<div id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="bg-light modal-dialog " style="position: absolute; top: 0px; padding: 10px; min-width:70vw;">
     <div class="modal-content" style="min-width:100%;">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">News Title Comes Here</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?php echo $title; ?></h1>
+        <button type="button" class="btn-close" onclick="close_news_model()"></button>
       </div>
       <div class="modal-body row">
-        <iframe src="MP-EXP-3.pdf" style="height:70vh;"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+        <iframe src="../uploads/documents/<?php echo $src; ?>" style="height:70vh;"></iframe>
       </div>
     </div>
   </div>
 </div>
-
+<?php
+}
+}
+?>
 <!-- Website Footer -->
 <hr>
 <div class="row">
@@ -193,6 +208,11 @@ include "../connection.php";
 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2723.4279550372253!2d87.50420574853884!3d26.73830469689345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2snp!4v1695029463556!5m2!1sen!2snp" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
+<script type="text/javascript">
+  function close_news_model(){
+    document.getElementById("staticBackdrop").style.display = "none";
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>

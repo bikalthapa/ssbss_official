@@ -1,3 +1,6 @@
+<?php
+include "../connection.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +95,32 @@
     </ul>
   </div>
   <div class="card-body">
-
+    <div class="card mb-3" style="max-width: 100%;">
+        <?php
+          $sql = "SELECT * FROM news WHERE type=\"notice\" ORDER BY news_id DESC";
+          $result = mysqli_query($conn,$sql);
+          if($result){
+            while($row = mysqli_fetch_assoc($result)){
+              $date = $row['upload_date'];
+              $title = $row['title'];
+              $thumbnail = $row['thumbnail'];
+        ?>
+              <div class="row news_cards g-0">
+                <div class="col-md-4">
+                  <img src="../uploads/images/<?php echo $thumbnail; ?>" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body text-start">
+                    <h5 class="card-title"><?php echo $title; ?></h5>
+                    <p class="card-text"><small class="text-body-secondary"><?php echo $date; ?></small></p>
+                  </div>
+                </div>
+              </div>
+        <?php
+            }
+          }
+        ?>
+    </div>
   </div>
 </div>
 
