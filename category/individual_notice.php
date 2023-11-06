@@ -5,10 +5,20 @@ $page = isset($_GET['page'])? $_GET['page']:1;
 $start = ($page-1)*$limit;
 $previous = $page -1;
 $next = $page + 1;
-$sql = "SELECT * FROM news WHERE type =\"news\";";
+$sql = "SELECT * FROM news WHERE type =\"notice\";";
 $result = mysqli_query($conn,$sql);
 $total_rows = mysqli_num_rows($result);
 $total_page = ceil($total_rows/$limit);
+
+// Getting the maximum id of notice
+$notice_select = "SELECT MAX(news_id) FROM news WHERE type=\"notice\";";
+$notice_result = mysqli_query($conn, $notice_select);
+$row = mysqli_fetch_assoc($notice_result);
+$max_value = $row['MAX(news_id)'];
+$id = $_GET['notice_id'];
+if($id<1 || $id>$max_value){
+    header("location:../page_not_found.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,114 +97,55 @@ $total_page = ceil($total_rows/$limit);
 <!-- News Section -->
 <div class="card text-center">
   <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="news.php">News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="false">Notice</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="download.php">Downloads</a>
-        </li>
-        <form class="d-flex" role="search" method="post" action="">
-            <div class="dropup-center dropup">
-              <div style="display:flex; flex-direction:row;">
-                  <input class="form-control me-2 border-primary dropdown-toggle" required name="search" type="search" placeholder="Search" aria-label="Search">
-                  <input class="btn btn-outline-primary" type="submit" name="submit_search" value="Search">
-              </div>
-              <ul class="dropdown-menu w-100">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Action two</a></li>
-                <li><a class="dropdown-item" href="#">Action three</a></li>
-              </ul>
-            </div>
-        </form>
-      </ul>
-    </div>
-  <?php
-  if(array_key_exists('submit_search',$_POST)){// This block is for display results according to users
-    $query = $_POST['search'];
-    $sql = "SELECT * FROM news WHERE title LIKE '%$query%' AND type='notice' ORDER BY(news_id) DESC;";
-    $result = mysqli_query($conn,$sql);
-  ?>
-  <div class="card text-center">
-    <div class="card-body">
-  <?php
-    if(mysqli_num_rows($result)>0){
-      echo "<p class=\"display-6\">Search Results</p>";
-    }else{
-      echo "<p class=\"display-6\">No Match Found</p>";
-    } 
-  ?>
-              <div class="row row-cols-1 row-cols-md-4 g-4">
-                    <?php
-                    if($result){
-                      while($row = mysqli_fetch_assoc($result)){
-                        $id = $row['news_id'];
-                        $title = $row['title'];
-                        $thumbnail = $row['thumbnail'];
-                        $upload_date = $row['upload_date'];
-                    ?>
-                <div class="col">
-                  <a href="individual_news.php?news_id=<?php echo $id; ?>" style="text-decoration:none;">
-                  <div class="news_cards card h-100">
-                    <img src="../uploads/images/<?php echo $thumbnail; ?>" class="h-100 card-img-top" alt="...">
-                    <div class="card-img-overlay">
-                    <p class="bg-dark text-light bg-opacity-50"><?php echo $upload_date; ?></p>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title"><?php echo $title; ?></h5>
-                    </div>
-                  </div>
-                  </a>
-                </div>
-                    <?php
-                        }
-                      }
-                    ?>
-              </div>
-    </div>
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="news.php">News</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="true">Notice</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="download.php">Downloads</a>
+      </li>
+      <form class="d-flex" role="search">
+        <input class="border-primary form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+    </ul>
   </div>
+  <div class="card-body">
+ 
+
+  
   <?php
-  }else{// This block is for displaying all news if user doesn't search
-  ?>
-    <div class="card-body">
-              <div class="row row-cols-1 row-cols-md-4 g-4">
-                    <?php
-                    $sql = "SELECT * FROM news WHERE type=\"notice\" ORDER BY(news_id) DESC LIMIT 12;";
-                    $result = mysqli_query($conn,$sql);
-                    if($result){
-                      while($row = mysqli_fetch_assoc($result)){
-                        $id = $row['news_id'];
-                        $title = $row['title'];
-                        $thumbnail = $row['thumbnail'];
-                        $upload_date = $row['upload_date'];
-                    ?>
-                <div class="col">
-                  <a href="individual_news.php?news_id=<?php echo $id; ?>" style="text-decoration:none;">
-                  <div class="news_cards card h-100">
-                    <img src="../uploads/images/<?php echo $thumbnail; ?>" class="h-100 card-img-top" alt="...">
-                    <div class="card-img-overlay">
-                    <p class="bg-dark text-light bg-opacity-50"><?php echo $upload_date; ?></p>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title"><?php echo $title; ?></h5>
-                    </div>
-                  </div>
-                  </a>
-                </div>
-                    <?php
-                        }
-                      }
-                    ?>
-              </div>
-    </div>
-  <?php
-  }
-  ?>
+    $sql = "SELECT * FROM news WHERE news_id = '$id';";
+    $result = mysqli_query($conn,$sql);
+    if($result){
+        while($row = mysqli_fetch_assoc($result)){
+            $news_title = $row['title'];
+            $description = $row['src'];
+            $upload_date = $row['upload_date'];
+            $thumbnail = $row['thumbnail'];
+?>
+<div class="card mb-3" style="max-width: 70%; margin:auto; border:none;">
+  <div class="row g-0">
+      <img style="max-height:350px; border-radius:7px;" src="../uploads/images/<?php echo $thumbnail; ?>" class="img-fluid rounded-start" alt="...">
+      <div class="card-body">
+        <h5 class="card-title display-2"><?php echo $news_title; ?></h5>
+        <p class="card-text text-justify"><?php echo $description; ?></p>
+        <p class="card-text"><small class="text-body-secondary"><?php echo $upload_date;?></small></p>
+      </div>
+  </div>
+</div>
+<?php
+        }
     
-  <br><br>
+    }
+    ?>
+    </div>
+</div>
+
+
   </div>
 </div>
 
