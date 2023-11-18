@@ -138,10 +138,10 @@ include "header_and_footer/header_and_footer.php";
     				<div class="row">
     					<div class="col col-sm-9">
 	    					<select class="form-select border-primary col-sm-9" name="exam_title">
-	    						<option value="first_term">First Terminal Examination </option>
-	    						<option value="second_term">Second Terminal Examination </option>
-	    						<option value="third_term">Third Terminal Examination </option>
-	    						<option value="final">Final Terminal Examination </option>
+	    						<option value="1">First Terminal Examination </option>
+	    						<option value="2">Second Terminal Examination </option>
+	    						<option value="3">Third Terminal Examination </option>
+	    						<option value="4">Final Terminal Examination </option>
 	    					</select>
     					</div>
     					<div class="col col-sm-3">
@@ -273,12 +273,10 @@ include "header_and_footer/header_and_footer.php";
 			                <div class="result_footer row row-cols-2">
 			                  <div class="col gy-2 gx-5">
 			                    <p class="class_teacher">CLASS TEACHER
-			                      <img src="../../images/unknown_signature.png" class="signature">
 			                    </p>
 			                  </div>
 			                  <div class="col gy-2 gx-5">
 			                    <p class="head_teacher">HEAD TEACHER
-			                      <img src="../../images/unknown_signature.png" class="signature">
 			                    <p>
 			                  </div>
 			                </div><hr>
@@ -310,13 +308,8 @@ include "header_and_footer/header_and_footer.php";
     				</table>
     			</div>
     		</div>
-    		<input class="btn btn-primary w-100" type="submit" id="publish_result" name="publish_result" value="Publish Result"  data-bs-toggle="modal" data-bs-target="#status_modal">
+    		<input class="btn btn-primary w-100" type="submit" id="publish_result" name="publish_result" value="Publish Result">
     	</form>
-
-
-
-
-
     </div>
   </div>
 </div>
@@ -324,7 +317,7 @@ include "header_and_footer/header_and_footer.php";
 
 
 		<!-- Modal for uplod status display -->
-		<div class="modal fade" id="status_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<!-- <div class="modal fade" id="status_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -342,7 +335,7 @@ include "header_and_footer/header_and_footer.php";
 		      </div>
 		    </div>
 		  </div>
-		</div>
+		</div> -->
 
 
 
@@ -350,9 +343,6 @@ include "header_and_footer/header_and_footer.php";
 <script type="text/javascript">
 	$("#filename_title").hide();
 	$(document).ready(function(){
-		function validation(){
-
-		}
 		// This function will request server to insert data to database //
 		$("#result_form").on("submit",function(e){
 			e.preventDefault();
@@ -362,37 +352,18 @@ include "header_and_footer/header_and_footer.php";
 				alert("Please Enter at least one file !");
 			}else{
 				$.ajax({
-					url:"header_and_footer/data_inserter.php?mode=result_validation",
+					url:"header_and_footer/data_inserter.php?mode=result_publish",
 					type:"POST",
 					data:new FormData(this),
 					contentType: false,
 					cache:false,
 					processData:false,
-					success:function(message){
-						if(message==" "){
-
-							$.ajax({
-								url:"header_and_footer/data_inserter.php?mode=result",
-								type:"POST",
-								data:new FormData(this),
-								contentType: false,
-								cache:false,
-								processData:false,
-								error:function (){
-									$("#upload_status_close").click();
-									alert("An error occur while uploading file");
-								},
-								success:function(message){
-									$("#response").html(message);
-								}
-							});
-
-						}else{
-							alert(message);
+					success:function(data){
+						if(data.length>4){
+							alert(data);
 						}
 					}
 				});
-
 			}
 		});
   
@@ -417,11 +388,6 @@ include "header_and_footer/header_and_footer.php";
 										<div class="col-sm-6">
 											<select class="col-sm-6 form-select border-primary grade_selection" aria-label="Class Example" choose_for="`+"id"+i+`" name="grade_selection[]" required>
 												<?php echo $classes; ?>
-											</select>
-										</div>
-										<div class="col-sm-6">
-											<select class="col-sm-6 border-primary form-select form-disabled section_selection" id="id`+i+`" required name="section_selection[]">
-												<option>Choose Section</option>
 											</select>
 										</div>
 									</div>
@@ -454,19 +420,12 @@ include "header_and_footer/header_and_footer.php";
 				}
 
 				if(error_str != ""){// Displaying invalid file types
-					alert(error_str + " Can't add due to invalid file type.Only CSV file is valid.");
+					alert(error_str + " Can't add due to invalid file type. Only CSV file is valid.");
 				}
 			}
 		});
 
 
-
-
-		// $("#csv_file").change(function(){
-		// 	var file = this.files[0];
-		// 	var url = URL.createObjectURL(file);
-		// 	$("#something").html("<img src='"+url+"'>");
-		// });
 		// This is for drag and drop //
 		var drag_cols = document.getElementsByClassName("drag_col");
 		var dropable_cols = document.getElementsByClassName("drop_col");

@@ -1,6 +1,5 @@
 <?php
 include "../../connection.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,65 +29,6 @@ include "../../connection.php";
     }
     .news_cards{
       box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
-    }
-
-    .header{
-      position: relative;
-    }
-
-    .header .logo{
-      height: 100px;
-      width: 100px;
-      border: 2px solid black;
-      border-radius: 100%;
-      z-index: -1;
-      margin: auto;
-      position: absolute;
-      left: 35px;
-      top: 45px;
-    }
-    .details_data{
-      font-weight: 800;
-      color: black;
-    }
-    .details{
-      font-size: 18px;
-    }
-    td, th{
-      border: 1px solid black;
-    }
-    .design1{
-      padding: 10px;
-      max-height: 1600px;
-      max-width: 800px;
-      border: 2px solid blue;
-      border-style: dashed;
-      margin: 15px;
-      margin: auto;
-    }
-    .GS{
-      font-weight: 800px;
-    }
-    .head_para{
-      z-index: 1;
-    }
-    .school_name{
-      font-size: 30px;
-      font-weight:700;
-      text-transform: uppercase;
-    }
-    .examination_title{
-      font-size: 25px;
-      font-weight: bold;
-      margin-top: -20px;
-    }
-    .signature{
-      height: 70px;
-      width: 120px;
-    }
-    .address{
-      font-size: 20px;
-      font-weight: bold;
     }
 </style>
 </head>
@@ -138,22 +78,26 @@ include "../../connection.php";
 
 <p class="display-6 text-center">Examination Result</p>
 
-<form method="post" action="" class="col-sm-6 col" style="margin:auto;">
+<form method="post" action="" class="col-sm-6 col" style="margin:auto; max-width:98vw;">
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col col-sm-9">
+      <select class="form-select border-primary" id="exam_title">
+        <option value="1">First Terminal Exam</option>
+        <option value="2">Second Terminal Exam</option>
+        <option value="3">Third Terminal Exam</option>
+        <option value="4">Final Exam</option>
+      </select>      
+    </div>
+    <div class="col">
+      <select class="form-select border-primary" id="year">
+        <option value="2080">2080</option>
+        <option value="2077">2078</option>
+        <option value="2076">2077</option>
+        <option value="2075">2076</option>
+      </select>      
+    </div>
+  </div>
     <select class="form-select border-primary" id="grade" aria-label="Default select example">
-    <option selected>Select Class</option>
-    <?php
-    $sql = "SELECT * FROM class;";
-    $result = mysqli_query($conn, $sql);
-    if($result){
-        while($row = mysqli_fetch_assoc($result)){
-            $classname = $row['class_name'];
-            $id = $row['class_id'];
-    ?>
-    <option value="<?php echo $id; ?>"><?php echo $classname; ?></option>
-    <?php
-        }
-    }
-    ?>
     </select><br>
     <select class="border-primary form-select" id="section">
     </select><br>
@@ -172,7 +116,9 @@ include "../../connection.php";
 <div id="grade_sheet">
 </div>
 
-
+<div class="row row-cols-2 row-cols-md-2 d-flex justify-content-center" id="grade_sheet_control">
+  <button class="btn btn-primary col g-5" style="max-width:98%; margin:10px;" id="print_btn">Print</button>
+</div>
 
 
 
@@ -207,13 +153,7 @@ include "../../connection.php";
     $("#date_of_birth").hide();
     $("#grade_sheet").hide();
     $("#result_spinner").hide();
-    $("#print_btn").click(function(){
-      alert();
-      // var temp = $("#grade_sheet").html();
-      // $("#grade_sheet").html($("#main_body").html());
-      // $("#main_body").html(temp);
-      // window.print();
-    });
+    $("#print_btn").hide();
   $(document).ready(function(){
     function loadData(type, id){
       $.ajax({
@@ -224,21 +164,24 @@ include "../../connection.php";
           $("#result_spinner").show();
         },
         success: function(data){
-          if(type=="grade"){
+          if(type=="grade_load"){
+            $("#grade").html(data);
+          }else if(type=="grade"){
             if(data!=""){
-              $("#section").show();
-              $("#section").html(data);
+                $("#section").show();
+                $("#section").html(data);
             }else{
               $("#section").hide();
               loadData("section",0);
             }
           }else if(type=="section"){
-            $("#student_name").show();
-            $("#student_name").html(data);
+              $("#student_name").show();
+              $("#student_name").html(data);
           }else if(type=="name"){
             $("#date_of_birth").show();
           }else if(type=="dob"){
             $("#grade_sheet").html(data);
+            $("#print_btn").show();
           }
         },
         complete: function(){
@@ -246,7 +189,43 @@ include "../../connection.php";
         }
       })
     }
+    $("#print_btn").click(function(){// It will print the marksheet
+      var temp = $("#grade_sheet").html();
+      $("#grade_sheet").html($("#main_body").html());
+      $("#main_body").html(temp);
+      window.print();
+      location.reload();
+    });
+    var term = $("#exam_title").val();
+    var year = $("#year").val();
     var grade_id,section_id,std_id,dob;
+    loadData("title",term);
+    loadData("year",year);
+    loadData("grade_load",0);
+    //It will execute if Term is changed //
+    $("#exam_title").on("change",function(){
+      term = $("#exam_title").val();
+      loadData("title",term);
+      $("#grade").val(0);
+      $("#student_name").hide();
+      $("#section").hide();
+      $("#date_of_birth").hide();
+      $("#grade_sheet").hide();
+      $("#print_btn").hide();
+      $("#date_of_birth").val("");
+    });
+    // It will execute if year is changed //
+    $("#year").on("change",function(){
+      year = $("#year").val();
+      loadData("year",year);
+      $("#grade").val(0);
+      $("#student_name").hide();
+      $("#section").hide();
+      $("#date_of_birth").hide();
+      $("#grade_sheet").hide();
+      $("#print_btn").hide();
+      $("#date_of_birth").val("");
+    });
     //It will execute if grade is changed //
     $("#grade").on("change",function(){
       grade_id = $("#grade").val();
@@ -254,6 +233,7 @@ include "../../connection.php";
       $("#student_name").hide();
       $("#date_of_birth").hide();
       $("#grade_sheet").hide();
+      $("#print_btn").hide();
       $("#date_of_birth").val("");
     });
     // It will execute if section is changed//
@@ -262,6 +242,7 @@ include "../../connection.php";
       loadData("section",section_id);
       $("#date_of_birth").hide();
       $("#grade_sheet").hide();
+      $("#print_btn").hide();
       $("#date_of_birth").val("");
     });
     // It will execute if name is selected //
@@ -270,6 +251,7 @@ include "../../connection.php";
       loadData("name",std_id);
       $("#date_of_birth").show();
       $("#grade_sheet").hide();
+      $("#print_btn").hide();
       $("#date_of_birth").val("");
     });
     // It will execute if user input on DOB section

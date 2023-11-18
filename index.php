@@ -65,60 +65,60 @@ $total_page = ceil($total_rows/$limit);
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="Style/style.css">
     <link rel="icon" type="icon" href="../images/slogo.png">
-<style>
-    .controls{
-        max-height:40px;
-        min-width:45%;
-        background-color:#dbdbdb;
-        overflow: hidden;
-    }
-    .online_btn{
-      margin: 10px;
-      margin: auto;
-      max-width: 100%;
-    }
-    .circle_image{
+  <style>
+      .controls{
+          max-height:40px;
+          min-width:45%;
+          background-color:#dbdbdb;
+          overflow: hidden;
+      }
+      .online_btn{
+        margin: 10px;
         margin: auto;
-        background-color: white;
-        border-radius: 100%;
-        height: 100px;
-        width: 100px;
-    }
-    .counter_title{
-      font-size: 20px;
-      text-align: center;
-    }
-    .counter_div{
-      margin-top: 10px;
-    }
-    .news_cards{
-      box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
-    }
-    .overflow_control{
-      max-height:350px;
-      overflow-x:hidden;
-      overflow-y:scroll;
-      padding-top:10px;
-      padding-left:20px;
-    }
-    .page_pagination{
-      margin-top:10px;
-    }
-    .modal_image{
-      max-width:100%;
-    }
-    .news_head{
-      overflow-y: hidden;
-    }
-    body{
-      overflow-x: hidden;
-    }
-    .more_image_btn{
-      text-shadow: none;
-      position: absolute;
-      bottom: 30px;
-    }
-</style>
+        max-width: 100%;
+      }
+      .circle_image{
+          margin: auto;
+          background-color: white;
+          border-radius: 100%;
+          height: 100px;
+          width: 100px;
+      }
+      .counter_title{
+        font-size: 20px;
+        text-align: center;
+      }
+      .counter_div{
+        margin-top: 10px;
+      }
+      .news_cards{
+        box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
+      }
+      .overflow_control{
+        max-height:350px;
+        overflow-x:hidden;
+        overflow-y:scroll;
+        padding-top:10px;
+        padding-left:20px;
+      }
+      .page_pagination{
+        margin-top:10px;
+      }
+      .modal_image{
+        max-width:100%;
+      }
+      .news_head{
+        overflow-y: hidden;
+      }
+      body{
+        overflow-x: hidden;
+      }
+      .more_image_btn{
+        text-shadow: none;
+        position: absolute;
+        bottom: 30px;
+      }
+  </style>
 </head>
 <body>
 <!-- navigation bar of index page  -->
@@ -216,92 +216,92 @@ $total_page = ceil($total_rows/$limit);
           <p class="display-6 col col-9">News</p>
           <a href="category/news.php" class="btn btn-warning col col-3">+ More</a>
       </div><br>
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-        <?php
-        $sql = "SELECT * FROM news WHERE type=\"news\" ORDER BY news_id DESC LIMIT $start, $limit;";
-        $result = mysqli_query($conn, $sql);
-        $number_of_rows = mysqli_num_rows($result);
-        if($result){
-          while($row = mysqli_fetch_assoc($result)){
-            $id = $row['news_id'];
-            $title = $row['title'];
-            $thumbnail = $row['thumbnail'];
-            $upload_date = $row['upload_date'];
-        ?>
-        <div class="col">
-          <a  href="category/individual_news.php?news_id=<?php echo $id;?>" style="text-decoration:none;">
-          <div class="card news_cards news_head">
-            <img src="uploads/images/<?php echo $thumbnail; ?>" class="card-img-top news_img" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"><?php echo $title; ?></h5>
-              <p class="text-body-secondary"><?php echo $upload_date; ?></p>
+      <div class="row" id="news_container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <?php
+          $sql = "SELECT * FROM news WHERE type=\"news\" ORDER BY news_id DESC LIMIT $start, $limit;";
+          $result = mysqli_query($conn, $sql);
+          $number_of_rows = mysqli_num_rows($result);
+          if($result){
+            while($row = mysqli_fetch_assoc($result)){
+              $id = $row['news_id'];
+              $title = $row['title'];
+              $thumbnail = $row['thumbnail'];
+              $upload_date = $row['upload_date'];
+          ?>
+          <div class="col">
+            <a  href="category/individual_news.php?news_id=<?php echo $id;?>" style="text-decoration:none;">
+            <div class="card news_cards news_head">
+              <img src="uploads/images/<?php echo $thumbnail; ?>" class="card-img-top news_img" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $title; ?></h5>
+                <p class="text-body-secondary"><?php echo $upload_date; ?></p>
+              </div>
             </div>
+            </a>
           </div>
-          </a>
+          <?php
+            }
+          }
+          ?>
         </div>
-        <?php
-          }
-        }
-        ?>
+        <nav class="page_pagination d-flex justify-content-center">
+          <ul class="pagination">
+            <?php
+            if(($previous+1)==1){
+            ?>
+            <li class="page-item disabled">
+              <a class="page-link">
+                <span aria-hidden="true">&laquo;</span>  
+              </a>
+            </li>
+            <?php
+            }
+             if(($previous+1)>=2){
+            ?>
+            <li class="page-item">
+              <a class="page-link" href="index.php?page=<?php echo $previous; ?>">
+              <span aria-hidden="true">&laquo;</span>  
+            </a>
+            </li>
+            <?php
+            }
+            for($i=1; $i<=3; $i++){
+              $previous++;
+              if($previous<=$total_page){
+            ?>
+            <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $previous ?>"><?php echo $previous;?></a></li>
+            <?php
+              }else if($previous>$total_page){
+            ?>
+            <li class="page-item disabled"><a class="page-link" href="index.php?page=<?php echo $previous ?>"><?php echo $previous;?></a></li>
+            <?php
+              }
+            }
+            if(($next-1)<$total_page){
+              // echo "one";
+            ?>
+            <li class="page-item">
+              <a class="page-link" href="index.php?page=<?php echo $next; ?>">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            <?php 
+            }
+            if(($next-1)>=$total_page){
+            ?>
+            <li class="page-item disabled">
+              <a class="page-link" href="index.php?page=<?php echo $next; ?>">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            <?php
+            }
+            ?>
+
+          </ul>
+        </nav>
       </div>
-
-        <!-- Pagination -->
-    <nav class="page_pagination d-flex justify-content-center">
-      <ul class="pagination">
-        <?php
-        if(($previous+1)==1){
-        ?>
-        <li class="page-item disabled">
-          <a class="page-link">
-            <span aria-hidden="true">&laquo;</span>  
-          </a>
-        </li>
-        <?php
-        }
-         if(($previous+1)>=2){
-        ?>
-        <li class="page-item">
-          <a class="page-link" href="index.php?page=<?php echo $previous; ?>">
-          <span aria-hidden="true">&laquo;</span>  
-        </a>
-        </li>
-        <?php
-        }
-        for($i=1; $i<=3; $i++){
-          $previous++;
-          if($previous<=$total_page){
-        ?>
-        <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $previous ?>"><?php echo $previous;?></a></li>
-        <?php
-          }else if($previous>$total_page){
-        ?>
-        <li class="page-item disabled"><a class="page-link" href="index.php?page=<?php echo $previous ?>"><?php echo $previous;?></a></li>
-        <?php
-          }
-        }
-        if(($next-1)<$total_page){
-          // echo "one";
-        ?>
-        <li class="page-item">
-          <a class="page-link" href="index.php?page=<?php echo $next; ?>">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-        <?php 
-        }
-        if(($next-1)>=$total_page){
-        ?>
-        <li class="page-item disabled">
-          <a class="page-link" href="index.php?page=<?php echo $next; ?>">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-        <?php
-        }
-        ?>
-
-      </ul>
-    </nav>
     </div>
     <div class="g-5 col-md-4">
       <div class="controls row">
