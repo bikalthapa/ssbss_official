@@ -1,5 +1,6 @@
 <?php
 include "../../connection.php";
+include "../../script/php_scripts/header_and_footer.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,47 +35,10 @@ include "../../connection.php";
 </head>
 <body id="main_body">
 <!-- navigation bar  -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+<?php
+print_header(2,"result");
+?>
 
-  <div class="logo text-center">
-    <img src="../../images/slogo.png" class="logo">
-    <p class="headings">Shree Shanti Bhagwati Secondary School</p>
-  </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav nav-underline">
-        <li class="nav-item">
-          <a class="nav-link" href="../../index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../news.php">News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../contact.php">Contacts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../faculty.php">Faculty</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../authorities.php">Authorities</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            More
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="../admission.php">Admission</a></li>
-            <li><a class="dropdown-item" href="../gallery.php">Gallery</a></li>
-            <li><a class="dropdown-item" href="../result.php">Results</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
 <p class="display-6 text-center">Examination Result</p>
 
@@ -89,15 +53,24 @@ include "../../connection.php";
       </select>      
     </div>
     <div class="col">
-      <select class="form-select border-primary" id="year">
-        <option value="2080">2080</option>
-        <option value="2077">2078</option>
-        <option value="2076">2077</option>
-        <option value="2075">2076</option>
+      <select class="form-select border-primary" id="year_dropdown">
+      <?php
+        $sql = "SELECT DISTINCT published_year FROM result_files;";
+        $result = mysqli_query($conn, $sql);
+        if($result){
+          $str = "";
+          while($row = mysqli_fetch_assoc($result)){
+            $year_val = $row['published_year'];
+      ?>
+            <option value='<?php echo $year_val?>'><?php echo $year_val ?></option>
+      <?php
+          }
+        }
+      ?>   
       </select>      
     </div>
   </div>
-    <select class="form-select border-primary" id="grade" aria-label="Default select example">
+    <select class="form-select border-primary" id="grade">
     </select><br>
     <select class="border-primary form-select" id="section">
     </select><br>
@@ -126,26 +99,9 @@ include "../../connection.php";
 
 
 <!-- Website Footer -->
-<hr>
-<div class="row">
-    <div class="gx-5 gy-5 col-md-4">
-        <p class="foot_title display-6 text-center">INFORMATION OFFICER</p>
-        <img src="../../images/shree_prashad_dhakal.jpg" style="margin-left: 30%;max-width:40%;">
-        <p class="foot_title display-6 text-center">Homnath Poudyal</p>
-    </div>
-    <div class="col-md-4 gx-5 gy-5">
-        <p class="foot_title display-6 text-center">CONTACT US</p>
-        <p>
-          Address : Letang-4, Morang<br>
-          Phone : 021-560034<br>
-          Email : shantibhagawatiletang2009@gmail.com
-        </p>
-    </div>
-    <div class="col-md-4 gy-5 gx-5">
-        <p class="foot_title display-6 text-center">LOCATION</p>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2723.4279550372253!2d87.50420574853884!3d26.73830469689345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2snp!4v1695029463556!5m2!1sen!2snp" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-</div>
+<?php
+print_footer("../../images/");
+?>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $("#section").hide();
@@ -164,7 +120,10 @@ include "../../connection.php";
           $("#result_spinner").show();
         },
         success: function(data){
-          if(type=="grade_load"){
+          if(type=="title"){
+            // $("#year_dropdown").html(data);
+          }else if(type=="year"){
+          }else if(type=="grade_load"){
             $("#grade").html(data);
           }else if(type=="grade"){
             if(data!=""){
@@ -197,11 +156,12 @@ include "../../connection.php";
       location.reload();
     });
     var term = $("#exam_title").val();
-    var year = $("#year").val();
-    var grade_id,section_id,std_id,dob;
     loadData("title",term);
+    var year = $("#year_dropdown").val();
     loadData("year",year);
     loadData("grade_load",0);
+    var grade_id,section_id,std_id,dob;
+
     //It will execute if Term is changed //
     $("#exam_title").on("change",function(){
       term = $("#exam_title").val();
@@ -262,6 +222,7 @@ include "../../connection.php";
     });
   })
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@
     		max-height: 100vh;
     	}
     	.small_nav_toggler{
-    		max-width: 50px;
+    		min-width: 60px;
     	}
     	.side_top_nav{
     		max-height: 55vh;
@@ -48,7 +48,7 @@
     			display: none;
     		}
     		.small_nav_toggler{
-    			max-width: 97%;
+    			min-width: 60px;
     		}
     		.main-content{
     			max-width: 100vw;

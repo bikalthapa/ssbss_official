@@ -1,3 +1,6 @@
+<?php
+include "../script/php_scripts/header_and_footer.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,75 +27,81 @@
       font-size: 20px;
       text-align: center;
     }
+    .faculty_thumbnail{
+      min-width:100%;
+      max-height:250px;
+    }
 </style>
 </head>
 <body>
 <!-- navigation bar  -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-
-  <div class="logo text-center">
-    <img src="../images/slogo.png" class="logo">
-    <p class="headings">Shree Shanti Bhagwati Secondary School</p>
-  </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav nav-underline">
-        <li class="nav-item">
-          <a class="nav-link" href="../index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="news.php">News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact.php">Contacts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="faculty.php">Faculty</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="authorities.php">Authorities</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            More
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="admission.php">Admission</a></li>
-            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
-            <li><a class="dropdown-item" href="result.php">Results</a></li>
-          </ul>
-        </li>
-      </ul>
+<?php
+print_header(1,"faculty");
+?>
+<p class="display-6 text-center">हाम्रा विभागहरू</p>
+<div class="row">
+  <div class="col-sm-4 mb-3 mb-sm-0 g-5">
+    <div class="card h-100">
+      <img src="../images/class_9_c_lab.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">ईन्जिनियरिङ् विभाग</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
     </div>
   </div>
-</nav>
-
-
+  <div class="col-sm-4 g-5">
+    <div class="card h-100">
+      <img src="../images/students_with_teachers.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">विज्ञान तथा प्रवीधी विभाग</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 g-5">
+    <div class="card h-100">
+      <img src="../images/students_with_teachers.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">अङ्ग्रेजी माध्यम</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4 mb-3 mb-sm-0 g-5">
+    <div class="card h-100">
+      <img src="../images/class_9_c_lab.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">नेपाली माध्यम्</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 g-5">
+    <div class="card h-100">
+      <img src="../images/students_with_teachers.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">वाणाीज्य</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 g-5">
+    <div class="card h-100">
+      <img src="../images/students_with_teachers.jpg" class="card-img-top faculty_thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">शिक्षा</h5>
+        <a href="about_faculty/about_faculty" class="btn btn-primary w-100">थप पढ्नुहाेस</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Website Footer -->
-<hr>
-<div class="row">
-    <div class="gx-5 gy-5 col-md-4">
-        <p class="foot_title display-6 text-center">INFORMATION OFFICER</p>
-        <img src="../images/shree_prashad_dhakal.jpg" style="margin-left: 30%;max-width:40%;">
-        <p class="foot_title display-6 text-center">Homnath Poudyal</p>
-    </div>
-    <div class="col-md-4 gx-5 gy-5">
-        <p class="foot_title display-6 text-center">CONTACT US</p>
-        <p>
-          Address : Letang-4, Morang<br>
-          Phone : 021-560034<br>
-          Email : shantibhagawatiletang2009@gmail.com
-        </p>
-    </div>
-    <div class="col-md-4 gy-5 gx-5">
-        <p class="foot_title display-6 text-center">LOCATION</p>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2723.4279550372253!2d87.50420574853884!3d26.73830469689345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2snp!4v1695029463556!5m2!1sen!2snp" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-</div>
+<?php
+print_footer("../images/");
+?>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>

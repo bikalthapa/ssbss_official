@@ -172,26 +172,10 @@ include "../connection.php";
 </div>
 
 <!-- Website Footer -->
-<hr>
-<div class="row">
-    <div class="gx-5 gy-5 col-md-4">
-        <p class="foot_title display-6 text-center">INFORMATION OFFICER</p>
-        <img src="../images/shree_prashad_dhakal.jpg" style="margin-left: 30%;max-width:40%;">
-        <p class="foot_title display-6 text-center">Homnath Poudyal</p>
-    </div>
-    <div class="col-md-4 gx-5 gy-5">
-        <p class="foot_title display-6 text-center">CONTACT US</p>
-        <p>
-          Address : Letang-4, Morang<br>
-          Phone : 021-560034<br>
-          Email : shantibhagawatiletang2009@gmail.com
-        </p>
-    </div>
-    <div class="col-md-4 gy-5 gx-5">
-        <p class="foot_title display-6 text-center">LOCATION</p>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2723.4279550372253!2d87.50420574853884!3d26.73830469689345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2snp!4v1695029463556!5m2!1sen!2snp" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-</div>
+<?php
+include "script/php_scripts/header_and_footer.php";
+print_footer("images/");
+?>
 <script type="text/javascript">
   function close_news_model(){
     document.getElementById("staticBackdrop").style.display = "none";

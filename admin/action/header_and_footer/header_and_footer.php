@@ -1,5 +1,12 @@
 <?php
-function get_html($type){
+function get_html($type, $requester_location){
+	if($requester_location=="outside_action"){
+		$index_path = "";
+		$other_path = "action/";
+	}else if($requester_location=="inside_action"){
+		$index_path = "../";
+		$other_path = "";
+	}
 	if($type=="navigation"){
 		$dashboard = '<svg xmlns="http://www.w3.org/2000/svg" style="margin-top:4px;" width="30" height="30" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
 					<path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
@@ -20,31 +27,32 @@ function get_html($type){
 							<path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
 							<path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
 							</svg>';
-		$setting = '<a class="list-group-item list-group-item-action active"><svg xmlns="http://www.w3.org/2000/svg" style="margin-top:13px;" width="30" height="30" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+		$setting = '<svg xmlns="http://www.w3.org/2000/svg" style="margin-top:13px;" width="30" height="30" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
 			  		<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
 			  		<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-				</svg></a>';
-		$logout = '<a class="list-group-item list-group-item-action active"><svg  type="button" data-bs-toggle="modal" data-bs-target="#log_out_model" xmlns="http://www.w3.org/2000/svg" width="30" style="margin-top:13px;" height="30" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+				</svg>';
+		$logout = '<svg  type="button" data-bs-toggle="modal" data-bs-target="#log_out_model" xmlns="http://www.w3.org/2000/svg" width="30" style="margin-top:13px;" height="30" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
 				<path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
 			 	<path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-				</svg></a>';
+				</svg>';
 
 
 
 		return '
 <div class="col side_nav_container">
-	<button class="btn btn-primary small_nav_toggler position-absolute start-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+	<button class="btn btn-primary position-absolute start-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
 			<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
 		</svg>
 	</button><br>
 	<div style="margin-top:60px;" class="top_nav side_top_nav">
-		<a href="../index.php" title="Dashboard" class="list-group-item list-group-item-action" aria-current="true">'.$dashboard.'</a>
-		<a href="new_post.php" title="New Post" class="list-group-item list-group-item-action active">'.$new_post.'</a>
-		<a href="messages.php" title="Messages" class="list-group-item list-group-item-action active">'.$message.'</a>
-		<a href="publish_result.php" title="Result Publication" class="list-group-item list-group-item-action active">'.$publish_result.'</a>
-		<a href="new_admission.php" title="New Admission" class="list-group-item list-group-item-action active">'.$new_admission.'</a>
-		'.$setting.$logout.'
+		<a href="'.$index_path.'index.php" title="Dashboard" class="list-group-item list-group-item-action" aria-current="true">'.$dashboard.'</a>
+		<a href="'.$other_path.'new_post.php" title="New Post" class="list-group-item list-group-item-action active">'.$new_post.'</a>
+		<a href="'.$other_path.'messages.php" title="Messages" class="list-group-item list-group-item-action active">'.$message.'</a>
+		<a href="'.$other_path.'publish_result.php" title="Result Publication" class="list-group-item list-group-item-action active">'.$publish_result.'</a>
+		<a href="'.$other_path.'new_admission.php" id="logout_btn_nav" title="New Admission" class="list-group-item list-group-item-action active">'.$new_admission.'</a>
+		<div style="display:flex; flex-direction:column">'.$setting.'
+			<div id="log_out_btn_nav">'.$logout.'</div></div>
 	</div>
 </div>
 
@@ -58,51 +66,37 @@ function get_html($type){
 		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	</div>
 	<div class="offcanvas-body">
-		<div class="profile position-absolute top-0" style="left:40%;" id="collapseExample">
+		<a href="../'.$index_path.'" class="profile position-absolute top-0" style="left:40%;" id="collapseExample">
 			<img src="../../images/slogo.png" class="card-image" height="60" width="60" style="position: relative;left: 20%;border-radius:100%;">
 			<p class="card-text text-center">SSBSS Admin</p>
-		</div><br>
+		</a><br>
 		<div class="list-group side_top_nav">
-			<a href="../index.php" class="list-group-item list-group-item-action active" aria-current="true">'.$dashboard.' Dashboard
+			<a href="'.$index_path.'index.php" class="list-group-item list-group-item-action active" aria-current="true">'.$dashboard.' Dashboard
 			</a>
-			<a href="new_post.php" class="list-group-item list-group-item-action active">'.$new_post.'
+			<a href="'.$other_path.'new_post.php" class="list-group-item list-group-item-action active">'.$new_post.'
 				New Post
 			</a>
-			<a href="messages.php" class="list-group-item list-group-item-action active">'.$message.'
+			<a href="'.$other_path.'messages.php" class="list-group-item list-group-item-action active">'.$message.'
 				Messages			
 			</a>
-			<a href="publish_result.php" class="list-group-item list-group-item-action active">'.$publish_result.' Publish Result
+			<a href="'.$other_path.'publish_result.php" class="list-group-item list-group-item-action active">'.$publish_result.' Publish Result
 			</a>
-			<a href="new_admission.php" class="list-group-item list-group-item-action active">'.$new_admission.'
+			<a href="'.$other_path.'new_admission.php" class="list-group-item list-group-item-action active">'.$new_admission.'
 				New Admission
 			</a>
 		</div>
+		<br><br>
+		<div class="list-group">
+		<a href="'.$other_path.'new_admission.php" class="list-group-item list-group-item-action active">'.$setting.'
+		Settings
+		</a>
+		<button id="log_out_btn_off_canvas" class="list-group-item list-group-item-action active">'.$logout.'
+		Log Out
+		</button>
+	  </div>
 
-		<div class="list-group bg-primary" style="position:absolute; bottom:15px; width:92%;">
-			<a href="#" class="list-group-item list-grou-item-action active">'.$setting.' Settings </a>
-			<a  href="#" class="list-group-item list-grou-item-action active" data-bs-toggle="modal" data-bs-target="#log_out_model" style="border:none;">'.$logout.' Log Out </a>
-		</div>
 	</div>
 </div>
-
-
-
-<div class="modal fade" id="log_out_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you Sure you want to Log Out ?</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 		';
 	}
 }

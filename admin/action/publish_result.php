@@ -1,6 +1,8 @@
 <?php
 include "../../connection.php";
 include "header_and_footer/header_and_footer.php";
+include "../scripts/php_scripts/logout.php";
+is_login("../../authentication/index.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -121,15 +123,15 @@ include "header_and_footer/header_and_footer.php";
 		</style>
 </head>
 <body id="main_body">
-<div class="mb-3" style="max-width: 100%;">
-  <div class="row g-0" style="max-height:100vh;">
-    <div class="col-sm-1 g-3" style="max-width:5%;">
+<div class="mb-3" style="max-width: 100%; padding:10px;">
+  <div class="row">
+    <div class="col-sm-1" style="max-width:5%;">
     	<div style="position:fixed;">
-    	<?php echo get_html("navigation");?>
+    	<?php echo get_html("navigation","inside_action");?>
     	</div>
     </div>
-    <div class="col-sm-11 g-3">
-    	<button class="btn btn-warning w-100">View Result</button>
+    <div class="col-sm-11">
+    	<button class="btn btn-warning w-100" id="result_toggler" current-toogle="view">Add Result</button>
     	<form method="post" action="" id="result_form" enctype="multipart/form-data">
     		<!-- First Row -->
     		<div class="row">
@@ -310,39 +312,167 @@ include "header_and_footer/header_and_footer.php";
     		</div>
     		<input class="btn btn-primary w-100" type="submit" id="publish_result" name="publish_result" value="Publish Result">
     	</form>
+				<div id="result_viewer" class="z-n1 position-absolute" style="width:90%;">
+					<div class="card text-center border-primary">
+									<div class="card-header">
+										<ul class="nav nav-tabs card-header-tabs">
+											<li class="nav-item">
+												<select class="form-select" id="exam_title">
+													<option value="1">First Terminal Examination</option>
+													<option value="2">Second Terminal Examination</option>
+													<option value="3">Third Terminal Examination</option>
+													<option value="4">Final Examination</option>
+												</select>
+											</li>
+											<li class="nav-item">
+												<select class="form-select" id="published_year">
+													<?php
+														$sql = "SELECT DISTINCT published_year FROM result_files";
+														$result = mysqli_query($conn,$sql);
+														if($result){
+															while($row = mysqli_fetch_assoc($result)){
+																$published_year = $row['published_year'];
+																?>
+																<option value="<?php echo $published_year ?>"><?php echo $published_year; ?></option>
+																<?php
+															}
+														}
+													?>
+												</select>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body">
+										<form class="controls_container row gx-1" style="margin-bottom:3px; margin-top:-15px;" method="post">
+											<div class="limit col-sm-2 gy-1">
+												<input type="number" class="form-control border-primary" placeholder="Limit" id="limit">
+											</div>
+											<div class="short_by col-sm-2 gy-1">
+												<select class="form-control border-primary" id="sort">
+													<option value="DESC">Order By Desc</option>
+													<option value="ASC">Order By Asc</option>
+												</select>
+											</div>
+											<div class="search col-sm-2 gy-1">
+												<input class="form-control me-2 border-primary dropdown-toggle" required name="search" type="search" placeholder="Search" aria-label="Search" id="search_bar">
+											</div>
+										</form><br>
+										<div class="table_div w-100 d-flex justify-content-center">
+											<table cellspacing="0" cellpadding="5" id="result_table">
+												
+											</table>
+										</div>
+										<!-- Loader -->
+										<div class="d-flex justify-content-center">
+											<div class="spinner-border" role="status" id="result_view_spinner">
+												<span class="visually-hidden">Loading...</span>
+											</div>
+										</div>
+									</div>
+					</div> 
+				</div>
     </div>
   </div>
 </div>
 
 
-
-		<!-- Modal for uplod status display -->
-		<!-- <div class="modal fade" id="status_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" id="exampleModalLabel">File Upload Status</h1>
-		        <button type="button" class="btn-close" id="upload_status_close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		      	<p>Uploading... (1/5)</p>
-						<div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-						  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%" id="upload_progress"></div>
-						</div>
-						<div id="response">
-							
-						</div>
-		      </div>
-		    </div>
-		  </div>
-		</div> -->
-
-
+<div class="modal fade" id="result_viewer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script type="text/javascript">
+<script>
 	$("#filename_title").hide();
-	$(document).ready(function(){
+	// $("#result_viewer").hide();
+	$("#result_form").hide();
+	$("#result_view_spinner").hide();
+	$(document).ready(()=>{
+		var term = $("#exam_title").val();
+		var year = $("#published_year").val();
+		if(year==null){// it will reduce an error in sql
+			year = 0;
+		}
+		var limit = 10;
+		var sort = "DESC";
+		var key = "%";
+		// This function is used to logout from admin panel
+		$("#log_out_btn_off_canvas , #log_out_btn_nav").click(function(){
+			var confirmation = confirm("Are you sure you want to log out");
+			if(confirmation==true){// Admin can be log out
+				$.ajax({
+					url:"../scripts/php_scripts/logout.php",
+					type:"POST",
+					data: {logout:"true"},
+					beforeSend: function(){
+						$("#result_view_spinner").show();
+					},
+					success: function(result){
+						if(result=="logout_success"){
+							window.location.replace("../../authentication/index.php");
+						}
+					},
+					complete: function(){
+						$("#result_view_spinner").hide();
+					}
+				});
+			}
+		});
+
+		// This function will request server to load result data //
+		function load_result(term, year, limit_value, order_value, key_value){
+			$.ajax({
+					url:"header_and_footer/data_loader.php?mode=result_load",
+					type:"POST",
+					data:{term : term, year: year, sort : order_value, limit : limit_value, sr_for : key_value},
+					success:function(data){
+							$("#result_table").html(data);
+					}
+			});
+		}
+		load_result(term, year, limit, sort, key);
+
+		// This function will execute when exam title is changed
+		$("#exam_title").on("change",function(){
+			term = $("#exam_title").val();
+			load_result(term, year, limit, sort, key);
+		})
+		// This function will execute when limit is changed
+		$("#limit").on("input",function(){
+			limit = $("#limit").val();
+			if(limit==""){
+				limit = 10;
+			}
+			load_result(term, year, limit, sort, key);
+		});
+		// This function will execute when sort is changed
+		$("#sort").on("input",function(){
+			sort = $("#sort").val();
+			load_result(term, year, limit, sort, key);
+		});
+		// This function will execute when search input is active
+		$("#search_bar").on("input",function(){
+			key = $("#search_bar").val();
+			if(key==""){
+				key = "%";
+			}else{
+				key = "%"+key+"%";
+			}
+			load_result(term, year, limit, sort, key);
+		});
 		// This function will request server to insert data to database //
 		$("#result_form").on("submit",function(e){
 			e.preventDefault();
@@ -425,7 +555,19 @@ include "header_and_footer/header_and_footer.php";
 			}
 		});
 
-
+		// Data view and add button toggler
+		var current_toogle_value = $("#result_toggler").attr("current-toogle");
+		$("#result_toggler").click(function(){
+			if(current_toogle_value=="add"){
+				$("#result_viewer").show();
+				$("#result_form").hide();
+				current_toogle_value="view";
+			}else if(current_toogle_value=="view"){
+				$("#result_viewer").hide();
+				$("#result_form").show();
+				current_toogle_value="add";
+			}
+		});
 		// This is for drag and drop //
 		var drag_cols = document.getElementsByClassName("drag_col");
 		var dropable_cols = document.getElementsByClassName("drop_col");
@@ -454,7 +596,7 @@ include "header_and_footer/header_and_footer.php";
 				e.target.append(selected);
 			});
 		}
-		});
+	});
 		function decide_template_viewer(){
 			if(document.getElementById("default_template").checked){
 				$("#template_viewer").hide();
@@ -465,8 +607,9 @@ include "header_and_footer/header_and_footer.php";
 			}
 		}
 		decide_template_viewer();
-</script>
 
+</script>
+<script src="../scripts/javascripts/header_and_footer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>

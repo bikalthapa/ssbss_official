@@ -161,7 +161,6 @@ if($type=="title"){// When the title is choosen//
     $section_id = $id;
     $term = $_SESSION['term'];
     $published_year = $_SESSION['year'];
-
     
     // Gettting the name of file from the database
     $file_sql = "SELECT * FROM result_files WHERE class_id = \"$grade_id\" AND term = \"$term\" AND published_year = \"$published_year\"";
