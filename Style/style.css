@@ -1,48 +1,83 @@
-    .logo{
-        display:flex;
-        flex-direction:row;
-        margin-bottom:2px;
-    }
-    .logo img{
-        height:10%;
-        margin-right:2%;
-        width:10%;
-        border-radius:100%;
-        border:1px solid black;
-    }    
-    .foot_title{
-      font-size: 20px;
-      margin: 2px;
-    }
-    .headings{
-        font-size:20px;
-        margin-top:3%;
-    }
-    .carousel > .carousel-inner > .carousel-item > img{
-        width:240px; /* Yeap you can change the width and height*/
-        height:490px;
-    }
-    .carousel-caption{
-        position:absolute;
-        top:60%;
-        text-shadow:5px 5px 5px;
-    }
-    @media screen and (max-width: 480px) {
-      .carousel > .carousel-inner > .carousel-item > img{
-          width:240px;
-          height:40%;
-      }
-    }
-    @media screen and (max-width: 713px){
-      .carousel > .carousel-inner > .carousel-item > img{
-          width:240px;
-          height:35%;
-      }
-    }
-    .card{
-        background-color: #F9F9F9;
+    :root {
+        /* Blue Shades */
+        --blue_1: #e7f1ff;
+        --blue_2: #a8d0ff;
+        --blue_3: #0d6efd;
+        --blue_4: #084298;
+
+        --blue_1-t: rgba(231, 241, 255, 0.4);
+        --blue_2-t: rgba(168, 208, 255, 0.4);
+        --blue_3-t: rgba(13, 110, 253, 0.4);
+        --blue_4-t: rgba(8, 66, 152, 0.4);
+
+        /* Gold Shades (renamed from Yellow) */
+        --gold_1: #fff9e6;
+        --gold_2: #ffe69c;
+        --gold_3: #ffc107;
+        --gold_4: #cc9a06;
+
+        --gold_1-t: rgba(255, 249, 230, 0.4);
+        --gold_2-t: rgba(255, 230, 156, 0.4);
+        --gold_3-t: rgba(255, 193, 7, 0.4);
+        --gold_4-t: rgba(204, 154, 6, 0.4);
+
+        /* Red Shades */
+        --red_1: #ffe6e6;
+        --red_2: #ff9d9d;
+        --red_3: #dc3545;
+        --red_4: #a71d2a;
+
+        --red_1-t: rgba(255, 230, 230, 0.4);
+        --red_2-t: rgba(255, 157, 157, 0.4);
+        --red_3-t: rgba(220, 53, 69, 0.4);
+        --red_4-t: rgba(167, 29, 42, 0.4);
+
+        /* Black/Gray Shades */
+        --black_1: #f8f9fa;
+        --black_2: #dee2e6;
+        --black_3: #6c757d;
+        --black_4: #212529;
+
+        --black_1-t: rgba(248, 249, 250, 0.4);
+        --black_2-t: rgba(222, 226, 230, 0.4);
+        --black_3-t: rgba(108, 117, 125, 0.4);
+        --black_4-t: rgba(33, 37, 41, 0.4);
+
+        /* White Shades */
+        --white_1: #ffffff;
+        --white_2: #fefefe;
+        --white_3: #f1f1f1;
+        --white_4: #e9ecef;
+
+        --white_1-t: rgba(255, 255, 255, 0.4);
+        --white_2-t: rgba(254, 254, 254, 0.4);
+        --white_3-t: rgba(241, 241, 241, 0.4);
+        --white_4-t: rgba(233, 236, 239, 0.4);
     }
 
-    
-    
 
+
+    /* Navbar design  */
+    .logo {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2px;
+    }
+
+    .logo img {
+        height: 10%;
+        margin-right: 2%;
+        width: 10%;
+        border-radius: 100%;
+        border: 1px solid black;
+    }
+    .headings {
+        font-size: 20px;
+        margin-top: 3%;
+    }
+
+    /* footer design */
+    .foot_title {
+        font-size: 20px;
+        margin: 2px;
+    }

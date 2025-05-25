@@ -22,7 +22,7 @@ function print_header($file_index,$active){
       <div class="container-fluid">
 
       <div class="logo text-center">
-        <img src="<?php echo $index_path?>/images/slogo.png" class="logo">
+        <img src="<?php echo $index_path?>images/slogo.png" class="logo">
         <p class="headings">श्री शान्ती भगवती माध्यमिक विधालय</p>
       </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

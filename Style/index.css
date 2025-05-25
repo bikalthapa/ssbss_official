@@ -1,0 +1,149 @@
+    :root {
+        /* Blue Shades */
+        --blue_1: #2588f1;
+        --blue_2: #227cdc;
+        --blue_3: #2176d1;
+        --blue_4: #1f70c6;
+
+        /* Gold Shades (renamed from Yellow) */
+        --gold_1: #ffd52e;
+        --gold_2: #ffdc5a;
+        --gold_3: #ffe27e;
+        --gold_4: #ffe99f;
+
+        /* Red Shades */
+        --red_1: #ff0000;
+        --red_2: #e00000;
+        --red_3: #c00000;
+        --red_4: #800000;
+
+        /* Black/Gray Shades */
+        --black_1: #000000;
+        --black_2: #101010;
+        --black_3: #202020;
+        --black_4: #404040;
+
+        /* White Shades */
+        --white_1: #ffffff;
+        --white_2: #f0f0f0;
+        --white_3: #c0c0c0;
+        --white_4: #808080;
+    }
+
+
+
+
+    /* Carousel design for hero section */
+    .carousel>.carousel-inner>.carousel-item>img {
+        width: 240px;
+        height: 490px;
+    }
+
+    .carousel-caption {
+        position: absolute;
+        top: 60%;
+        text-shadow: 5px 5px 5px;
+    }
+
+    @media screen and (max-width: 480px) {
+        .carousel>.carousel-inner>.carousel-item>img {
+            width: 240px;
+            height: 40%;
+        }
+    }
+
+    @media screen and (max-width: 713px) {
+        .carousel>.carousel-inner>.carousel-item>img {
+            width: 240px;
+            height: 35%;
+        }
+    }
+
+    .card {
+        background-color: #F9F9F9;
+    }
+
+
+    /* Section designs  */
+    .section {
+        width:100%;
+        background-color: var(--white_2);
+        display: flex;
+        justify-content: center;
+        border-radius: 4px;
+        align-items: center;
+        max-height: 50px;
+    }
+
+    .section .title {
+        font-size: 30px;
+    }
+
+    .section .more_btn {
+        height: 50px;
+        margin: 0px;
+        text-decoration: none;
+        background-color: var(--gold_1);
+        color: var(--black_1);
+        border-radius: 4px;
+        width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .news_cards {
+        box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
+    }
+
+    .overflow_control {
+        min-height:400px;
+        max-height: 405px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding-top: 10px;
+        padding-left: 20px;
+    }
+
+    .downloads{
+        margin-top:50px;
+    }
+
+    /* Scrollbar Styling (WebKit: Chrome, Edge, Safari) */
+    .overflow_control::-webkit-scrollbar {
+        width: 1px;
+        /* <-- Change thickness here */
+    }
+
+    .overflow_control::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .overflow_control::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+    }
+
+    .overflow_control::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+
+    .modal_image {
+        max-width: 100%;
+    }
+
+
+    .more_image_btn {
+        text-shadow: none;
+        position: absolute;
+        bottom: 30px;
+    }
+
+    .online_btn {
+        margin: 10px;
+        margin: auto;
+        max-width: 100%;
+    }
