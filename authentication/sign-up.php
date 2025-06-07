@@ -1,117 +1,159 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSBSS | Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSBSS | Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        .login_form{
-            border:1px solid lightgrey;
-            box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
-            border-radius:10px;
-            padding:10px 20px 10px 20px;
-            background-color:white;
+        .login_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
         }
-        .login_btn{
-            font-size:25px;
+
+        .login_form {
+            border: 1px solid lightgrey;
+            box-shadow: rgba(42, 67, 113, 0.15) 8px 8px 30px;
+            border-radius: 10px;
+            padding: 20px;
+            width: clamp(300px, 30vw, 500px);
+            background-color: white;
         }
-        .create_account_btn{
-            background-color:#42B72A;
-            color:white;
+
+        .create_account_btn {
+            background-color: #42b72a;
+            color: white;
         }
-        .create_account_btn:hover{
-            background-color:#5cd544;
-            color:white;
+
+        .create_account_btn:hover {
+            background-color: #5cd544;
+            color: white;
         }
     </style>
 </head>
-<body>
-<div class="w-25" style="margin:auto;">
-<p class="display-6 text-center text-dark"><a href="../">SSBSS</a> Sign Up</p>
-<form class="login_form" id="signup_form" method="post" autocomplete="false">
-    <div class="mb-3">
-        <label for="username" class="form-label" id="userHelp">Username</label>
-        <input type="text" name="username" class="form-control signup_input" id="username" aria-describedby="userHelp">
-    </div>
-    <div class="mb-3">
-        <label for="Email" class="form-label" id="emailHelp">Email address</label>
-        <input type="email" name="email" class="form-control signup_input" id="email" aria-describedby="emailHelp">
-    </div>
-    <div class="mb-3">
-        <label for="Password" id="passwordHelp" class="form-label" autocomplete="new-password">Password</label>
-        <input type="password" name="password" class="form-control signup_input" id="password" aria-describedby="passwordHelp">
-    </div>
-    <div class="mb-3">
-        <label for="cpassword" class="form-label" id="cpasswordHelp" autocomplete="new-password">Confirmation Password</label>
-        <input type="password" name="password" class="form-control signup_input" id="cpassword" aria-describedby="cpasswordHelp">
-    </div>
-    <label class="form-label">Your Role</label>
-    <div class="roles row" style="margin-left:10px;">
-        <div class="form-check gx-5 col col-md-4">
-            <input class="form-check-input border-primary" checked type="radio" name="role" value="Student" id="student_check">
-            <label class="form-check-label" for="student_check">
-                Students
-            </label>
-        </div>
-        <div class="form-check gx-5 col col-md-4">
-        <input class="form-check-input border-primary" disabled type="radio" value="teacher" name="role" id="teacher_check">
-        <label class="form-check-label" for="teacher_check">
-            Teacher
-        </label>
-        </div>
-    </div><br>
-    <button type="submit" class="btn btn-primary w-100 login-btn">Sign Up</button><br><br>
-    <a href="index" class="btn create_account_btn w-100">Already Have Account | Login</a>
-    </form>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-    $(document).ready(function(){
-        var error_count = 0;
-        function warn_user(input_field,message){
-                var description = $("#"+input_field.attr("aria-describedby"));
-                input_field.addClass("border-danger");
-                input_field.attr("description",description.html());
-                description.addClass("text-danger");
-                description.html(message);
-                error_count++;
-        }
-        $("#signup_form").on("submit",function(e){
-            e.preventDefault();
-            var username = $("#username");
-            var email = $("#email");
-            var password = $("#password");
-            var confirm_password = $("#cpassword");
 
-            if(username.val()==""){
-                warn_user(username, "Username Required");
-            }else if(email.val()==""){
-                warn_user(email, "Email Required");
-            }else if(password.val()==""){
-                warn_user(password, "Password Required");
-            }else if(confirm_password.val()==""){
-                warn_user(confirm_password, "Confirm Password Required");
-            }else if(password.val()!=confirm_password.val()){
-                alert("Password doesn't match");
-            }else{//You can login from here
-                alert("Student's signup is under construction");
-                $("#signup_form")[0].reset();
+<body>
+    <div class="container login_container">
+        <h1 class="display-6 text-center text-dark">
+            <a href="../" class="text-decoration-none text-dark">SSBSS</a> Sign Up
+        </h1>
+        <form class="login_form" id="signup_form" method="post" autocomplete="off" novalidate>
+            <div class="mb-3">
+                <label for="user_name" class="form-label">Username</label>
+                <input type="text" name="user_name" class="form-control signup_input" id="user_name" required />
+                <div class="invalid-feedback">Please enter a username.</div>
+            </div>
+            <div class="mb-3">
+                <label for="user_email" class="form-label">Email address</label>
+                <input type="email" name="user_email" class="form-control signup_input" id="user_email" required />
+                <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+            <div class="mb-3">
+                <label for="user_password" class="form-label">Password</label>
+                <input type="password" name="user_password" class="form-control signup_input" id="user_password"
+                    required minlength="6" />
+                <div class="invalid-feedback">Password must be at least 6 characters.</div>
+            </div>
+            <div class="mb-3">
+                <label for="user_cpassword" class="form-label">Confirm Password</label>
+                <input type="password" name="user_cpassword" class="form-control signup_input" id="user_cpassword"
+                    required />
+                <div class="invalid-feedback">Passwords must match.</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            <br /><br />
+            <a href="index" class="btn create_account_btn w-100">Already Have Account | Login</a>
+        </form>
+        <div id="form_message" class="mt-3"></div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script/javascript/UI/toast.js"></script>
+    <script>
+        $(document).ready(function () {
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
             }
-        });
-        var inputs = document.getElementsByClassName("signup_input");
-        for(input of inputs){
-            input.addEventListener("input",(e)=>{
-                var selected = $("#"+e.target.id);
-                var description = $("#"+selected.attr("aria-describedby"));
-                    selected.removeClass("border-danger");
-                    description.removeClass("text-danger");
-                    description.html(selected.attr("description"));
+
+            function validateField(field) {
+                const id = field.attr("id");
+                const val = field.val().trim();
+
+                switch (id) {
+                    case "user_name":
+                        return val !== "";
+                    case "user_email":
+                        return validateEmail(val);
+                    case "user_password":
+                        return val.length >= 6;
+                    case "user_cpassword":
+                        return val === $("#user_password").val() && val.length >= 6;
+                    default:
+                        return true;
+                }
+            }
+
+            // Real-time validation feedback
+            $(".signup_input").on("input", function () {
+                const input = $(this);
+                if (validateField(input)) {
+                    input.removeClass("is-invalid");
+                }
             });
-        }
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+            $("#signup_form").on("submit", function (e) {
+                e.preventDefault();
+                let valid = true;
+
+                $(".signup_input").each(function () {
+                    const input = $(this);
+                    if (!validateField(input)) {
+                        input.addClass("is-invalid");
+                        valid = false;
+                    } else {
+                        input.removeClass("is-invalid");
+                    }
+                });
+
+                if (!valid) {
+                    ToastManager.show("Form Error", "Please correct the highlighted fields.", "warning");
+                    return;
+                }
+
+                const formData = new FormData(this);
+
+                $.ajax({
+                    url: "validate_signup.php",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.status === "success") {
+                            ToastManager.show("Success", response.message || "Signup successful!", "success");
+                            $("#signup_form")[0].reset();
+                        } else {
+                            ToastManager.show("Signup Failed", response.message || "Something went wrong.", "danger");
+                        }
+                    },
+                    error: function (xhr) {
+                        ToastManager.show("Server Error", xhr.statusText || "Something went wrong.", "danger");
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
 </body>
+
 </html>

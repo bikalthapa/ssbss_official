@@ -1,6 +1,5 @@
 <?php
-require_once 'Database.php';
-require_once 'ui/pagination.php';
+include __DIR__.'/../ui/pagination.php';
 
 class NewsPortal
 {

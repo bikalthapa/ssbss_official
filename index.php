@@ -1,8 +1,8 @@
 <?php
-require_once 'script/php_scripts/Database.php';
-require_once 'script/php_scripts/newsPortal.php';
+require 'script/php_scripts/database.php';
+include 'script/php_scripts/components/newsPortal.php';
 require_once 'script/php_scripts/ui/pagination.php';
-require_once 'script/php_scripts/ui/cards.php';
+include 'script/php_scripts/ui/cards.php';
 include "script/php_scripts/header_and_footer.php";
 
 // Define parameters

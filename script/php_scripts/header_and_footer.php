@@ -1,8 +1,10 @@
 <?php
+include __DIR__."/utilities/authentication.php";
 // This function will print the header of the page
+$login_condition = $auth->isLoggedIn()!="";
 function print_header($file_index,$active){
   $index_path = "";
-  $login_condition = isset($_COOKIE['login_id'])?True:False;
+  global $login_condition;
   if($file_index==0){
     $index_path = "";
     $first_siblings = "category/";
@@ -51,7 +53,7 @@ function print_header($file_index,$active){
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item <?php echo $active=="login"?"active":""?>" href="<?php echo $index_path?>authentication"><?php echo $login_condition?"व्यवस्थापक":"लगइन";?></a>
+                  <a class="dropdown-item <?php echo $active=="login"?"active":""?>" href="<?php echo $index_path?>authentication/"><?php echo $login_condition?"व्यवस्थापक":"लगइन";?></a>
                 </li>
                 <li>
                   <a class="dropdown-item <?php echo $active=="result"?"active":""?>" href="<?php echo $second_siblings?>result">परिक्षाफल</a>
