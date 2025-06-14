@@ -2,6 +2,7 @@
 include "../../connection.php";
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
+include "../../script/php_scripts/utilities/tables.php";
 // Check if the user is logged in as an admin
 if ($auth->isLoggedIn() != "A") {
     header("Location: ../../authentication/");
@@ -48,7 +49,7 @@ if ($auth->isLoggedIn() != "A") {
                                     <small id="email<?php echo $userId; ?>" class="text-muted"><?php echo $userEmail; ?></small>
                                 </label>
                                 <button type="button" class="ms-auto btn bg-success bg-opacity-10 text-success me-2"
-                                    data-bs-toggle="modal" data-bs-target="#roleModal">
+                                    data-bs-toggle="modal" data-bs-target="#roleModal" onclick="setUser('<?php echo $userId; ?>')">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                         class="bi bi-person-check" viewBox="0 0 16 16">
                                         <path
@@ -89,51 +90,40 @@ if ($auth->isLoggedIn() != "A") {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="roleForm">
+                        <!-- Role Select -->
                         <div class="mb-3">
-                            <label for="userRole" class="form-label">Role</label>
+                            <label class="form-label" for="userRole">User Role</label>
                             <select class="form-select" id="userRole">
+                                <option value="">Select Role</option>
+                                <option value="G">Guest</option>
                                 <option value="T">Teacher</option>
                                 <option value="E">Editor</option>
                                 <option value="S">Student</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+
+                        <!-- Class (initially hidden) -->
+                        <div class="mb-3" id="classWrapper" style="display: none;">
                             <label for="userClass" class="form-label">Class</label>
-                            <input type="text" class="form-control" id="userClass" list="classOptions"
-                                placeholder="Select or type class">
-                            <datalist id="classOptions">
-                                <option value="1">
-                                <option value="2">
-                                <option value="3">
-                                <option value="4">
-                                <option value="5">
-                                <option value="6">
-                                <option value="7">
-                                <option value="8">
-                                <option value="9">
-                                <option value="10">
-                                <option value="11">
-                                <option value="12">
-                            </datalist>
+                            <select class="form-control" id="userClass" name="userClass">
+                                <option value="" disabled selected>Loading classes...</option>
+                            </select>
                         </div>
-                        <div class="mb-3">
+
+                        <!-- Section (initially hidden) -->
+                        <div class="mb-3" id="sectionWrapper" style="display: none;">
                             <label for="userSection" class="form-label">Section</label>
-                            <input type="text" class="form-control" id="userSection" list="sectionOptions"
-                                placeholder="Select or type section">
-                            <datalist id="sectionOptions">
-                                <option value="A">
-                                <option value="B">
-                                <option value="C">
-                                <option value="D">
-                                <option value="E">
-                            </datalist>
+                            <select class="form-control" id="userSection" name="userSection">
+                                <option value="" disabled selected>Select section</option>
+                            </select>
                         </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" id="submitBtn" disabled>Submit</button>
                 </div>
             </div>
         </div>
@@ -202,6 +192,161 @@ if ($auth->isLoggedIn() != "A") {
                 }
             });
         }
+        function setUser(id){
+            selectedUserId = id;
+        }
+
+
+        $(document).ready(function () {
+            const $classWrapper = $('#classWrapper');
+            const $sectionWrapper = $('#sectionWrapper');
+            const $userClass = $('#userClass');
+            const $userSection = $('#userSection');
+            const $submitBtn = $('#submitBtn');
+            const $userRole = $('#userRole');
+
+            $submitBtn.prop('disabled', true); // Disable on load
+
+            function resetFields() {
+                $classWrapper.hide();
+                $sectionWrapper.hide();
+                $userClass.empty();
+                $userSection.empty();
+                $submitBtn.prop('disabled', true);
+            }
+
+            function validateForm() {
+                const role = $userRole.val();
+                if (role === 'T') {
+                    const classSelected = $userClass.val();
+                    const sectionSelected = $userSection.val();
+                    $submitBtn.prop('disabled', !(classSelected && sectionSelected));
+                } else if (role && role !== 'T') {
+                    $submitBtn.prop('disabled', false);
+                } else {
+                    $submitBtn.prop('disabled', true);
+                }
+            }
+
+            $userRole.on('change', function () {
+                const role = $(this).val();
+                resetFields();
+
+                if (role === 'T') {
+                    $.ajax({
+                        url: 'action/read_data.php',
+                        method: 'POST',
+                        data: { typ: "class" },
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                $userClass.append('<option value="" disabled selected>Select class</option>');
+                                response.data.forEach(cls => {
+                                    $userClass.append(`<option value="${cls.class_id}">${cls.class_name}</option>`);
+                                });
+                                $classWrapper.show();
+                            } else {
+                                alert('Error loading classes: ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('Failed to load classes.');
+                        }
+                    });
+                } else {
+                    validateForm();
+                }
+            });
+
+            $userClass.on('change', function () {
+                const classId = $(this).val();
+                $userSection.empty().append('<option value="" disabled selected>Loading...</option>');
+                $sectionWrapper.hide();
+                $submitBtn.prop('disabled', true);
+
+                if (classId) {
+                    $.ajax({
+                        url: 'action/read_data.php',
+                        method: 'POST',
+                        data: { class_id: classId, typ: "section" },
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                $userSection.empty().append('<option value="" disabled selected>Select section</option>');
+                                if (response.data.length === 0) {
+                                    $userSection.append('<option value="" disabled>No sections available</option>');
+                                    $submitBtn.prop('disabled', false);
+                                } else {
+                                    response.data.forEach(sec => {
+                                        $userSection.append(`<option value="${sec.section_id}">${sec.section_name}</option>`);
+                                    });
+                                    $sectionWrapper.show();
+                                }
+                            } else {
+                                alert('Error loading sections: ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('Failed to load sections.');
+                        }
+                    });
+                }
+            });
+
+            $userSection.on('change', function () {
+                validateForm();
+            });
+
+            $('#submitBtn').on('click', function () {
+                const role = $('#userRole').val();
+                const classId = $('#userClass').val();
+                const sectionId = $('#userSection').val();
+
+                // Basic validation (extra safety)
+                if (!role) {
+                    alert("Please select a role.");
+                    return;
+                }
+                if (role === 'T' && !classId) {
+                    alert("Please select a class.");
+                    return;
+                }
+                if (role === 'T' && $('#sectionWrapper').is(':visible') && !sectionId) {
+                    alert("Please select a section.");
+                    return;
+                }
+
+                // Prepare form data
+                const formData = {
+                    u_id: selectedUserId, // Assuming this is set when the modal opens
+                    u_role: role,
+                    class_id: classId || null,
+                    section_id: sectionId || null
+                };
+
+                // AJAX submit
+                $.ajax({
+                    url: 'action/update_data.php', // Your PHP handler
+                    method: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log( response);
+                        if (response.status === 'success') {
+                            alert("Role assigned successfully!");
+                            $('#roleModal').modal('hide'); // Close modal
+                            $('#roleForm')[0].reset(); // Optional reset
+                            $('#submitBtn').prop('disabled', true);
+                        } else {
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An unexpected error occurred.");
+                    }
+                });
+            });
+
+        });
+
+
 
     </script>
 </body>

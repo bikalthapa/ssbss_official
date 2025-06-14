@@ -1,7 +1,11 @@
 <?php
 include "../../script/php_scripts/database.php";
 include "scripts/php_scripts/header_and_footer.php";
-// is_login("../../authentication/index.php");
+include "../../script/php_scripts/utilities/authentication.php";
+// if ($auth->isLoggedIn() != "A") {
+//     header("Location: ../../authentication/");
+//     exit;
+// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,6 +16,7 @@ include "scripts/php_scripts/header_and_footer.php";
 	<title>New Post | Admin</title>
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="icon" href="../../images/slogo.png">
 	<style>
@@ -152,49 +157,67 @@ include "scripts/php_scripts/header_and_footer.php";
 				</div>
 			</div>
 		</div><br>
+		<form class="row g-3 align-items-end p-3 rounded shadow-sm bg-white"
+			style="margin-bottom: 10px; margin-top: -10px;" method="post" action="">
+
+			<!-- Limit Input -->
+			<div class="col-md-3">
+				<div class="input-group">
+					<span class="input-group-text bg-white border-primary">
+						<i class="bi bi-sliders"></i>
+					</span>
+					<input type="number" class="form-control border-primary" placeholder="Number of rows." id="limit">
+				</div>
+			</div>
+
+			<!-- Sort Dropdown -->
+			<div class="col-md-3">
+				<div class="input-group">
+					<span class="input-group-text bg-white border-primary">
+						<i class="bi bi-sort-down-alt"></i>
+					</span>
+					<select class="form-select border-primary" id="sort">
+						<option value="DESC">Descending</option>
+						<option value="ASC">Ascending</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Search Input -->
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class="input-group-text bg-white border-primary">
+						<i class="bi bi-search"></i>
+					</span>
+					<input type="search" name="search" class="form-control border-primary" placeholder="Search..."
+						aria-label="Search" id="search_bar">
+				</div>
+			</div>
+		</form><br>
 
 
 		<div id="view_postt">
-			<div class="card text-center">
-				<div class="card-body">
-					<form class="controls_container row gx-1" style="margin-bottom:3px; margin-top:-15px;" method="post"
-						action="">
-						<div class="limit col-sm-2 gy-1">
-							<input type="number" class="form-control border-primary" placeholder="Limit" id="limit">
-						</div>
-						<div class="short_by col-sm-2 gy-1">
-							<select class="form-control border-primary" id="sort">
-								<option value="DESC">Order By Desc</option>
-								<option value="ASC">Order By Asc</option>
-							</select>
-						</div>
-						<div class="search col-sm-2 gy-1">
-							<input class="form-control me-2 border-primary dropdown-toggle" required name="search"
-								type="search" placeholder="Search" aria-label="Search" id="search_bar">
-						</div>
-					</form><br>
-					<div class="table_div">
-						<div id="news_div">
-							<div id="news_row"
-								class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center align-items-center">
-							</div>
-						</div>
-						<div id="notice_div">
-							<div id="notice_row"
-								class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center align-items-center">
-							</div>
-						</div>
-						<div id="document_div">
-							<table cellspacing="0" cellpadding="0" style="margin:auto; width:100%;" id="document_row">
-							</table>
-						</div>
+
+			<div class="table_div">
+				<div id="news_div">
+					<div id="news_row"
+						class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center align-items-center">
 					</div>
-					<!-- Loader -->
-					<div class="d-flex justify-content-center">
-						<div class="spinner-border" role="status" id="post_view_spinner">
-							<span class="visually-hidden">Loading...</span>
-						</div>
+				</div>
+				<div id="notice_div">
+					<div id="notice_row"
+						class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center align-items-center">
 					</div>
+				</div>
+				<div id="document_div">
+					<table cellspacing="0" cellpadding="0" style="margin:auto; width:100%;" id="document_row">
+					</table>
+				</div>
+			</div>
+			<!-- Loader -->
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border" role="status" id="post_view_spinner">
+					<span class="visually-hidden">Loading...</span>
 				</div>
 			</div>
 		</div>

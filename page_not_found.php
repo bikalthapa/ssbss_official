@@ -8,35 +8,12 @@ include "script/php_scripts/header_and_footer.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News | SSBSS</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../Style/style.css">
-    <link rel="icon" type="icon" href="../images/slogo.png">
-<style>
-    .controls{
-        max-height:40px;
-        min-width:45%;
-        background-color:#dbdbdb;
-        overflow: hidden;
-    }
-    .circle_image{
-        border-radius: 100%;
-        height: 100px;
-        margin: auto;
-        width: 100px;
-    }
-    .counter_title{
-      font-size: 20px;
-      text-align: center;
-    }
-    .news_cards{
-      box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
-    }
-    
-</style>
+    <link rel="icon" type="icon" href="images/slogo.png">
 </head>
 <body>
 <!-- navigation bar  -->
 <?php
-print_header(0,"");
+print_header("");
 ?>
 <!-- News Section -->
 <div class="card text-center">
@@ -50,7 +27,7 @@ print_header(0,"");
 
 <!-- Website Footer -->
 <?php
-print_footer("images/");
+print_footer();
 ?>
 <script type="text/javascript">
   function close_news_model(){

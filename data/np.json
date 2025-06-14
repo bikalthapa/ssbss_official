@@ -1,0 +1,214 @@
+{
+  "school": {
+    "name": "श्री शान्ती भगवती माध्यमिक विद्यालय",
+    "email": "ssbss2009@gmail.com",
+    "phone": "०२१-५६००३४",
+    "address": "लेटाङ ५, मेराङ",
+    "estd": "स्थापना: वि.सं. २००९",
+    "about": "श्री शान्ति भगवती माध्यमिक विद्यालय लेटाङ, मोरङ, नेपालमा अवस्थित एक सामुदायिक विद्यालय हो। यो विद्यालय वि.सं. २००९ मा स्थापना गरिएको हो र तबदेखि नै यसले स्थानीय समुदायलाई गुणस्तरीय शिक्षा प्रदान गर्दै आएको छ। विद्यालयले सहयोगी सिकाइ वातावरण सृजना गर्न र विद्यार्थीहरूमा समग्र विकास प्रवर्द्धन गर्न प्रतिबद्ध छ।",
+    "vision": "गुणस्तरीय शिक्षा हाम्रो मूल मन्त्र हो।"
+  },
+  "menu": {
+    "online_services": "अनलाइन सेवा",
+    "home": "गृहपृष्ठ",
+    "news": "सूचना",
+    "contact": "सम्पर्क",
+    "faculty": "विभागहरू",
+    "authorities": "प्रशासन",
+    "login": "लग-इन",
+    "admin": "व्यवस्थापक",
+    "result": "नतिजा हेर्नुहोस्",
+    "admission": "विधार्थी भर्ना",
+    "gallery": "ग्यालरी",
+    "other": "अन्य",
+    "dashboard": "ड्यासबोर्ड"
+  },
+  "footer": {
+    "contact": "सम्पर्क नम्बर: ०२१-५६००३४",
+    "email": "इमेल: ssbss2009@gmail.com",
+    "location": "स्थान",
+    "address": "ठेगाना: लेटाङ ४, मेराङ",
+    "privacy": "गोपनीयता नीति",
+    "terms": "नियम तथा सर्तहरू",
+    "dev": {
+      "by": "वेबसाइट विकासकर्ता",
+      "name": "विकल थापा"
+    }
+  },
+  "button": {
+    "read_more": "थप पढ्नुहोस्",
+    "view_gallery": "ग्यालेरी हेर्नुहोस्",
+    "apply_now": "अहिले आवेदन दिनुहोस्",
+    "contact_us": "सम्पर्क गर्नुहोस्",
+    "download": "डाउनलोड गर्नुहोस्",
+    "detail_view": "विस्तृतमा हेर्नुहोस्",
+    "submit": "पेश गर्नुहोस्",
+    "send": "पठाउनुहाेस्"
+  },
+  "input": {
+    "name": "तपाईंको नाम",
+    "email": "example@gmail.com",
+    "message": "यहाँ तपाईंको सन्देश टाइप गर्नुहोस्"
+  },
+  "labels": {
+    "name": "नाम",
+    "email": "इमेल",
+    "message": "तपाईंको सन्देश",
+    "scl_relation": "विद्यालयसँगको सम्बन्ध"
+  },
+  "common": {
+    "loading": "लोड हुँदैछ...",
+    "error": "एउटा त्रुटि भयो। कृपया पछि प्रयास गर्नुहोस्।",
+    "success": "कार्य सफलतापूर्वक सम्पन्न भयो।",
+    "not_found": "पृष्ठ फेला परेन।",
+    "about_school": "विद्यालयको बारेमा",
+    "principal": "प्रधानाध्यापक",
+    "our_faculty": "हाम्रा संकायहरू",
+    "contact_us": "सम्पर्क गर्नुहोस्",
+    "online_admission": "अनलाइन भर्ना",
+    "result": "नतिजा",
+    "documents": "कागजातहरू",
+    "news": "समाचार",
+    "notice": "सूचना",
+    "recent_notice": "हालका सूचना",
+    "our_services": "हाम्रा सेवाहरू",
+    "more": "थप",
+    "student": "विधार्थी",
+    "parents": "अभिभावक",
+    "guest": "पाहुना"
+  },
+  "hero": {
+    "button_text": "+ अन्य तस्विर",
+    "slides": [
+      {
+        "caption": "विधालय प्रवेशद्वार"
+      },
+      {
+        "caption": "विधालय प्राँगण"
+      },
+      {
+        "caption": "शिक्षकसँग विधार्थीहरु"
+      },
+      {
+        "caption": "विद्यालयको स्वच्छ वातावरण"
+      }
+    ]
+  },
+  "service": [
+    {
+      "title": "विधालय वातावरण",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">विशाल खेल मैदान र स्वच्छ वातावरण।</li>\n  <li class=\"list-group-item\">व्यवस्थित कक्षाकोठा</li>\n  <li class=\"list-group-item\">विद्यालयमा आधारित स्वास्थ्य सेवा</li>\n  <li class=\"list-group-item\">२४ सै घण्टा सिसीटिभी निग्रानी सेवा ।</li>\n</ol>",
+      "image": "images/front_wallpapers/english medium.jpg"
+    },
+    {
+      "title": "शिक्षा प्रणाली",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">प्राविधिक संकाय सहित ६ संकाय।</li>\n  <li class=\"list-group-item\">पुस्तकहरूको विभिन्न संग्रहको साथ पुस्तकालय।</li>\n  <li class=\"list-group-item\">व्यावहारिक ज्ञानको लागि राम्रो तरिकाले सुसज्जित प्रयोगशालाहरू।</li>\n  <li class=\"list-group-item\">छात्रवृत्ति वितरण कार्यक्रम।</li>\n</ol>",
+      "image": "images/entrance_examination_ce.jpg"
+    },
+    {
+      "title": "अन्य महत्वपुर्ण कृयाकलापहरु",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">दैनिक हाजीरीजबाफ र वक्तृत्वकला ।</li>\n  <li class=\"list-group-item\">साप्ताहिक खेलाई ।</li>\n  <li class=\"list-group-item\">मासिक विषयगत कक्षा परीक्षा।</li>\n  <li class=\"list-group-item\">शिक्षकहरू विद्यार्थी र अभिभावक  बिच भेला।</li>\n</ol>",
+      "image": "images/smart_board.jpg"
+    }
+  ],
+  "faculties": [
+    {
+      "title": "इन्जिनियरिङ (कक्षा ९–१२)",
+      "description": "कम्प्युटर र इलेक्ट्रिकल इन्जिनियरिङमा आधारित प्राविधिक शिक्षा, प्रयोगात्मक सिकाइको अवसर सहित।"
+    },
+    {
+      "title": "विज्ञान (कक्षा ११–१२)",
+      "description": "भौतिक, रसायन, जीवविज्ञान र कम्प्युटर विषयको अध्ययन, अत्याधुनिक प्रयोगशालासहित।"
+    },
+    {
+      "title": "वाणिज्य (कक्षा ११–१२)",
+      "description": "लेखा, व्यवस्थापन, उद्यमशीलता र सूचना प्रविधिमा आधारित आधुनिक पाठ्यक्रम।"
+    },
+    {
+      "title": "शिक्षा (कक्षा ११–१२)",
+      "description": "शैक्षिक विज्ञान, मनोविज्ञान र समाजशास्त्रमाथि आधारित शिक्षक तालिम कार्यक्रम।"
+    },
+    {
+      "title": "अंग्रेजी माध्यम (कक्षा १० सम्म)",
+      "description": "आईसीटी आधारित शिक्षण, कम्प्युटर आधारित टेस्टिङ (CBT), र सिर्जनात्मक शिक्षण प्रविधिहरू।"
+    },
+    {
+      "title": "नेपाली माध्यम (कक्षा १० सम्म)",
+      "description": "नेपाली भाषामा प्रभावकारी शिक्षा, अनुशासन, मूल्य र संस्कारमा केन्द्रित।"
+    }
+  ],
+  "authorities": [
+    {
+      "name": "राम कुमार श्रेषठ",
+      "department": "व्यवस्थापन समिती",
+      "position": "अदक्क्ष",
+      "image": "images/authorities_img/chairman.jpg"
+    },
+    {
+      "name": "दीपक भण्डारी",
+      "department": "शिक्षक अभिभावक संघ",
+      "position": "अदक्क्ष",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "हाेमनाथ पाैड्याल",
+      "department": "शान्ती भगवती",
+      "position": "प्रधान्अध्यापक",
+      "image": "images/authorities_img/school_head_teacher.jpg"
+    },
+    {
+      "name": "लेखनाथ पाैड्याल",
+      "department": "शान्ती भगवती",
+      "position": "सुचना अधीकारी तथा सहायक प्र.अ.",
+      "image": "images/authorities_img/information_officer.jpg"
+    },
+    {
+      "name": "सेामनाथ भट्रराइ",
+      "department": "शान्ती भगवती",
+      "position": "सहायक प्रधान्अध्यापक तथा विहानी सम्याेजक",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "बिपीन खत्री",
+      "department": "विज्ञान",
+      "position": "सम्याेजक",
+      "image": "images/authorities_img/science_incharge.jpg"
+    },
+    {
+      "name": "इ. विजय सहनी",
+      "department": "इन्जीनियरीङ",
+      "position": "सम्याेजक",
+      "image": "images/authorities_img/engineering_incharge.jpg"
+    },
+    {
+      "name": "राेमनाथ पाैड्याल",
+      "department": "कक्षाा ११ र १२",
+      "position": "परीक्षाा सम्याेजक",
+      "image": "images/authorities_img/education_and_commerce_incharge.jpg"
+    },
+    {
+      "name": "राम नारायणा यादव",
+      "department": "समयाोजक नेपाली माध्यम  (कक्षा ९ र १०)",
+      "position": "परीक्षा सम्याेजक (०-१०)",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "विरेन्द्र कुमार लिम्बु",
+      "department": "अङग्रेजी माध्यम्",
+      "position": "संयोजक",
+      "image": "images/authorities_img/english_medium_incharge.jpg"
+    },
+    {
+      "name": "नेत्रप्रशाद चुडाल",
+      "department": "अङग्रेजी माध्यम्",
+      "position": "सह सम्याेजक",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "टङक थापा मगर",
+      "department": "नेपाली माध्यम्",
+      "position": "निमा सम्याेजक",
+      "image": "images/authorities_img/unknown_person.jpg"
+    }
+  ]
+}

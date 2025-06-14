@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../database.php";
+require_once __DIR__ . "/../database.php";
 class User
 {
     private $conn;
@@ -91,6 +91,16 @@ class User
         return $result->fetch_assoc();
     }
 
+    // Get unassigned Users who is not assign to any class and section
+    public function getUnassignedTeacher()
+    {
+        $stmt = $this->conn->prepare("SELECT u_id, u_name FROM users WHERE class_id IS NULL AND section_id IS NULL AND u_role = 'T'");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC); // ✅ Returns all unassigned teachers
+    }
+
+
     // Get multiple users with search, order, and pagination
     public function getUsers($search = '', $orderBy = 'u_name', $orderDir = 'ASC', $limit = 10, $offset = 0)
     {
@@ -173,9 +183,398 @@ class User
 }
 
 
+class ClassManagement
+{
+    private $conn;
 
-// Create User object
+    public function __construct($conn)
+    {
+        $this->conn = $conn; // $conn is a MySQLi connection object
+    }
+
+    // Add a new class
+    public function addClass($className)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO class (class_name) VALUES (?)");
+        $stmt->bind_param("s", $className);
+        $stmt->execute();
+        $insertId = $stmt->insert_id;
+        $stmt->close();
+        return $insertId;
+    }
+
+    // Add multiple sections to a class
+    public function addSections($classId, array $sections)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO class_section (section_name, class_id) VALUES (?, ?)");
+        foreach ($sections as $section) {
+            $stmt->bind_param("si", $section, $classId);
+            $stmt->execute();
+        }
+        $stmt->close();
+        return true;
+    }
+
+    // Delete a class and its sections
+    public function deleteClass($classId)
+    {
+        // Delete sections first
+        $stmt1 = $this->conn->prepare("DELETE FROM class_section WHERE class_id = ?");
+        $stmt1->bind_param("i", $classId);
+        $stmt1->execute();
+        $stmt1->close();
+
+        // Then delete the class
+        $stmt2 = $this->conn->prepare("DELETE FROM class WHERE class_id = ?");
+        $stmt2->bind_param("i", $classId);
+        $stmt2->execute();
+        $stmt2->close();
+
+        return true;
+    }
+
+    // Delete a section by section_id
+    public function deleteSection($sectionId)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM class_section WHERE section_id = ?");
+        $stmt->bind_param("i", $sectionId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+    public function getClassDetails($conn)
+    {
+        $data = [];
+
+        // Get all classes
+        $classSql = "SELECT * FROM class";
+        $classResult = mysqli_query($conn, $classSql);
+        if (!$classResult) {
+            die("Class Query Failed: " . mysqli_error($conn));
+        }
+
+        while ($classRow = mysqli_fetch_assoc($classResult)) {
+            $class_id = $classRow['class_id'];
+            $class_name = $classRow['class_name'];
+
+            // Get all sections for this class
+            $sectionSql = "SELECT * FROM class_section WHERE class_id = $class_id";
+            $sectionResult = mysqli_query($conn, $sectionSql);
+            if (!$sectionResult) {
+                die("Section Query Failed for class_id $class_id: " . mysqli_error($conn));
+            }
+
+            $sections = [];
+            while ($sectionRow = mysqli_fetch_assoc($sectionResult)) {
+                $sections[] = [
+                    'section_id' => $sectionRow['section_id'],
+                    'section_name' => $sectionRow['section_name']
+                ];
+            }
+
+            // Get all teachers for this class (users with role 'T' and class_id matching)
+            $teacherSql = "SELECT u_id, u_name 
+                       FROM users 
+                       WHERE u_role = 'T' AND class_id = $class_id";
+            $teacherResult = mysqli_query($conn, $teacherSql);
+            if (!$teacherResult) {
+                die("Teacher Query Failed for class_id $class_id: " . mysqli_error($conn));
+            }
+
+            $teachers = [];
+            while ($teacherRow = mysqli_fetch_assoc($teacherResult)) {
+                $teachers[] = $teacherRow['u_name'];
+            }
+
+            // Compile data
+            $data[] = [
+                'class_id' => $class_id,
+                'class_name' => $class_name,
+                'teachers' => $teachers,
+                'sections' => $sections
+            ];
+        }
+
+        return $data;
+    }
+    public function getClass()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM class");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $stmt->close();
+        return $data;
+    }
+    public function getSection($class_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM class_section WHERE class_id = ?");
+        $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $stmt->close();
+        return $data;
+    }
+    public function getSectionsByClassId($section_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM class_section WHERE class_id = $section_id");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $stmt->close();
+        return $data;
+    }
+
+    public function getTeachersByClassId($classId)
+    {
+        $stmt = $this->conn->prepare("SELECT u_id, u_name FROM users WHERE class_id = ? AND u_role = 'T'");
+        $stmt->bind_param("i", $classId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $stmt->close();
+        return $data;
+    }
+
+    public function getTeachersBySectionId($sectionId)
+    {
+        $stmt = $this->conn->prepare("SELECT u_id, u_name FROM users WHERE section_id = ? AND u_role = 'T'");
+        $stmt->bind_param("i", $sectionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $stmt->close();
+        return $data;
+    }
+
+
+    // Assign a class and section to a teacher (user)
+    public function assignClassToTeacher($userId, $classId, $sectionId)
+    {
+        $stmt = $this->conn->prepare("UPDATE users SET class_id = ?, section_id = ? WHERE u_id = ?");
+        $stmt->bind_param("iii", $classId, $sectionId, $userId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+}
+
+
+class News
+{
+    private $conn;
+
+    public function __construct(mysqli $conn)
+    {
+        $this->conn = $conn;
+    }
+
+    // Get single news item by ID with images
+    public function getById($id)
+    {
+        $id = (int) $id;
+        $newsSql = "SELECT * FROM news WHERE news_id = $id";
+        $newsRes = $this->conn->query($newsSql);
+
+        if ($newsRes && $newsRes->num_rows > 0) {
+            $news = $newsRes->fetch_assoc();
+
+            $imgSql = "SELECT filename FROM news_img WHERE news_id = $id";
+            $imgRes = $this->conn->query($imgSql);
+
+            $images = [];
+            if ($imgRes && $imgRes->num_rows > 0) {
+                while ($row = $imgRes->fetch_assoc()) {
+                    $images[] = $row['filename'];
+                }
+            }
+
+            $news['images'] = $images;
+            return $news;
+        }
+
+        return null;
+    }
+
+    // Get multiple news items with filters
+    public function getAllNews($options = [])
+    {
+        $limit = isset($options['limit']) ? (int) $options['limit'] : 10;
+        $typ = isset($options['typ']) ? $options['typ'] : 'news';
+        $offset = isset($options['offset']) ? (int) $options['offset'] : 0;
+        $query = isset($options['query']) ? '%' . $options['query'] . '%' : null;
+        $order = (isset($options['order']) && strtoupper($options['order']) === 'ASC') ? 'ASC' : 'DESC';
+
+        $data = [];
+
+        // Build base SQL and parameters
+        $sql = "SELECT * FROM news WHERE type = ?";
+        $types = "s"; // type is string
+        $params = [$typ];
+
+        if ($query !== null) {
+            $sql .= " AND title LIKE ?";
+            $types .= "s";
+            $params[] = $query;
+        }
+
+        $sql .= " ORDER BY upload_date $order LIMIT ? OFFSET ?";
+        $types .= "ii";
+        $params[] = $limit;
+        $params[] = $offset;
+
+        // Prepare statement
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            return [];
+        }
+
+        // Dynamically bind params
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($news = $result->fetch_assoc()) {
+            $news_id = (int) $news['news_id'];
+
+            // Fetch related images securely
+            $imgStmt = $this->conn->prepare("SELECT filename FROM news_img WHERE news_id = ?");
+            if ($imgStmt) {
+                $imgStmt->bind_param("i", $news_id);
+                $imgStmt->execute();
+                $imgRes = $imgStmt->get_result();
+
+                $images = [];
+                while ($img = $imgRes->fetch_assoc()) {
+                    $images[] = $img['filename'];
+                }
+
+                $imgStmt->close();
+                $news['images'] = $images;
+            } else {
+                $news['images'] = [];
+            }
+
+            $data[] = $news;
+        }
+
+        $stmt->close();
+        return $data;
+    }
+
+
+}
+
+class Documents
+{
+    private $conn;
+
+    public function __construct(mysqli $conn)
+    {
+        $this->conn = $conn;
+    }
+
+    // Get single document item by ID with images
+    public function getById($id)
+    {
+        $id = (int) $id;
+        $newsSql = "SELECT * FROM news WHERE news_id = $id";
+        $newsRes = $this->conn->query($newsSql);
+
+        if ($newsRes && $newsRes->num_rows > 0) {
+            $news = $newsRes->fetch_assoc();
+
+            $imgSql = "SELECT filename FROM news_img WHERE news_id = $id";
+            $imgRes = $this->conn->query($imgSql);
+
+            $images = [];
+            if ($imgRes && $imgRes->num_rows > 0) {
+                while ($row = $imgRes->fetch_assoc()) {
+                    $images[] = $row['filename'];
+                }
+            }
+
+            $news['images'] = $images;
+            return $news;
+        }
+
+        return null;
+    }
+
+    // Get multiple news items with filters
+    public function getAllDocuments($options = [])
+    {
+        $limit = isset($options['limit']) ? (int) $options['limit'] : 10;
+        $offset = isset($options['offset']) ? (int) $options['offset'] : 0;
+        $query = isset($options['query']) ? '%' . $options['query'] . '%' : null;
+        $order = (isset($options['order']) && strtoupper($options['order']) === 'ASC') ? 'ASC' : 'DESC';
+
+        $data = [];
+        $params = [];
+        $types = "";
+
+        // Start building the SQL
+        $sql = "SELECT * FROM documents";
+
+        // Add WHERE clause if there's a search query
+        if ($query !== null) {
+            $sql .= " WHERE doc_title LIKE ?";
+            $types .= "s";
+            $params[] = $query;
+        }
+
+        // Append ordering, limit, and offset
+        $sql .= " ORDER BY upload_date $order LIMIT ? OFFSET ?";
+        $types .= "ii";
+        $params[] = $limit;
+        $params[] = $offset;
+
+        // Prepare statement
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            return [];
+        }
+
+        // Bind parameters
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($doc = $result->fetch_assoc()) {
+            $data[] = $doc;
+        }
+
+        $stmt->close();
+        return $data;
+    }
+
+
+
+}
+
+
+$classManager = new ClassManagement($conn);
 $user = new User($conn);
+$news = new News($conn);
+$document = new Documents($conn);
 
 // ---- Test methods ----
 

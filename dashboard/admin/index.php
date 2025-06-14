@@ -1,7 +1,10 @@
 <?php
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
-
+if ($auth->isLoggedIn() != "A") {
+    header("Location: ../../authentication/");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html>

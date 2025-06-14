@@ -1,8 +1,7 @@
 <?php
 	include "../../../script/php_scripts/database.php";
 	include "../scripts/php_scripts/header_and_footer.php";
-	include "../scripts/php_scripts/logout.php";
-	is_login("../../authentication/index.php");
+	// include "../scripts/php_scripts/logout.php";
 ?>
 <!DOCTYPE html>
 <html>

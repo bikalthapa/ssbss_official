@@ -2,6 +2,7 @@
 include "../../connection.php";
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
+include "../../script/php_scripts/utilities/tables.php";
 // Check if the user is logged in as an admin
 if ($auth->isLoggedIn() != "A") {
     header("Location: ../../authentication/");
@@ -17,6 +18,7 @@ if ($auth->isLoggedIn() != "A") {
     <title>Class Management</title>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="icon" href="../../images/slogo.png">
 
     <style>
@@ -26,8 +28,8 @@ if ($auth->isLoggedIn() != "A") {
 
         #classAccordion .accordion-button::after {
             position: absolute;
-            top: 45%;
-            right: 15px;
+            bottom: 5px;
+            left: 50%;
 
         }
 
@@ -107,174 +109,159 @@ if ($auth->isLoggedIn() != "A") {
                 </svg>
             </button>
         </div>
+        <?php
+        $classData = $classManager->getClass();
+        // print_r($classData);
+        ?>
 
         <!-- Class Accordion -->
         <div class="accordion accordion-flush" id="classAccordion">
+            <?php
+            foreach ($classData as $class) {
+                $className = htmlspecialchars($class['class_name']);
+                $sections = $classManager->getSectionsByClassId($class['class_id']);
+                if (count($sections) > 0) {
+                    ?>
+                    <!-- Class with sections -->
+                    <div class="accordion-item border rounded border-warning mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-warning bg-opacity-25 d-flex flex-row" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $class['class_id'] ?>"
+                                aria-expanded="false" aria-controls="flush-collapseOne">
 
-            <!-- Class with sections -->
-            <div class="accordion-item border rounded border-warning mb-3">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed bg-warning bg-opacity-25" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                        aria-controls="flush-collapseOne">
-                        <div class="grade-name">Grade 1</div>
-                        <div class="teacher-name">Ms. Anna + more</div>
-                    </button>
-                    <span class="badge bg-warning text-dark rounded-pill section-badge">2 Sections</span>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body pt-2 bg-warning bg-opacity-10">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-transparent d-flex justify-content-between">
+                                <div>
+                                    <div class="grade-name"><?php echo $className; ?></div>
+                                    <div class="teacher-name">
+                                        <?php
+                                        $len = count($sections) > 2 ? 2 : count($sections);
+                                        for ($i = 0; $i < $len; $i++) {
+                                            echo $sections[$i]["section_name"];
+                                            if ($i < $len - 1)
+                                                echo ", "; // comma between names
+                                        }
 
-                            <li class="list-group-item hstack bg-transparent">
-                                <p><b>Section A</b><br><span class="text-muted small">Mr. James</span></p>
-                                <div class="dropdown dropstart ms-auto">
-                                    <svg data-bs-toggle="dropdown" aria-expanded="false"
-                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                        <path
-                                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                    </svg>
-                                    <ul class="dropdown-menu bg-warning-subtle">
+                                        $remaining = count($sections) - $len;
+                                        if ($remaining > 0) {
+                                            echo " + $remaining More";
+                                        }
+                                        ?>
+                                    </div>
+
+                                </div>
+
+                                <div class="dropdown dropstart ms-auto" onclick="event.stopPropagation()">
+                                    <!-- STOP PROPAGATION HERE -->
+                                    <i class="bi bi-three-dots-vertical fs-4" data-bs-toggle="dropdown"
+                                        onclick="event.stopPropagation()"></i>
+
+                                    <ul class="dropdown-menu bg-warning-subtle" onclick="event.stopPropagation()">
                                         <li>
                                             <a class="dropdown-item" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-                                                    <path
-                                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708" />
-                                                </svg>&nbsp;&nbsp;
-                                                Remove Teacher
+                                                <i class="bi bi-pencil-square fs-4"></i>&nbsp;&nbsp;
+                                                Edit Class
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-                                                </svg>&nbsp;&nbsp;
-                                                Change Teacher
+                                                <i class="bi bi-person-standing-dress fs-4"></i>&nbsp;&nbsp;
+                                                Manage Students
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item bg-danger bg-opacity-25 text-danger" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                                </svg>&nbsp;&nbsp;
+                                            <a class="dropdown-item bg-danger bg-opacity-25 text-danger" id="deleteClass">
+                                                <i class="bi bi-trash3 fs-4"></i>&nbsp;&nbsp;
                                                 Delete Class
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
+                            </button>
 
-                            </li>
-                            <li class="list-group-item hstack bg-transparent">
-                                <p><b>Section B</b><br><span class="text-muted small">Mr. James</span></p>
-                                <div class="dropdown dropstart ms-auto">
-                                    <svg data-bs-toggle="dropdown" aria-expanded="false"
-                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                        <path
-                                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                    </svg>
-                                    <ul class="dropdown-menu bg-warning-subtle">
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-                                                    <path
-                                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708" />
-                                                </svg>&nbsp;&nbsp;
-                                                Remove Teacher
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-                                                </svg>&nbsp;&nbsp;
-                                                Change Teacher
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item bg-danger bg-opacity-25 text-danger" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                                </svg>&nbsp;&nbsp;
-                                                Delete Class
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <span class="badge bg-warning text-dark rounded-pill section-badge"><?php echo count($sections); ?>
+                                Sections</span>
 
-                            </li>
-                        </ul>
+                        </h2>
+                        <div id="flush-collapse<?php echo $class['class_id'] ?>" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body pt-2 bg-warning bg-opacity-10">
+                                <ul class="list-group list-group-flush">
+                                    <?php
+                                    foreach ($sections as $section) {
+                                        $sectionName = htmlspecialchars($section['section_name']);
+                                        $teacher = $classManager->getTeachersBySectionId($section['section_id']);
+                                        $teacherName = $teacher ? htmlspecialchars($teacher['name']) : "Teacher isn't Assigned";
+                                        ?>
+                                        <li class="list-group-item hstack bg-transparent">
+                                            <p><b><?php echo $sectionName; ?></b><br><span
+                                                    class="text-muted small"><?php echo $teacherName; ?></span></p>
+                                            <div class="dropdown dropstart ms-auto">
+                                                <i class="bi bi-three-dots-vertical fs-4" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"></i>
+                                                <ul class="dropdown-menu bg-warning-subtle">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="bi bi-pencil-square fs-4"></i>&nbsp;&nbsp;
+                                                            Edit Section
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item bg-danger bg-opacity-25 text-danger" href="#">
+                                                            <i class="bi bi-trash3 fs-4"></i>&nbsp;&nbsp;
+                                                            Delete Class
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Class without sections -->
-            <div class="accordion-item border rounded border-warning mb-3">
-                <h2 class="accordion-header d-flex align-items-center  bg-warning bg-opacity-25 position-relative">
-                    <button class="accordion-button no-collapse" type="button" disabled>
-                        <div class="grade-name">Grade 2</div>
-                        <div class="teacher-name">Mrs. Johnson</div>
-                    </button>
-                    <div class="dropdown dropstart me-3">
-                        <svg data-bs-toggle="dropdown" aria-expanded="false" xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                        </svg>
-                        <ul class="dropdown-menu bg-warning-subtle">
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                        class="bi bi-person-x" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-                                        <path
-                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708" />
-                                    </svg>&nbsp;&nbsp;
-                                    Remove Teacher
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                        class="bi bi-people" viewBox="0 0 16 16">
-                                        <path
-                                            d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-                                    </svg>&nbsp;&nbsp;
-                                    Change Teacher
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item bg-danger bg-opacity-25 text-danger" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                        class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                    </svg>&nbsp;&nbsp;
-                                    Delete Class
-                                </a>
-                            </li>
-                        </ul>
+                    <?php
+                } else {
+                    $teacher = $classManager->getTeachersByClassId($class['class_id']);
+                    $teacherName = $teacher ? htmlspecialchars($teacher[0]['u_name']) : "Teacher isn't Assigned";
+                    ?>
+                    <!-- Class without sections -->
+                    <div class="accordion-item border rounded border-warning mb-3">
+                        <h2 class="accordion-header d-flex align-items-center  bg-warning bg-opacity-25 position-relative">
+                            <button class="accordion-button no-collapse" type="button" disabled>
+                                <div class="grade-name"><?php echo $className; ?></div>
+                                <div class="teacher-name"><?php echo $teacherName; ?></div>
+                            </button>
+                            <div class="dropdown dropstart me-3">
+                                <i class="bi bi-three-dots-vertical fs-4" data-bs-toggle="dropdown"></i>
+                                <ul class="dropdown-menu bg-warning-subtle">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil-square fs-4"></i>&nbsp;&nbsp;
+                                            Edit Class
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-person-standing-dress fs-4"></i>&nbsp;&nbsp;
+                                            Manage Students
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item bg-danger bg-opacity-25 text-danger" href="#">
+                                            <i class="bi bi-trash3 fs-4"></i>&nbsp;&nbsp;
+                                            Delete Class
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </h2>
                     </div>
-                </h2>
-            </div>
+                    <?php
+                }
+            }
+            ?>
 
         </div>
 
@@ -287,7 +274,8 @@ if ($auth->isLoggedIn() != "A") {
     <!-- Modal: Add Class -->
     <div class="modal fade" id="addClassModal" tabindex="-1" aria-labelledby="addClassModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="modal-content">
+            <form class="modal-content" id="addClassForm">
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="addClassModalLabel">Add New Class</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -295,30 +283,33 @@ if ($auth->isLoggedIn() != "A") {
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="className" class="form-label">Class Name</label>
-                        <input type="text" class="form-control" id="className" required>
+                        <input type="text" class="form-control class-input" id="className">
                     </div>
                     <div class="mb-3">
                         <label for="classTeacher" class="form-label">Class Teacher</label>
-                        <select class="form-select" id="classTeacher" required>
+                        <select class="form-select class-input" id="classTeacher">
                             <option value="">Select a teacher</option>
-                            <option value="Ms. Anna">Ms. Anna</option>
-                            <option value="Mr. James">Mr. James</option>
-                            <option value="Mrs. Johnson">Mrs. Johnson</option>
-                            <option value="Mr. David">Mr. David</option>
-                            <!-- Add more options dynamically if needed -->
+                            <?php
+                            $freeTeachers = $user->getUnassignedTeacher();
+                            if (count($freeTeachers) > 0) {
+                                foreach ($freeTeachers as $teacher) {
+                                    echo "<option value='{$teacher['u_id']}'>{$teacher['name']}</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No available teachers</option>";
+                            }
+                            ?>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="sections" class="form-label">Sections (comma separated)</label>
-                        <input type="text" class="form-control" id="sections" name="sections" list="sectionOptions"
+                        <input type="text" class="form-control class-input" id="sections" list="sectionOptions"
                             autocomplete="off">
-
                         <datalist id="sectionOptions">
                             <option value="Sagarmatha">
                             <option value="Makalu">
                             <option value="Annapurna">
-                                <!-- Add more as needed -->
                         </datalist>
                     </div>
                 </div>
@@ -342,33 +333,125 @@ if ($auth->isLoggedIn() != "A") {
         crossorigin="anonymous"></script>
     <script src="../../script/javascript/UI/toast.js"></script>
     <script>
-        document.querySelectorAll('.accordion-button').forEach(button => {
-            button.addEventListener('focus', () => {
-                // Collapse all other items first
-                document.querySelectorAll('.accordion-collapse.show').forEach(openCollapse => {
-                    // Only collapse if not the current button's target
-                    const collapseId = button.getAttribute('data-bs-target');
-                    if (openCollapse.id !== collapseId?.slice(1)) {
-                        const collapseInstance = bootstrap.Collapse.getInstance(openCollapse);
-                        if (collapseInstance) {
-                            collapseInstance.hide();
-                        }
+        $(document).ready(function () {
+
+            function showError(input, message) {
+                input.addClass("is-invalid");
+
+                let feedback = input.siblings(".invalid-feedback");
+                if (!feedback.length) {
+                    input.after(`<div class="invalid-feedback d-block">
+                    <i class="bi bi-exclamation-circle-fill me-1"></i>${message}
+                </div>`);
+                } else {
+                    feedback.html(`<i class="bi bi-exclamation-circle-fill me-1"></i>${message}`);
+                }
+            }
+
+            function clearError(input) {
+                input.removeClass("is-invalid");
+                input.siblings(".invalid-feedback").remove();
+            }
+
+            function validateClassForm() {
+                let valid = true;
+
+                const className = $("#className");
+                const classTeacher = $("#classTeacher");
+                const sections = $("#sections");
+
+                if (className.val().trim() === "") {
+                    showError(className, "Class name is required.");
+                    valid = false;
+                } else {
+                    clearError(className);
+                }
+
+                if (classTeacher.val().trim() !== "") {
+                    const isValidOption = classTeacher.find(`option[value='${classTeacher.val().trim()}']`).length > 0;
+                    if (!isValidOption) {
+                        showError(classTeacher, "Please select a valid teacher.");
+                        valid = false;
+                    } else {
+                        clearError(classTeacher);
                     }
+                } else {
+                    clearError(classTeacher);
+                }
+
+                if (sections.val().trim() !== "") {
+                    const sectionList = sections.val().split(',').map(s => s.trim()).filter(Boolean);
+                    if (sectionList.length === 0) {
+                        showError(sections, "Enter valid section names, comma separated.");
+                        valid = false;
+                    } else {
+                        clearError(sections);
+                    }
+                } else {
+                    clearError(sections);
+                }
+
+                return valid;
+            }
+
+            $(".class-input").on("input change", function () {
+                clearError($(this));
+            });
+
+            $("#addClassModal form").on("submit", function (e) {
+                e.preventDefault();
+
+                if (!validateClassForm()) {
+                    ToastManager.show("Validation Error", "Please correct the highlighted fields.", "warning");
+                    return;
+                }
+
+                const className = $("#className").val().trim();
+                const classTeacher = $("#classTeacher").val().trim();
+                const sectionNames = $("#sections").val().trim().split(',').map(s => s.trim()).filter(Boolean);
+
+                const formData = new FormData();
+                formData.append("class_name", className);
+
+                if (classTeacher !== "") {
+                    formData.append("u_id", classTeacher);
+                }
+
+                sectionNames.forEach(name => {
+                    formData.append("section_names[]", name);
                 });
 
-                // Show the focused button's collapse if it has one
-                const target = button.getAttribute('data-bs-target');
-                if (target) {
-                    const collapseElement = document.querySelector(target);
-                    if (collapseElement) {
-                        const collapseInstance = bootstrap.Collapse.getOrCreateInstance(collapseElement);
-                        collapseInstance.show();
+                $.ajax({
+                    url: "action/insert_data.php",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res);
+                        if (res.status === "success") {
+                            ToastManager.show("Success", res.message || "Class added successfully!", "success");
+                            $("#addClassModal form")[0].reset();
+                            $(".invalid-feedback").remove();
+                            $(".class-input").removeClass("is-invalid");
+                            $("#addClassModal").modal('hide');
+                        } else {
+                            ToastManager.show("Error", res.message || "Could not add class.", "danger");
+                        }
+                    },
+                    error: function () {
+                        ToastManager.show("Server Error", "Please try again later.", "danger");
                     }
-                }
+                });
             });
-        });
 
+        });
     </script>
+
+
+
+
+
 </body>
 
 </html>

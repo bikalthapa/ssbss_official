@@ -66,7 +66,7 @@
 
     /* Section designs  */
     .section {
-        width:100%;
+        width: 100%;
         background-color: var(--white_2);
         display: flex;
         justify-content: center;
@@ -99,7 +99,7 @@
     }
 
     .overflow_control {
-        min-height:400px;
+        min-height: 400px;
         max-height: 405px;
         overflow-x: hidden;
         overflow-y: scroll;
@@ -107,8 +107,8 @@
         padding-left: 20px;
     }
 
-    .downloads{
-        margin-top:50px;
+    .downloads {
+        margin-top: 50px;
     }
 
     /* Scrollbar Styling (WebKit: Chrome, Edge, Safari) */
@@ -146,4 +146,25 @@
         margin: 10px;
         margin: auto;
         max-width: 100%;
+    }
+
+
+    .service-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .service-img {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-img {
+        transform: scale(1.05);
     }

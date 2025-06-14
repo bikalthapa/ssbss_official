@@ -1,0 +1,214 @@
+{
+  "school": {
+    "name": "Shree Shanti Bhagawati Secondary School",
+    "email": "ssbss2009@gmail.com",
+    "phone": "021-560034",
+    "address": "Letang-5, Merang",
+    "estd": "Established: B.S. 2009",
+    "about": "Shree Shanti Bhagawati Secondary School is a community school located in Letang, Morang, Nepal. It was established in 2009 B.S. and has been providing quality education to the local community ever since. The school is committed to fostering a conducive learning environment and promoting holistic development among its students.",
+    "vision": "Quality education is our motto."
+  },
+  "menu": {
+    "online_services": "Online Services",
+    "home": "Home",
+    "news": "News",
+    "contact": "Contact",
+    "faculty": "Faculty",
+    "authorities": "Administration",
+    "login": "Login",
+    "admin": "Administrator",
+    "result": "View Result",
+    "admission": "Student Admission",
+    "gallery": "Gallery",
+    "other": "Other",
+    "dashboard": "Dashboard"
+  },
+  "footer": {
+    "contact": "Contact Number: 021-560034",
+    "email": "Email: ssbss2009@gmail.com",
+    "location": "Location",
+    "address": "Address: Letang-4, Merang",
+    "privacy": "Privacy Policy",
+    "terms": "Terms and Conditions",
+    "dev": {
+      "by": "Website developed by",
+      "name": "Bikal Thapa"
+    }
+  },
+  "button": {
+    "read_more": "Read More",
+    "view_gallery": "View Gallery",
+    "apply_now": "Apply Now",
+    "contact_us": "Contact Us",
+    "download": "Download",
+    "detail_view": "View in Details",
+    "submit": "Submit",
+    "send": "Send"
+  },
+  "input":{
+    "name": "Your Name",
+    "email": "example@gmail.com",
+    "message": "Type your message here"
+  },
+  "labels":{
+    "name": "Name",
+    "email": "Email",
+    "message": "Your Message",
+    "scl_relation": "Relation with school"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again later.",
+    "success": "Operation completed successfully.",
+    "not_found": "Page not found.",
+    "about_school": "About School",
+    "principal": "Principal",
+    "our_faculty": "Our Faculty",
+    "contact_us": "Contact Us",
+    "online_admission": "Online Admission",
+    "result": "Result",
+    "documents": "Documents",
+    "news": "News",
+    "notice": "Notice",
+    "recent_notice": "Recent Notice",
+    "our_services": "Our Services",
+    "more": "More",
+    "student": "Student",
+    "parents": "Parents",
+    "guest": "Guest"
+  },
+  "hero": {
+    "button_text": "+ More Images",
+    "slides": [
+      {
+        "caption": "School Entrance Gate"
+      },
+      {
+        "caption": "School Premises"
+      },
+      {
+        "caption": "Students with Teacher"
+      },
+      {
+        "caption": "Clean School Environment"
+      }
+    ]
+  },
+  "services": [
+    {
+      "title": "School Environment",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Spacious playground and clean environment.</li>\n  <li class=\"list-group-item\">Well-organized classrooms.</li>\n  <li class=\"list-group-item\">School-based health services.</li>\n  <li class=\"list-group-item\">24/7 CCTV surveillance system.</li>\n</ol>",
+      "image": "images/front_wallpapers/english medium.jpg"
+    },
+    {
+      "title": "Education System",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Six faculties including technical education.</li>\n  <li class=\"list-group-item\">Library with a wide collection of books.</li>\n  <li class=\"list-group-item\">Well-equipped laboratories for practical learning.</li>\n  <li class=\"list-group-item\">Scholarship distribution programs.</li>\n</ol>",
+      "image": "images/entrance_examination_ce.jpg"
+    },
+    {
+      "title": "Other Important Activities",
+      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Daily question-answer sessions and oratory practice.</li>\n  <li class=\"list-group-item\">Weekly sports activities.</li>\n  <li class=\"list-group-item\">Monthly subject-wise class tests.</li>\n  <li class=\"list-group-item\">Meetings among teachers, students, and parents.</li>\n</ol>",
+      "image": "images/smart_board.jpg"
+    }
+  ],
+  "faculties": [
+    {
+      "title": "Engineering (Grade 9–12)",
+      "description": "Technical education based on Computer and Electrical Engineering with practical learning opportunities."
+    },
+    {
+      "title": "Science (Grade 11–12)",
+      "description": "Advanced studies in Physics, Chemistry, Biology, and Computer with well-equipped laboratories."
+    },
+    {
+      "title": "Management (Grade 11–12)",
+      "description": "Modern curriculum focused on Accounting, Management, Entrepreneurship, and Information Technology."
+    },
+    {
+      "title": "Education (Grade 11–12)",
+      "description": "Teacher-training program based on Education Science, Psychology, and Sociology."
+    },
+    {
+      "title": "English Medium (Up to Grade 10)",
+      "description": "Quality education through ICT-based teaching methods, CBT techniques, and creative learning approaches."
+    },
+    {
+      "title": "Nepali Medium (Up to Grade 10)",
+      "description": "Effective learning in the Nepali language with a focus on discipline, values, and cultural education."
+    }
+  ],
+  "authorities": [
+    {
+      "name": "Ram Kumar Shrestha",
+      "department": "Management Committee",
+      "position": "Chairman",
+      "image": "images/authorities_img/chairman.jpg"
+    },
+    {
+      "name": "Deepak Bhandari",
+      "department": "Teacher-Parent Association",
+      "position": "Chairman",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "Homnath Poudel",
+      "department": "Shanti Bhagawati",
+      "position": "Head Teacher",
+      "image": "images/authorities_img/school_head_teacher.jpg"
+    },
+    {
+      "name": "Lekhnath Paudel",
+      "department": "Shanti Bhagawati",
+      "position": "Information Officer and Assistant Head Teacher",
+      "image": "images/authorities_img/information_officer.jpg"
+    },
+    {
+      "name": "Somnath Bhattrai",
+      "department": "Shanti Bhagawati",
+      "position": "Assistant Head Teacher and Morning Coordinator",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "Bipin Khatri",
+      "department": "Science",
+      "position": "Coordinator",
+      "image": "images/authorities_img/science_incharge.jpg"
+    },
+    {
+      "name": "Er. Bijay Sahani",
+      "department": "Engineering",
+      "position": "Coordinator",
+      "image": "images/authorities_img/engineering_incharge.jpg"
+    },
+    {
+      "name": "Romanath Paudel",
+      "department": "Grades 11 and 12",
+      "position": "Exam Coordinator",
+      "image": "images/authorities_img/education_and_commerce_incharge.jpg"
+    },
+    {
+      "name": "Ram Narayan Yadav",
+      "department": "Coordinator Nepali Medium (Grades 9 and 10)",
+      "position": "Exam Coordinator (0-10)",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "Virendra Kumar Limbu",
+      "department": "English Medium",
+      "position": "Coordinator",
+      "image": "images/authorities_img/english_medium_incharge.jpg"
+    },
+    {
+      "name": "Netra Prasad Chudal",
+      "department": "English Medium",
+      "position": "Assistant Coordinator",
+      "image": "images/authorities_img/unknown_person.jpg"
+    },
+    {
+      "name": "Tanka Thapa Magar",
+      "department": "Nepali Medium",
+      "position": "Junior Coordinator",
+      "image": "images/authorities_img/unknown_person.jpg"
+    }
+  ]
+}

@@ -39,19 +39,24 @@ class Card
         $date = htmlspecialchars($notice['upload_date']);
 
         return <<<HTML
-        <div class="mb-3" style="border: 1px solid lightgrey; max-height: 100px;">
-            <a class="row" style="text-decoration: none;" href="{$relPath}category/individual_content.php?notice_id={$id}">
-                <div class="col-md-4 bg-info text-light">
-                    <p class="text-center text-dark">{$date}</p>
+    <div class="card mb-3 border-0 shadow-sm hover-shadow transition" style="background-color: #fefbea;">
+        <a href="{$relPath}category/individual_content.php?notice_id={$id}" class="text-decoration-none text-dark">
+            <div class="row g-0">
+                <!-- Date -->
+                <div class="col-md-4 bg-info d-flex flex-column justify-content-center align-items-center text-white py-3">
+                    <i class="bi bi-calendar-event fs-6 mb-1"></i>
+                    <small class="fw-semibold">{$date}</small>
                 </div>
+                <!-- Title -->
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">{$title}</p>
+                        <p class="card-text fw-semibold" style="font-size: 16px;">{$title}</p>
                     </div>
                 </div>
-            </a>
-        </div>
-        HTML;
+            </div>
+        </a>
+    </div>
+    HTML;
     }
 
     public static function get_document_card(array $document, string $relPath = ''): string
@@ -61,20 +66,29 @@ class Card
         $date = htmlspecialchars($document['upload_date']);
 
         return <<<HTML
-        <div class="mb-3" style="max-height:100px; border:1px solid lightgrey;">
-            <a class="row" style="text-decoration: none;" href="{$relPath}category/individual_content.php?doc_id={$id}">
-                <div class="col-md-4 bg-info text-light position-relative">
-                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">PDF</span>
-                    <p class="text-center text-dark">{$date}</p>
+    <div class="card mb-3 border-0 shadow-sm hover-shadow transition" style="background-color: #fefbea;">
+        <a href="{$relPath}category/individual_content.php?doc_id={$id}" class="text-decoration-none text-dark">
+            <div class="row g-0">
+                <!-- Date and PDF Badge -->
+                <div class="col-md-4 bg-info text-white d-flex flex-column justify-content-center align-items-center position-relative py-3">
+                    <i class="bi bi-file-earmark-pdf fs-6 mb-2"></i>
+                    <small class="fw-semibold">{$date}</small>
+                    <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                        PDF
+                    </span>
                 </div>
+
+                <!-- Title -->
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">{$title}</p>
+                        <p class="card-text fw-semibold" style="font-size: 16px;">{$title}</p>
                     </div>
                 </div>
-            </a>
-        </div>
-        HTML;
+            </div>
+        </a>
+    </div>
+    HTML;
     }
+
 }
 ?>
