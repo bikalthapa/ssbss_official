@@ -6,44 +6,47 @@ function print_header($active)
 {
   global $login_condition;
   ?>
-  <!-- माथिल्लो ब्रान्डिङ बार (Non-Sticky) -->
-  <nav class="navbar bg-warning-subtle py-2 shadow-sm">
+  <!-- Top Branding Bar (Non-Sticky) -->
+  <nav class="navbar bg-warning-subtle py-2 shadow-sm" style="z-index: 5; position: relative;">
     <div class="container-fluid px-3">
-      <div class="row w-100 align-items-center">
-        
+      <div class="row w-100 align-items-center gx-3">
+
         <!-- Left: Logo + School Name -->
-        <div class="col-12 col-md-6 d-flex align-items-center gap-3 mb-2 mb-md-0">
+        <div
+          class="col-12 col-md-6 d-flex align-items-center justify-content-between justify-content-md-start gap-3 mb-2 mb-md-0">
           <img src="images/slogo.png" alt="Logo" class="rounded-5" style="height: 50px;">
           <h6 class="mb-0 fw-bold text-warning text-nowrap" data-i18n="school.name">
             श्री शान्ति भागवती माध्यमिक विद्यालय
           </h6>
         </div>
 
-        <!-- Right: Contact + Online Services -->
-        <div class="col-12 col-md-6 d-flex flex-column flex-md-row align-items-md-center justify-content-md-end gap-3 text-end">
-          
+        <!-- Right: Contact + Services -->
+        <div
+          class="col-12 col-md-6 d-flex flex-wrap align-items-center justify-content-between justify-content-md-end gap-3">
+
           <!-- Contact Info -->
-          <div class="small text-primary">
-            <div><i class="bi bi-envelope-fill me-1"></i><span data-i18n="school.email"> info@school.edu.np</span></div>
-            <div><i class="bi bi-telephone-fill me-1"></i> <span data-i18n="school.phone">+९७७-१-१२३४५६७</span></div>
+          <div class="small text-primary text-start text-md-end">
+            <div><i class="bi bi-envelope-fill me-1"></i><span data-i18n="school.email">info@school.edu.np</span></div>
+            <div><i class="bi bi-telephone-fill me-1"></i><span data-i18n="school.phone">+९७७-१-१२३४५६७</span></div>
           </div>
 
           <!-- Online Services Dropdown -->
           <div class="dropdown">
-            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="onlineServicesDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-globe2 me-1"></i> <span data-i18n="menu.online_services">अनलाइन सेवा</span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="onlineServicesDropdown">
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'admission' ? 'active text-primary fw-semibold' : '' ?>"
+                <a class="dropdown-item d-flex align-items-center gap-2"
                   href="admission">
-                  <i class="bi bi-person-plus"></i> अनलाइन भर्ना
+                  <i class="bi bi-person-plus"></i> <span data-i18n="menu.admission">अनलाइन भर्ना</span>
                 </a>
               </li>
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'result' ? 'active text-primary fw-semibold' : '' ?>"
+                <a class="dropdown-item d-flex align-items-center gap-2"
                   href="result">
-                  <i class="bi bi-clipboard-data"></i> नतिजा हेर्नुहोस्
+                  <i class="bi bi-clipboard-data"></i> <span data-i18n="menu.result">नतिजा हेर्नुहोस्</span>
                 </a>
               </li>
             </ul>
@@ -54,15 +57,15 @@ function print_header($active)
             <option value="en">En</option>
             <option value="np">नेपा</option>
           </select>
-
         </div>
       </div>
     </div>
   </nav>
 
 
+
   <!-- मुख्य नेभिगेसन बार (Sticky) -->
-  <nav class="navbar navbar-expand-lg bg-light sticky-top shadow-sm border-bottom" style="z-index: 1020;">
+  <nav class="navbar navbar-expand-lg bg-light sticky-top shadow-sm border-bottom" style="z-index: 4;">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
         aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,19 +117,20 @@ function print_header($active)
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'login' ? 'active text-primary fw-semibold' : '' ?>"
+                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'login' ? 'active text-light fw-semibold' : '' ?>"
                   href="authentication/">
-                  <i class="bi bi-box-arrow-in-right"></i> <?php echo $login_condition ? "<span data-i18n='menu.dashboard'>व्यवस्थापक</span>" : "<span data-i18n='menu.login'>लग-इन</span>"; ?>
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  <?php echo $login_condition ? "<span data-i18n='menu.dashboard'>व्यवस्थापक</span>" : "<span data-i18n='menu.login'>लग-इन</span>"; ?>
                 </a>
               </li>
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'admission' ? 'active text-primary fw-semibold' : '' ?>"
+                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'admission' ? 'active text-light fw-semibold' : '' ?>"
                   href="admission">
                   <i class="bi bi-person-plus"></i> <span data-i18n="menu.admission">विधार्थी भर्ना</span>
                 </a>
               </li>
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'gallery' ? 'active text-primary fw-semibold' : '' ?>"
+                <a class="dropdown-item d-flex align-items-center gap-2 <?php echo $active == 'gallery' ? 'active text-light fw-semibold' : '' ?>"
                   href="gallery">
                   <i class="bi bi-images"></i> <span data-i18n="menu.gallery">ग्यालरी</span>
                 </a>
@@ -207,8 +211,9 @@ function print_footer()
       </div>
     </div>
     <hr>
-    <div class="text-center">
-      <span data-i18n="footer.dev.by">Website Developed By</span> &nbsp;<a href="https://www.thapabikal.com.np" target="blank" data-i18n="footer.dev.name">Bikal Thapa</a>
+    <div class="text-center mb-5">
+      <span data-i18n="footer.dev.by">Website Developed By</span> &nbsp;<a href="https://www.thapabikal.com.np"
+        target="blank" data-i18n="footer.dev.name">Bikal Thapa</a>
     </div>
   </div>
   <?php

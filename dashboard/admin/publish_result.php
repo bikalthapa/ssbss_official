@@ -1,5 +1,5 @@
 <?php
-include "../../connection.php";
+include "../../script/php_scripts/database.php";
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
 // Check if the user is logged in as an admin

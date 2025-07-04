@@ -1,170 +1,158 @@
-    :root {
-        /* Blue Shades */
-        --blue_1: #2588f1;
-        --blue_2: #227cdc;
-        --blue_3: #2176d1;
-        --blue_4: #1f70c6;
+:root {
+  /* Blue Shades */
+  --blue_1: #2588f1;
+  --blue_2: #227cdc;
+  --blue_3: #2176d1;
+  --blue_4: #1f70c6;
 
-        /* Gold Shades (renamed from Yellow) */
-        --gold_1: #ffd52e;
-        --gold_2: #ffdc5a;
-        --gold_3: #ffe27e;
-        --gold_4: #ffe99f;
+  /* Gold Shades */
+  --gold_1: #ffd52e;
+  --gold_2: #ffdc5a;
+  --gold_3: #ffe27e;
+  --gold_4: #ffe99f;
 
-        /* Red Shades */
-        --red_1: #ff0000;
-        --red_2: #e00000;
-        --red_3: #c00000;
-        --red_4: #800000;
+  /* Red Shades */
+  --red_1: #ff0000;
+  --red_2: #e00000;
+  --red_3: #c00000;
+  --red_4: #800000;
 
-        /* Black/Gray Shades */
-        --black_1: #000000;
-        --black_2: #101010;
-        --black_3: #202020;
-        --black_4: #404040;
+  /* Black/Gray Shades */
+  --black_1: #000000;
+  --black_2: #101010;
+  --black_3: #202020;
+  --black_4: #404040;
 
-        /* White Shades */
-        --white_1: #ffffff;
-        --white_2: #f0f0f0;
-        --white_3: #c0c0c0;
-        --white_4: #808080;
-    }
+  /* White Shades */
+  --white_1: #ffffff;
+  --white_2: #f0f0f0;
+  --white_3: #c0c0c0;
+  --white_4: #808080;
+}
 
+/* ========== GENERAL CARD ========== */
 
+.card {
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
 
+/* ========== SECTION TITLE ========== */
 
-    /* Carousel design for hero section */
-    .carousel>.carousel-inner>.carousel-item>img {
-        width: 240px;
-        height: 490px;
-    }
+.section {
+  width: 100%;
+  background-color: var(--white_2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 4px;
+}
 
-    .carousel-caption {
-        position: absolute;
-        top: 60%;
-        text-shadow: 5px 5px 5px;
-    }
+.section .title {
+  font-size: 30px;
+  font-weight: 600;
+}
 
-    @media screen and (max-width: 480px) {
-        .carousel>.carousel-inner>.carousel-item>img {
-            width: 240px;
-            height: 40%;
-        }
-    }
+.section .more_btn {
+  height: 50px;
+  text-decoration: none;
+  background-color: var(--gold_1);
+  color: var(--black_1);
+  border-radius: 4px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 400;
+}
 
-    @media screen and (max-width: 713px) {
-        .carousel>.carousel-inner>.carousel-item>img {
-            width: 240px;
-            height: 35%;
-        }
-    }
+/* ========== SCROLLABLE CONTAINER ========== */
 
-    .card {
-        background-color: #F9F9F9;
-    }
+.overflow_control {
+  min-height: 400px;
+  max-height: 405px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 20px;
+}
 
+.overflow_control::-webkit-scrollbar {
+  width: 4px;
+}
 
-    /* Section designs  */
-    .section {
-        width: 100%;
-        background-color: var(--white_2);
-        display: flex;
-        justify-content: center;
-        border-radius: 4px;
-        align-items: center;
-        max-height: 50px;
-    }
+.overflow_control::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
-    .section .title {
-        font-size: 30px;
-    }
+.overflow_control::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
 
-    .section .more_btn {
-        height: 50px;
-        margin: 0px;
-        text-decoration: none;
-        background-color: var(--gold_1);
-        color: var(--black_1);
-        border-radius: 4px;
-        width: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        font-weight: 400;
-    }
+.overflow_control::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-    .news_cards {
-        box-shadow: rgb(42 67 113 / 15%) 8px 8px 30px 0px;
-    }
+/* ========== SERVICE CARD EFFECTS ========== */
 
-    .overflow_control {
-        min-height: 400px;
-        max-height: 405px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        padding-top: 10px;
-        padding-left: 20px;
-    }
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--white_1);
+}
 
-    .downloads {
-        margin-top: 50px;
-    }
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
 
-    /* Scrollbar Styling (WebKit: Chrome, Edge, Safari) */
-    .overflow_control::-webkit-scrollbar {
-        width: 1px;
-        /* <-- Change thickness here */
-    }
+.service-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
 
-    .overflow_control::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
+.service-card:hover .service-img {
+  transform: scale(1.05);
+}
 
-    .overflow_control::-webkit-scrollbar-thumb {
-        background-color: #888;
-        border-radius: 4px;
-    }
+/* ========== DOWNLOADS ========== */
 
-    .overflow_control::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+.downloads {
+  margin-top: 50px;
+}
 
+/* ========== MODAL IMAGE ========== */
 
-    .modal_image {
-        max-width: 100%;
-    }
+.modal_image {
+  max-width: 100%;
+  border-radius: 8px;
+}
 
+/* ========== BUTTON STYLING ========== */
 
-    .more_image_btn {
-        text-shadow: none;
-        position: absolute;
-        bottom: 30px;
-    }
-
-    .online_btn {
-        margin: 10px;
-        margin: auto;
-        max-width: 100%;
-    }
+.online_btn {
+  margin: auto;
+  max-width: 100%;
+}
 
 
-    .service-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-    }
+/* ========== FULLSCREEN CAROUSEL ON DESKTOP ========== */
+/* @media screen and (min-width: 1024px) {
+  .carousel {
+    height: 90vh;
+  }
 
-    .service-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    }
-
-    .service-img {
-        height: 200px;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .service-card:hover .service-img {
-        transform: scale(1.05);
-    }
+  .carousel-item > img {
+    height: 100%;
+    object-fit: cover;
+  }
+} */

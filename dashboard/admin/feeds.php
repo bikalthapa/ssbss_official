@@ -2,10 +2,10 @@
 include "../../script/php_scripts/database.php";
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
-// if ($auth->isLoggedIn() != "A") {
-//     header("Location: ../../authentication/");
-//     exit;
-// }
+if ($auth->isLoggedIn() != "A") {
+	header("Location: ../../authentication/");
+	exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -223,68 +223,83 @@ include "../../script/php_scripts/utilities/authentication.php";
 		</div>
 	</div>
 
-
-
 	<!-- Modal -->
-	<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5 text-center w-100" id="exampleModalLabel">Create post</h1>
+					<h1 class="modal-title fs-5 text-center w-100" id="postModalLabel">Create Post</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form class="border-primary card post_form" id="new_post_form"
-						style=" margin: auto; max-width:500px;" method="post" action="" enctype="multipart/form-data">
-						<label class="form-label">Post Category</label>
-						<select id="selection" class="form-select form-select-md border-primary gx-5 mb-3"
-							name="post_type">
-							<option value="news">News</option>
-							<option value="notice">Notice</option>
-							<option value="document">Documents</option>
-						</select>
+					<form class="card post_form border-primary" id="new_post_form"
+						style="margin: auto; max-width: 500px;" method="post" action="" enctype="multipart/form-data">
+
+						<!-- Post Category -->
 						<div class="mb-3">
-							<label for="title" class="form-label" id="titleHelp">Title</label>
-							<input type="text" placeholder="Something..." describeby="titleHelp"
-								class="form-control form-control-md border-primary post_inputs" id="title" name="title">
+							<label class="form-label">Post Category</label>
+							<select id="selection" class="form-select border-primary" name="post_type" required>
+								<option value="news">News</option>
+								<option value="notice">Notice</option>
+								<option value="document">Documents</option>
+							</select>
 						</div>
 
+						<!-- Title -->
+						<div class="mb-3">
+							<label for="title" class="form-label" id="titleHelp">Title</label>
+							<input type="text" name="title" id="title" placeholder="Something..."
+								class="form-control border-primary" aria-describedby="titleHelp" required>
+						</div>
 
+						<!-- NEWS/NOTICE SECTION -->
 						<div class="news_section" id="news_section">
+							<!-- Description -->
 							<div class="mb-3">
 								<label for="description" id="descriptionHelp" class="form-label">Post
 									Description</label>
-								<textarea name="news_content"
-									class="form-control border-primary form-control-sm  post_inputs" id="description"
-									describeby="descriptionHelp"></textarea>
+								<textarea name="news_content" id="description"
+									class="form-control border-primary form-control-sm"
+									aria-describedby="descriptionHelp"></textarea>
 							</div>
+
+							<!-- Thumbnail -->
 							<div class="mb-3">
 								<label for="thumbnail" id="thumbnailHelp" class="form-label">Thumbnail (JPEG)</label>
-								<input name="thumbnail" class="form-control border-primary form-control-sm  post_inputs"
-									id="thumbnail" describeby="thumbnailHelp" accept="image/*" type="file">
+								<input type="file" name="thumbnail" id="thumbnail" accept="image/jpeg,image/png"
+									class="form-control border-primary form-control-sm"
+									aria-describedby="thumbnailHelp">
 							</div>
+
 							<div id="thumbPreview"
 								class="row row-cols-2 p-2 d-flex justify-content-center align-items-center">
 							</div>
+
+							<!-- Related Images -->
 							<div class="mb-3">
 								<label for="image" id="imageHelp" class="form-label">Related Images (JPEG)</label>
-								<input name="image[]" class="form-control border-primary form-control-sm  post_inputs"
-									id="image" multiple describeby="imageHelp" accept="image/*" type="file">
+								<input type="file" name="image[]" id="image" multiple accept="image/jpeg,image/png"
+									class="form-control border-primary form-control-sm" aria-describedby="imageHelp">
 							</div>
+
 							<div id="imgPreview"
 								class="row row-cols-2 p-2 d-flex justify-content-center align-items-center">
 							</div>
 						</div>
 
-						<div style="display:none;" class="document_section" id="document_section">
+						<!-- DOCUMENT SECTION -->
+						<div class="document_section" id="document_section" style="display: none;">
 							<div class="mb-3">
-								<label for="document" id="documentHelp" class="form-label">Files</label>
-								<input name="document_file[]" multiple
-									class="form-control border-primary form-control-sm  post_inputs" id="document"
-									describeby="documentHelp" type="file">
+								<label for="document" id="documentHelp" class="form-label">Upload PDF File</label>
+								<input type="file" name="file" id="document" accept="application/pdf"
+									class="form-control border-primary form-control-sm" aria-describedby="documentHelp">
 							</div>
 						</div>
-						<input type="submit" name="create_post" value="Post" class="btn btn-primary">
+
+						<!-- Submit -->
+						<div class="d-grid">
+							<input type="submit" name="create_post" value="Post" class="btn btn-primary">
+						</div>
 					</form>
 				</div>
 			</div>
@@ -299,120 +314,206 @@ include "../../script/php_scripts/utilities/authentication.php";
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
 		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
 		crossorigin="anonymous"></script>
+
+	<script src="../../script/javascript/UI/toast.js"></script>
 	<script src="scripts/each_file_js/new_post.js"></script>
+
+
+
 	<script>
 		$(document).ready(() => {
-			function validate_inputs(input, description) {
-				if (input.val() == "") {
-					input.addClass(" border-danger");
-					description.addClass(" text-danger");
-					description.attr("description", description.html());
-					description.html("Fields Required");
+			// Get the modal element by ID
+			const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+
+			// OPEN the modal
+			function openPostModal() {
+				postModal.show();
+			}
+
+			// CLOSE the modal
+			function closePostModal() {
+				postModal.hide();
+			}
+			// Store original help messages on load
+			$(".post_inputs").each(function () {
+				const $input = $(this);
+				const helpEl = descrOf($input);
+				if (helpEl && helpEl.length && !helpEl.data("original")) {
+					helpEl.data("original", helpEl.html().trim());
+				}
+			});
+
+
+			// Remove error styles on input change
+			$(".post_inputs").on("input", function () {
+				const $this = $(this);
+				if ($this.hasClass("border-danger") && $this.val().trim() !== "") {
+					$this.removeClass("border-danger");
+					const description = descrOf($this);
+					description.removeClass("text-danger");
+					if (description.data("original")) {
+						description.html(description.data("original"));
+					}
+				}
+			});
+
+			// Remove error styles on file input change
+			$("input[type='file']").on("change", function () {
+				const $this = $(this);
+				const files = $this[0].files;
+				const description = descrOf($this);
+
+				if ($this.hasClass("border-danger") && files.length > 0) {
+					$this.removeClass("border-danger");
+					description.removeClass("text-danger");
+					if (description.data("original")) {
+						description.html(description.data("original"));
+					}
+				}
+			});
+
+			// Get description element by aria-describedby
+			function descrOf(inputField) {
+				const attr = inputField.attr("aria-describedby");
+				return $("#" + attr);
+			}
+
+			// Show validation error
+			function validateInputs(input, description) {
+				if (input.val().trim() === "") {
+					input.addClass("border-danger");
+					description.addClass("text-danger");
+
+					if (!description.data("original")) {
+						description.data("original", description.html().trim());
+					}
+
+					description.html("Field Required");
 					return false;
 				}
 				return true;
 			}
-			function descr_of(input_field) {
-				var attr = input_field.attr("describeby");
-				return $("#" + attr);
-			}
-			function validate_files(file_field, center_of_display) {
-				var error_count = 0;
-				var files_length = file_field[0].files.length;
-				var file_list = file_field[0].files;
-				var allowed_format = ["image/jpeg", "image/png"];
-				if (files_length != 0) {
-					var new_id;
-					document.getElementById(center_of_display).innerHTML = "";
-					for (i = 0; i < files_length; i++) {
-						if (allowed_format.includes(file_list[i].type)) {
-							if (file_list[i]) {
-								let reader = new FileReader();
-								reader.onload = function (event) {
-									document.getElementById(center_of_display).innerHTML += `
-										<div class='col gx-5 outer_img_div'>
-												<img class=' inner_img' src='`+ event.target.result + `'>
-										</div>`;
-								}
-								reader.readAsDataURL(file_list[i]);
-							}
-						} else {
-							error_count++;
-						}
+
+			// Validate images and preview
+			function validateImg(fileField, previewId) {
+				const allowedFormat = ["image/jpeg", "image/png"];
+				const files = fileField[0].files;
+				let errorCount = 0;
+				const preview = document.getElementById(previewId);
+				preview.innerHTML = ""; // Clear old previews
+
+				if (files.length === 0) {
+					return false;
+				}
+
+				for (let file of files) {
+					if (!allowedFormat.includes(file.type)) {
+						errorCount++;
+						continue;
 					}
-				} else {
-					error_count++;
+
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const div = document.createElement("div");
+						div.className = "col gx-5 outer_img_div";
+						div.innerHTML = `<img class="inner_img" src="${e.target.result}">`;
+						preview.appendChild(div);
+					};
+					reader.readAsDataURL(file);
 				}
-				if (error_count == 0) {
-					return true;
-				}
-				return false;
+
+				return errorCount === 0;
 			}
 
-
-			var post_inputs = document.getElementsByClassName("post_inputs");
-			for (post_input of post_inputs) {
-				post_input.addEventListener("input", (e) => {
-					var choosen_element = $("#" + e.target.id);
-					if (choosen_element.hasClass("border-danger") && choosen_element.val() != "") {
-						choosen_element.removeClass("border-danger");
-						var description = descr_of(choosen_element);
-						description.removeClass(" text-danger");
-						description.html(description.attr("description"));
-					}
-				});
-			};
+			// Image input preview
 			$("#image").on("change", function () {
-				validate_files($("#image"), "imgPreview");
+				validateImg($("#image"), "imgPreview");
 			});
+
 			$("#thumbnail").on("change", function () {
-				validate_files($("#thumbnail"), "thumbPreview");
+				validateImg($("#thumbnail"), "thumbPreview");
 			});
+
 			$("#new_post_form").on("submit", function (e) {
 				e.preventDefault();
-				var post_category = $("#selection").val();
-				var title_validate = validate_inputs($("#title"), $("#titleHelp"));
-				if (post_category == "news" || post_category == "notice") {
-					var desc_validation = validate_inputs($("#description"), $("#descriptionHelp"));
-					var thumb_validation = validate_inputs($("#thumbnail"), $("#thumbnailHelp"));
-					var img_validation = validate_inputs($("#image"), $("#imageHelp"));
-					if (desc_validation && thumb_validation && img_validation && title_validate) {
-						$.ajax({
-							url: "action/insert.php?mode=news_publish",
-							type: "POST",
-							data: new FormData(this),
-							contentType: false,
-							cache: false,
-							processData: false,
-							success: function (data) {
-								alert(data);
-							}
-						});
-					} else {
-						alert("Some Error Occur In Your input");
+
+				const postCategory = $("#selection").val();
+				const titleInput = $("#title");
+				const title = titleInput.val().trim();
+
+				if (!title) {
+					ToastManager.show("Validation Error", "Please enter a title.", "warning");
+					return;
+				}
+
+				const formData = new FormData();
+				formData.append("typ", postCategory);
+				formData.append("title", title);
+
+				if (postCategory === "news" || postCategory === "notice") {
+					const description = $("#description").val().trim();
+					const thumbnail = $("#thumbnail")[0].files[0];
+					const relatedImages = $("#image")[0].files;
+
+					if (!description) {
+						ToastManager.show("Validation Error", "Please enter a description.", "warning");
+						return;
 					}
-				} else if (post_category == "document") {
-					var docmt_validation = validate_inputs($("#document"), $("#documentHelp"));
+					if (!thumbnail) {
+						ToastManager.show("Validation Error", "Please select a thumbnail.", "warning");
+						return;
+					}
+
+					formData.append("description", description);
+					formData.append("thumbnail", thumbnail);
+					formData.append("action", "new_news");
+
+					for (let i = 0; i < relatedImages.length; i++) {
+						formData.append("image[]", relatedImages[i]);
+					}
+
+				} else if (postCategory === "document") {
+					const documentFile = $("#document")[0].files[0];
+
+					if (!documentFile) {
+						ToastManager.show("Validation Error", "Please select a PDF document.", "warning");
+						return;
+					}
+
+					formData.append("file", documentFile);
+					formData.append("action", "new_document");
+				} else {
+					ToastManager.show("Error", "Invalid post category selected.", "danger");
+					return;
 				}
-			});
-			// This function is used to logout from admin panel
-			$("#log_out_btn_off_canvas , #log_out_btn_nav").click(function () {
-				var confirmation = confirm("Are you sure you want to log out");
-				if (confirmation == true) {// Admin can be log out
-					$.ajax({
-						url: "../scripts/php_scripts/logout.php",
-						type: "POST",
-						data: { logout: "true" },
-						success: function (result) {
-							if (result == "logout_success") {
-								window.location.replace("../../authentication/index.php");
-							}
+
+				$.ajax({
+					url: "action/insert_data.php",
+					type: "POST",
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function (res) {
+						console.log(res);
+						if (res.status === "success") {
+							ToastManager.show("Success", "Post added successfully!", "success");
+							$("#new_post_form")[0].reset();
+							$("#imgPreview, #thumbPreview").empty();
+							closePostModal();
+						} else {
+							ToastManager.show("Error", res.message || "Failed to add post.", "danger");
 						}
-					});
-				}
+					},
+					error: function () {
+						ToastManager.show("Error", "Server error. Please try again later.", "danger");
+					}
+				});
 			});
+
 		});
 	</script>
+
+
 </body>
 
 </html>

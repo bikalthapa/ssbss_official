@@ -30,10 +30,10 @@ class ToastManager {
 
     // Background + text colors for toast container
     const typeClassMap = {
-      success: 'bg-success bg-opacity-10 text-success',
-      danger: 'bg-danger bg-opacity-10 text-danger',
-      warning: 'bg-warning bg-opacity-10 text-warning',
-      info: 'bg-info bg-opacity-10 text-info',
+      success: 'bg-success-subtle text-success',
+      danger: 'bg-danger-subtle text-danger',
+      warning: 'bg-warning-subtle text-warning',
+      info: 'bg-info-subtle text-info',
       light: 'bg-light text-dark border',
       dark: 'bg-dark text-white'
     };

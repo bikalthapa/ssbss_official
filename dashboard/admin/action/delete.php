@@ -43,7 +43,7 @@ if(isset($_GET["news_id"]) || isset($_GET["notice_id"])){
 			<tr>
 				<td><?php echo $id?></td>
 				<td><?php echo $row['title']?></td>
-				<td><?php echo file_get_contents("../../uploads/news_descr/".$row['src'])?></td>
+				<td><?php echo file_get_contents("../../../uploads/news_descr/".$row['src'])?></td>
 				<td><?php echo $row['upload_date']?></td>
 			</tr>
 		</table>
@@ -54,8 +54,8 @@ if(isset($_GET["news_id"]) || isset($_GET["notice_id"])){
 	</form>
 	<?php
 		if(array_key_exists("delete_post",$_POST)){
-			unlink("../../uploads/images/".$row['thumbnail']);
-			unlink("../../uploads/news_descr/".$row['src']);
+			unlink("../../../uploads/images/".$row['thumbnail']);
+			unlink("../../../uploads/news_descr/".$row['src']);
 			$sql = "DELETE FROM news WHERE news_id = $id";
 			$result = mysqli_query($conn, $sql);
 			if($result){

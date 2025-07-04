@@ -31,116 +31,141 @@ function getNothingFoundHTML() {
 
 
 
-function getImageDesign(images) {
-	html = "";
-	images.forEach((image) => {
+// Generates image carousel slides (first image is 'active')
+function getImageDesign(images, isActive) {
+	let html = "";
+	images.forEach((image, index) => {
 		html += `
-			<div class="carousel-item active d-flex justify-content-center align-item-center">
-				<img src="../../uploads/images/${image}" class="d-block news_img_carousel" alt="...">
+			<div class="carousel-item ${isActive ? 'active' : ''} d-flex justify-content-center align-items-center">
+				<img src="../../uploads/images/${image}" class="d-block w-100 rounded-3 news_img_carousel" alt="news image">
 			</div>
 		`;
 	});
 	return html;
 }
+
+// Generates the full news card with image carousel
 function getNewsDesign(data) {
 	let html = "";
 	if (data.length > 0) {
 		data.forEach((item) => {
 			html += `
-						<div class="col col-sm-6 g-3" style="z-index:0;">
-							<div class="card post_form">
-								<div class="card-body">
-									<h5 class="card-title">
-										<div class="hstack gap-3">
-										<div>${item.title}</div>
-										<div class="ms-auto">
-												<div class="dropdown dropstart">
-												<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-													<i class="bi bi-three-dots-vertical"></i>
-												</a>
-					
-												<ul class="dropdown-menu">
-													<li>
-														<a href="action/update.php?news_id=${item.news_id}" title="Update" class="dropdown-item">
-															<i class="bi bi-pencil-square"></i>
-															Update
-														</a>
-													</li>
-													<li>
-														<a href="action/delete.php?news_id=${item.news_id}" title="Delete" class="dropdown-item">
-															<i class="bi bi-trash"></i>
-															Delete
-														</a>
-													</li>
-													<li>
-														<a class="dropdown-item" href="../../category/individual_content.php?news_id=${item.news_id}" target="blank" style="z-index:1;">
-															<i class="bi bi-eye"></i>
-															Detail View
-														</a>
-													</li>
-												</ul>
-												</div>
-										</div>
-										</div>
-									</h5><hr>
-									<p class="card-text" style="text-align:justify;">${item.src}</p>
-									<p class="card-text text-start"><small class="text-body-secondary">${item.upload_date}</small></p>
-									<!-- image carousel -->
-									<div id="carouselExampleFade'.$news_id.'" class="carousel slide carousel-fade">
-										<div class="carousel-inner">
-											${getImageDesign(item.images)}
-										</div>
-										<button class="carousel-control-prev bg-dark bg-opacity-25" type="button" data-bs-target="#carouselExampleFade${item.news_id}" data-bs-slide="prev">
-											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-											<span class="visually-hidden">Previous</span>
-										</button>
-										<button class="carousel-control-next bg-dark bg-opacity-25" type="button" data-bs-target="#carouselExampleFade${item.news_id}" data-bs-slide="next">
-											<span class="carousel-control-next-icon" aria-hidden="true"></span>
-											<span class="visually-hidden">Next</span>
-										</button>
-									</div>
+				<div class="col g-3">
+					<div class="card border-0 shadow rounded-4 overflow-hidden">
+						<div class="card-body p-4">
+							<div class="d-flex justify-content-between align-items-center mb-3">
+								<h5 class="card-title mb-0">${item.title}</h5>
+								<div class="dropdown">
+									<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="bi bi-three-dots-vertical fs-5 text-muted"></i>
+									</a>
+									<ul class="dropdown-menu dropdown-menu-end">
+										<li>
+											<a href="action/update.php?news_id=${item.news_id}" class="dropdown-item">
+												<i class="bi bi-pencil-square me-2"></i> Update
+											</a>
+										</li>
+										<li>
+											<a href="action/delete.php?news_id=${item.news_id}" class="dropdown-item text-danger">
+												<i class="bi bi-trash me-2"></i> Delete
+											</a>
+										</li>
+										<li>
+											<a href="../../individual_content.php?news_id=${item.news_id}" target="_blank" class="dropdown-item">
+												<i class="bi bi-eye me-2"></i> Detail View
+											</a>
+										</li>
+									</ul>
 								</div>
 							</div>
+
+							<hr>
+							<p class="card-text">
+								<small class="text-muted">${item.upload_date}</small>
+							</p>
+							<p class="card-text text-justify mb-3">${item.src}</p>
+
+							<!-- Bootstrap Carousel -->
+							<div id="carousel${item.news_id}" class="carousel slide carousel-fade rounded-3 overflow-hidden" data-bs-ride="carousel">
+								<div class="carousel-inner">
+									${getImageDesign(item.images, true)}
+									${getImageDesign([item.thumbnail], false)}
+								</div>
+								<button class="carousel-control-prev" type="button" data-bs-target="#carousel${item.news_id}" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#carousel${item.news_id}" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
 						</div>
+					</div>
+				</div>
 			`;
 		});
 	}
 	return html;
 }
+
+
+
+
 function getDocumentsDesign(data) {
-	html = `<tr>
-				<th>Id</th>
-				<th>Title</th>
-				<th>File Name</th>
-				<th>Date</th>
-				<th colspan="2">Action</th>
-			</tr>`;
+	let html = `<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`;
+
 	data.forEach((item) => {
 		html += `
-			<tr>
-				<td>${item.doc_id}</td>
-				<td>${item.doc_title}</td>
-				<td>${item.doc_file}</td>
-				<td>${item.upload_date}</td>
-				<td>
-					<a href="action/update.php?document_id=${item.document_id}" title="Update" class="btn btn-primary btn-sm">
-						<i class="bi bi-pencil-square"></i> Update
-					</a>
-				</td>
-				<td>
-					<a href="action/delete.php?document_id=${item.document_id}" title="Delete" class="btn btn-danger btn-sm">
-						<i class="bi bi-trash"></i> Delete
-					</a>
-				</td>
-			</tr>`;
+			<div class="col">
+				<div class="card h-100 shadow-sm border-0 rounded-4 text-center position-relative p-3">
+
+					<!-- Header row: date and action -->
+					<div class="d-flex justify-content-between align-items-start mb-2">
+						<div class="text-muted small">${item.upload_date}</div>
+						<div class="dropdown">
+							<button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="bi bi-three-dots-vertical"></i>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li>
+									<a class="dropdown-item" href="action/update.php?document_id=${item.doc_id}">
+										<i class="bi bi-pencil-square me-2"></i> Update
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item text-danger" href="action/delete.php?document_id=${item.doc_id}">
+										<i class="bi bi-trash me-2"></i> Delete
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- File icon -->
+					<div class="my-4">
+						<i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size: 3rem;"></i>
+					</div>
+
+					<!-- Title -->
+					<div class="fw-semibold text-truncate px-2">${item.doc_title}</div>
+
+				</div>
+			</div>
+		`;
 	});
+
+	html += `</div>`;
 	return html;
 }
+
+
+
 
 $(document).ready(function () {
 	// Default controls state
 	let limit_value = 10;
-	let sort_value = "DESC";
+	let sort_value = "desc";
 	let search_value = "";
 	let data_view_mode = "news";
 
@@ -152,7 +177,6 @@ $(document).ready(function () {
 			data: { typ: type, sort: sort_val, limit: limit_val, query: search_for },
 			beforeSend: () => $("#post_view_spinner").show(),
 			success: (res) => {
-				console.log(res);
 				if (type === "news" || type === "notice") {
 					if (res.data.length > 0) {
 						$(type === "news" ? "#news_row" : "#notice_row").html(getNewsDesign(res.data));
@@ -160,7 +184,7 @@ $(document).ready(function () {
 						$(type === "news" ? "#news_row" : "#notice_row").html(getNothingFoundHTML());
 					}
 				} else if (type === "document") {
-					if(res.data.length>0){
+					if (res.data.length > 0) {
 						$("#document_row").html(getDocumentsDesign(res.data));
 					}
 				}
@@ -234,7 +258,6 @@ $(document).ready(function () {
 		search_value = "";
 		$("#document_div").show();
 		$("#news_div, #notice_div").hide();
-		// $("#document_view_btn").addClass("active bg-primary text-white").siblings().removeClass("active bg-primary text-white");
 		loadrows(data_view_mode, sort_value, limit_value, search_value);
 	});
 });

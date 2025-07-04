@@ -71,7 +71,7 @@ require_once "script/php_scripts/database.php";
 
   <section class="gallery-section">
     <div class="container">
-      <h2 class="gallery-title">Gallery</h2>
+      <h2 class="gallery-title" data-i18n="menu.gallery">Gallery</h2>
       <div class="masonry">
 
         <?php
@@ -96,6 +96,8 @@ require_once "script/php_scripts/database.php";
   </section>
 
   <?php print_footer(); ?>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="data/translation.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>

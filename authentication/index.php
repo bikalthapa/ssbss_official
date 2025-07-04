@@ -1,9 +1,12 @@
 <?php
 require_once "../script/php_scripts/utilities/authentication.php";
 // Start session and check if user is already logged in
-if ($auth->isLoggedIn() == "A") {
+$role = $auth->isLoggedIn();
+if ($role == "A") {
     header("Location: ../dashboard/admin/");
     exit;
+}else if($role == "T"){
+    header("Location: ../dashboard/teacher");
 }
 ?>
 <!DOCTYPE html>

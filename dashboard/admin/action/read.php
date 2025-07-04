@@ -1,5 +1,5 @@
 <?php
-include "../../../connection.php";
+include "../../../script/php_scripts/database.php";
 $mode = isset($_GET['mode'])?$_GET['mode']:"news_load";
 $str = "";
 $sort = $_POST['sort'];

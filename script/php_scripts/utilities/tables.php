@@ -1,5 +1,40 @@
 <?php
 require_once __DIR__ . "/../database.php";
+function timeAgo($datetime)
+{
+    // Set default timezone (optional, but important if not globally set)
+    date_default_timezone_set('Asia/Kathmandu');
+
+    $timestamp = strtotime($datetime);
+    $currentTime = time();
+    $diff = $currentTime - $timestamp;
+
+    if ($diff < 1) {
+        return "just now";
+    }
+
+    $units = [
+        31536000 => ['year', 'years'],
+        2592000  => ['month', 'months'],
+        86400    => ['day', 'days'],
+        3600     => ['hour', 'hours'],
+        60       => ['minute', 'minutes'],
+        1        => ['second', 'seconds']
+    ];
+
+    foreach ($units as $secs => $labels) {
+        if ($diff >= $secs) {
+            $value = floor($diff / $secs);
+            $label = $value === 1 ? $labels[0] : $labels[1];
+            return "$value $label ago";
+        }
+    }
+
+    return "just now";
+}
+
+
+
 class User
 {
     private $conn;
@@ -384,6 +419,116 @@ class News
     {
         $this->conn = $conn;
     }
+    public function addNews(array $data): bool
+    {
+        // Extract and sanitize inputs
+        $post_type = $data['typ'] ?? '';
+        $title = trim($data['title'] ?? '');
+        $news_content = trim($data['description'] ?? '');
+        $thumbnail = $data['thumbnail'] ?? null;
+        $related_imgs = $data['related_imgs'] ?? null;
+
+        // Validate required fields
+        if (!in_array($post_type, ['news', 'notice'], true) || empty($title) || !$thumbnail) {
+            return false;
+        }
+
+        // Upload directories
+        $base_dir = __DIR__ . "/../../../uploads/";
+        $images_dir = $base_dir . "images/";
+        $descr_dir = $base_dir . "news_descr/";
+
+        // Create directories if they don't exist
+        if (!is_dir($images_dir) && !mkdir($images_dir, 0755, true)) {
+            error_log("Failed to create images directory.");
+            return false;
+        }
+        if (!is_dir($descr_dir) && !mkdir($descr_dir, 0755, true)) {
+            error_log("Failed to create news_descr directory.");
+            return false;
+        }
+
+        $allowed_types = ['image/jpeg', 'image/png'];
+
+        // Validate thumbnail file type
+        if (!in_array($thumbnail['type'], $allowed_types, true)) {
+            return false;
+        }
+
+        // Prepare unique filename for thumbnail
+        $thumb_name = uniqid('thumb_', true) . '_' . basename($thumbnail['name']);
+        $thumb_path = $images_dir . $thumb_name;
+
+        // Move thumbnail
+        if (!move_uploaded_file($thumbnail['tmp_name'], $thumb_path)) {
+            error_log("Failed to move uploaded thumbnail.");
+            return false;
+        }
+
+        // Save news content to file
+        $description_file = uniqid('descr_', true) . '_' . date("YmdHis") . ".txt";
+        $desc_path = $descr_dir . $description_file;
+
+        if (file_put_contents($desc_path, $news_content) === false) {
+            error_log("Failed to save news content.");
+            unlink($thumb_path); // rollback
+            return false;
+        }
+
+        // Prepare and execute main insert
+        $query = "INSERT INTO news (title, src, thumbnail, `type`) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            unlink($thumb_path);
+            unlink($desc_path);
+            return false;
+        }
+
+        $stmt->bind_param("ssss", $title, $description_file, $thumb_name, $post_type);
+
+        if (!$stmt->execute()) {
+            error_log("Execute failed: " . $stmt->error);
+            $stmt->close();
+            unlink($thumb_path);
+            unlink($desc_path);
+            return false;
+        }
+
+        $news_id = $stmt->insert_id;
+        $stmt->close();
+
+        // Handle related images
+        if ($related_imgs && isset($related_imgs['tmp_name']) && is_array($related_imgs['tmp_name'])) {
+            foreach ($related_imgs['tmp_name'] as $key => $tmp_name) {
+                $file_type = $related_imgs['type'][$key] ?? '';
+                if (!in_array($file_type, $allowed_types, true)) {
+                    continue;
+                }
+
+                $file_name = uniqid('rtimg_', true) . '_' . basename($related_imgs['name'][$key]);
+                $file_path = $images_dir . $file_name;
+
+                if (move_uploaded_file($tmp_name, $file_path)) {
+                    $img_stmt = $this->conn->prepare("INSERT INTO news_img (filename, news_id) VALUES (?, ?)");
+                    if ($img_stmt) {
+                        $img_stmt->bind_param("si", $file_name, $news_id);
+                        $img_stmt->execute();
+                        $img_stmt->close();
+                    } else {
+                        error_log("Image insert prepare failed: " . $this->conn->error);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+
+
 
     // Get single news item by ID with images
     public function getById($id)
@@ -434,7 +579,7 @@ class News
             $params[] = $query;
         }
 
-        $sql .= " ORDER BY upload_date $order LIMIT ? OFFSET ?";
+        $sql .= " ORDER BY news_id $order LIMIT ? OFFSET ?";
         $types .= "ii";
         $params[] = $limit;
         $params[] = $offset;
@@ -451,8 +596,21 @@ class News
         $stmt->execute();
         $result = $stmt->get_result();
 
+
         while ($news = $result->fetch_assoc()) {
             $news_id = (int) $news['news_id'];
+
+            // Convert date to "time ago"
+            $news['upload_date'] = timeAgo($news['upload_date']);
+
+            // Reading the description file if it exists
+            $filename = __DIR__ . "/../../../uploads/news_descr/" . $news['src'];
+            if (file_exists($filename)) {
+                $content = file_get_contents($filename);
+                $news['src'] = $content;
+            } else {
+                $news['src'] = null;
+            }
 
             // Fetch related images securely
             $imgStmt = $this->conn->prepare("SELECT filename FROM news_img WHERE news_id = ?");
@@ -490,6 +648,75 @@ class Documents
     {
         $this->conn = $conn;
     }
+    public function addDocuments(array $data)
+    {
+        $title = trim($data['doc_title'] ?? '');
+        $file = $data['file'] ?? null;
+
+        if (empty($title) || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+            error_log("Missing title or invalid file.");
+            return "Missing title or invalid file.";
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        if (!$finfo) {
+            error_log("Failed to open finfo.");
+            return "Failed to open finfo.";
+        }
+
+        $mimeType = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+
+        if ($mimeType !== 'application/pdf') {
+            error_log("Invalid file type: $mimeType. Only PDF allowed.");
+            return "Invalid file type: $mimeType. Only PDF allowed.";
+        }
+
+        $uploadDir = __DIR__ . '/../../../uploads/documents/';
+        if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+            error_log("Failed to create upload directory.");
+            return "Failed to create upload directory.";
+        }
+
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $safeFilename = uniqid('doc_', true) . '.' . $extension;
+        $destination = $uploadDir . $safeFilename;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            error_log("File upload failed.");
+            return "File upload failed.";
+        }
+
+        chmod($destination, 0644);
+
+        $sql = "INSERT INTO documents (doc_title, doc_file, upload_date) VALUES (?, ?, NOW())";
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            unlink($destination);
+            return "Prepare failed: " . $this->conn->error;
+        }
+
+        $stmt->bind_param("ss", $title, $safeFilename);
+
+        if ($stmt->execute()) {
+            $insertedId = $stmt->insert_id;
+            $stmt->close();
+            return $insertedId;
+        } else {
+            $error = $stmt->error;
+            error_log("Execute failed: " . $error);
+            $stmt->close();
+            unlink($destination);
+            return "Execute failed: " . $error;
+        }
+    }
+
+
+
+
+
 
     // Get single document item by ID with images
     public function getById($id)

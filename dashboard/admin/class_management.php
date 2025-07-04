@@ -1,5 +1,5 @@
 <?php
-include "../../connection.php";
+include "../../script/php_scripts/database.php";
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
 include "../../script/php_scripts/utilities/tables.php";
@@ -341,8 +341,7 @@ if ($auth->isLoggedIn() != "A") {
                 let feedback = input.siblings(".invalid-feedback");
                 if (!feedback.length) {
                     input.after(`<div class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle-fill me-1"></i>${message}
-                </div>`);
+                    <i class="bi bi-exclamation-circle-fill me-1"></i>${message}</div>`);
                 } else {
                     feedback.html(`<i class="bi bi-exclamation-circle-fill me-1"></i>${message}`);
                 }
@@ -412,6 +411,7 @@ if ($auth->isLoggedIn() != "A") {
 
                 const formData = new FormData();
                 formData.append("class_name", className);
+                formData.append("action", "add_class");
 
                 if (classTeacher !== "") {
                     formData.append("u_id", classTeacher);

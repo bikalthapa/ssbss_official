@@ -87,30 +87,13 @@
         "caption": "विधालय प्राँगण"
       },
       {
-        "caption": "शिक्षकसँग विधार्थीहरु"
+        "caption": "विद्यालयको स्वच्छ वातावरण"
       },
       {
-        "caption": "विद्यालयको स्वच्छ वातावरण"
+        "caption": "शिक्षकसँग विधार्थीहरु"
       }
     ]
   },
-  "service": [
-    {
-      "title": "विधालय वातावरण",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">विशाल खेल मैदान र स्वच्छ वातावरण।</li>\n  <li class=\"list-group-item\">व्यवस्थित कक्षाकोठा</li>\n  <li class=\"list-group-item\">विद्यालयमा आधारित स्वास्थ्य सेवा</li>\n  <li class=\"list-group-item\">२४ सै घण्टा सिसीटिभी निग्रानी सेवा ।</li>\n</ol>",
-      "image": "images/front_wallpapers/english medium.jpg"
-    },
-    {
-      "title": "शिक्षा प्रणाली",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">प्राविधिक संकाय सहित ६ संकाय।</li>\n  <li class=\"list-group-item\">पुस्तकहरूको विभिन्न संग्रहको साथ पुस्तकालय।</li>\n  <li class=\"list-group-item\">व्यावहारिक ज्ञानको लागि राम्रो तरिकाले सुसज्जित प्रयोगशालाहरू।</li>\n  <li class=\"list-group-item\">छात्रवृत्ति वितरण कार्यक्रम।</li>\n</ol>",
-      "image": "images/entrance_examination_ce.jpg"
-    },
-    {
-      "title": "अन्य महत्वपुर्ण कृयाकलापहरु",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">दैनिक हाजीरीजबाफ र वक्तृत्वकला ।</li>\n  <li class=\"list-group-item\">साप्ताहिक खेलाई ।</li>\n  <li class=\"list-group-item\">मासिक विषयगत कक्षा परीक्षा।</li>\n  <li class=\"list-group-item\">शिक्षकहरू विद्यार्थी र अभिभावक  बिच भेला।</li>\n</ol>",
-      "image": "images/smart_board.jpg"
-    }
-  ],
   "faculties": [
     {
       "title": "इन्जिनियरिङ (कक्षा ९–१२)",
@@ -151,10 +134,11 @@
       "image": "images/authorities_img/unknown_person.jpg"
     },
     {
-      "name": "हाेमनाथ पाैड्याल",
-      "department": "शान्ती भगवती",
-      "position": "प्रधान्अध्यापक",
-      "image": "images/authorities_img/school_head_teacher.jpg"
+      "name": "होमनाथ पौडेल",
+      "department": "शान्ति भगवती",
+      "position": "प्रधानाध्यापक",
+      "image": "images/authorities_img/school_head_teacher.jpg",
+      "message": "मैले शान्ति भगवतीमा सूचना अधिकृतको रूपमा आफ्नो यात्रा सुरु गरेँ र अहिले प्रधानाध्यापकको रूपमा सेवा गरिरहेको छु। सामाजिक विषय पढाउँदै आएको म एकजना शिक्षकको रूपमा ज्ञान र मूल्यमार्फत जिम्मेवार नागरिक निर्माणमा विश्वास राख्छु। आउनुहोस्, हामी मिलेर विद्यार्थीहरूकाे समग्र विकासका लागि एक सशक्त वातावरण निर्माण गरौं।"
     },
     {
       "name": "लेखनाथ पाैड्याल",
@@ -175,7 +159,7 @@
       "image": "images/authorities_img/science_incharge.jpg"
     },
     {
-      "name": "इ. विजय सहनी",
+      "name": "ई. विजय सहनी",
       "department": "इन्जीनियरीङ",
       "position": "सम्याेजक",
       "image": "images/authorities_img/engineering_incharge.jpg"
@@ -209,6 +193,104 @@
       "department": "नेपाली माध्यम्",
       "position": "निमा सम्याेजक",
       "image": "images/authorities_img/unknown_person.jpg"
+    }
+  ],
+  "admission_form": {
+    "title": {
+      "personalDetails": "व्यक्तिगत विवरण",
+      "educationDetails": "शैक्षिक विवरण"
+    },
+    "fields": {
+      "name": {
+        "placeholder": "नाम",
+        "help": "जन्म प्रमाणपत्रमा भएको नाम"
+      },
+      "dob": {
+        "help": "तपाईंको जन्म मिति"
+      },
+      "gender": {
+        "label": "लिङ्ग चयन",
+        "options": {
+          "male": "पुरुष",
+          "female": "महिला",
+          "others": "अन्य"
+        }
+      },
+      "temp_address": {
+        "placeholder": "हालको ठेगाना",
+        "help": "तपाईंको हालको ठेगाना"
+      },
+      "permanent_address": {
+        "placeholder": "स्थायी ठेगाना",
+        "help": "तपाईंको स्थायी ठेगाना"
+      },
+      "phoneOrEmail": {
+        "placeholder": "फोन वा इमेल",
+        "help": "तपाईंको सम्पर्क विवरण"
+      },
+      "father_name": {
+        "placeholder": "बुबाको नाम",
+        "help": "तपाईंको बुबाको नाम"
+      },
+      "mother_name": {
+        "placeholder": "आमाको नाम",
+        "help": "तपाईंको आमाको नाम"
+      },
+      "father_contact": {
+        "placeholder": "बुबाको सम्पर्क नम्बर",
+        "help": "बुबाको सम्पर्क विवरण"
+      },
+      "mother_contact": {
+        "placeholder": "बुबाको सम्पर्क नम्बर",
+        "help": "बुबाको सम्पर्क विवरण"
+      },
+      "birth_certificate": {
+        "placeholder": "अघिल्लो कक्षाको प्रमाणपत्र",
+        "help": "जन्म प्रमाणपत्र"
+      },
+      "pre_school": {
+        "placeholder": "अघिल्लो विद्यालयको नाम",
+        "help": "तपाईंको अघिल्लो विद्यालय"
+      },
+      "admit_class": {
+        "help": "तपाईंले भर्ना लिन चाहनुभएको कक्षा"
+      },
+      "certificate": {
+        "placeholder": "अघिल्लो कक्षाको प्रमाणपत्र",
+        "help": "अघिल्लो कक्षाको प्रमाणपत्र"
+      },
+      "admission_policy": {
+        "label": "म SSBSS को भर्ना नीतिमा सहमत छु"
+      }
+    },
+    "buttons": {
+      "submit": "अहिले भर्ना गर्नुहोस्"
+    }
+  },
+  "services": [
+    {
+      "title": "२ वटा कम्प्युटर ल्याब",
+      "description": "हाम्रो विधालयमा दुईवटा अत्याधुनिक कम्प्युटर ल्याब छन्, जहाँ विद्यार्थीहरूलाई व्यवहारिक रूपमा सूचना प्रविधिको अध्ययन गराइन्छ।"
+    },
+    {
+      "title": "विज्ञान प्रयोगशाला",
+      "description": "भौतिक, रसायन र जीव विज्ञानका लागि सुविधा सम्पन्न प्रयोगशालाहरूले विद्यार्थीलाई प्रयोगात्मक शिक्षामा सहयोग पुर्‍याउँछन्।"
+    },
+    {
+      "title": "विधालय नर्स",
+      "description": "विद्यालयमा दक्ष नर्सको व्यवस्था गरिएको छ जसले विद्यार्थीको स्वास्थ्य सुरक्षामा विशेष ध्यान दिन्छन्।"
+    },
+    {
+      "title": "प्रविधी मैत्री कक्षा",
+      "description": "स्मार्ट बोर्ड र डिजिटल उपकरणमार्फत पढाइ हुने प्रविधि मैत्री कक्षाहरूले सिकाइलाई अझै प्रभावकारी बनाउँछन्।"
+    },
+    {
+      "title": "२ वटा विधालय बस",
+      "description": "विद्यालयका आफ्नै दुई बसद्वारा विद्यार्थीहरूलाई सुरक्षित तथा नियमित यातायात सेवा उपलब्ध गराइएको छ।"
+    },
+    {
+      "title": "स्वच्छ विधालय वातावरण",
+      "description": "विद्यालय परिसर सफा, हरियाली र सुरक्षित छ, जसले विद्यार्थीहरूलाई अनुशासित र स्वस्थ वातावरणमा अध्ययन गर्न सहयोग पुर्‍याउँछ।"
     }
   ]
 }

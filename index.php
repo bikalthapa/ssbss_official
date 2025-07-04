@@ -24,127 +24,345 @@ $noticeData = $notices['data'];
 
 $document = $portal->getDocuments();
 $documentData = $document['data'];
-
-// This variables is for principal few words section
-$principal_name = "हाेमनाथ पाैडयाल";
-$principal_image_src = "images/authorities_img/school_head_teacher.jpg";
-$few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="title">SSBSS | Home</title>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="Style/style.css">
-<link rel="stylesheet" type="text/css" href="Style/index.css">
-<link rel="icon" type="icon" href="images/slogo.png">
-<style>
-  /* Carousel indicators with flat sky blue and yellow */
-  #carouselExampleAutoplaying .carousel-indicators [data-bs-slide-to] {
-    background-color: #87ceeb;
-    /* sky blue */
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  #carouselExampleAutoplaying .carousel-indicators .active {
-    background-color: #ffc107;
-    /* yellow */
-    opacity: 1;
-  }
+  <title data-i18n="title.home">Shree Shanti Bhagwati Secondary School | Letang-5, Morang</title>
 
-  #carouselExampleAutoplaying .carousel-indicators [data-bs-slide-to]:hover {
-    opacity: 1;
-  }
+  <meta name="description"
+    content="Official website of Shree Shanti Bhagwati Secondary School, Letang-5, Morang. Access school news, results, notices, and updates.">
+  <meta name="keywords"
+    content="Shree Shanti Bhagwati Secondary School, Letang, Morang School, SSBSS, school results, school notice, basic school Nepal, secondary education Morang">
+  <meta name="author" content="Shree Shanti Bhagwati Secondary School">
+  <link rel="canonical" href="https://www.ssbss.edu.np/">
 
-  /* More images button: flat color and sharp edges */
-  .more_image_btn {
-    margin-left: 1rem;
-    background-color: #ffc107;
-    color: white;
-    font-weight: 600;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    box-shadow: none;
-    transition: background-color 0.3s ease;
-  }
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Shree Shanti Bhagwati Secondary School | Letang-5, Morang" />
+  <meta property="og:description"
+    content="Explore news, notices, results, gallery, and more from Shree Shanti Bhagwati Secondary School." />
+  <meta property="og:image" content="https://www.ssbss.edu.np/images/slogo.png" />
+  <meta property="og:url" content="https://www.ssbss.edu.np/" />
+  <meta property="og:type" content="website" />
 
-  .more_image_btn:hover {
-    background-color: #e0a800;
-    color: white;
-    text-decoration: none;
-  }
+  <!-- Twitter Card Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shree Shanti Bhagwati Secondary School" />
+  <meta name="twitter:description"
+    content="Official school site for updates, notices, and academic information from Letang-5, Morang." />
+  <meta name="twitter:image" content="https://www.ssbss.edu.np/images/slogo.png" />
 
-  /* Caption with solid dark background and crisp white text */
-  .carousel-caption {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 0.3rem;
-    padding: 0.4rem 0.8rem;
-  }
+  <!-- Favicon and CSS -->
+  <link rel="icon" href="images/slogo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="Style/style.css">
+  <link rel="stylesheet" href="Style/index.css">
 
-  .carousel-caption h5 {
-    color: #ffc107;
-    /* yellow text */
-    font-weight: 700;
-    margin: 0;
-  }
-
-  /* Image styling with subtle rounded corners only */
-  .carousel-item img {
-    border-radius: 0.5rem;
-    box-shadow: none;
-  }
-
-  .card-container:hover .overlay {
-    opacity: 0;
-  }
-
-  .card-container:hover img {
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 768px) {
-    .card-container {
-      height: 220px !important;
+  <style>
+    /* Custom Color Scheme - Yellow and Sky Blue */
+    .hero-carousel {
+      --primary-yellow: #FFD700;
+      --secondary-yellow: #FFA500;
+      --primary-sky-blue: #87CEEB;
+      --secondary-sky-blue: #4169E1;
+      --accent-blue: #1E90FF;
+      --white: #FFFFFF;
+      --black: #000000;
     }
-  }
 
-  /* Service designs  */
-  .full-overlay-title {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-weight: 700;
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
-    color: #ffca28;
-    /* warm warning yellow */
-  }
+    /* Hero Carousel Styles */
+    .hero-carousel {
+      height: 95vh;
+      margin-top: -10px;
+    }
 
-  .full-overlay-title i {
-    font-size: 28px;
-    color: #ffca28;
-  }
+    .hero-carousel .carousel-item {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
 
-  .full-overlay-text {
-    color: #ffe082;
-  }
-</style>
+    /* Dark overlay for better text readability */
+    .hero-carousel .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero-carousel .carousel-caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    /* Text Background Overlay */
+    .hero-carousel .text-overlay {
+      background: rgba(250, 250, 249, 0.12);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-carousel .hero-title {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-carousel .hero-subtitle {
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      font-size: 1.25rem;
+      line-height: 1.6;
+    }
+
+    /* Custom Button Styles */
+    .hero-carousel .btn-primary {
+      background: linear-gradient(45deg, var(--primary-yellow), var(--secondary-yellow));
+      border: none;
+      color: var(--black);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-carousel .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+      background: linear-gradient(45deg, var(--secondary-yellow), var(--primary-yellow));
+      color: var(--black);
+    }
+
+    .hero-carousel .btn-outline-light {
+      border: 2px solid var(--white);
+      color: var(--white);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 50px;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .hero-carousel .btn-outline-light:hover {
+      background: var(--white);
+      color: var(--secondary-sky-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Carousel Controls */
+    .hero-carousel .carousel-control-prev,
+    .hero-carousel .carousel-control-next {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+
+    .hero-carousel .carousel-control-prev {
+      left: 30px;
+    }
+
+    .hero-carousel .carousel-control-next {
+      right: 30px;
+    }
+
+    .hero-carousel .carousel-control-prev:hover,
+    .hero-carousel .carousel-control-next:hover {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .hero-carousel .carousel-control-prev-icon,
+    .hero-carousel .carousel-control-next-icon {
+      color: var(--black);
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Carousel Indicators */
+    .hero-carousel .carousel-indicators {
+      bottom: 30px;
+      margin-bottom: 0;
+    }
+
+    .hero-carousel .carousel-indicators [data-bs-target] {
+      width: 25px;
+      height: 5px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      margin: 0 8px;
+      opacity: 0.7;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .hero-carousel .carousel-indicators .active {
+      background: var(--primary-yellow);
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .hero-carousel .carousel-indicators [data-bs-target]:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-carousel .animate-fade-up {
+      animation: fadeUp 1s ease-out;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-carousel .text-overlay {
+        padding: 30px 25px;
+        margin: 0 15px;
+      }
+
+      .hero-carousel .hero-title {
+        font-size: 2rem !important;
+      }
+
+      .hero-carousel .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .hero-carousel .btn-lg {
+        padding: 12px 30px !important;
+        font-size: 1rem;
+      }
+
+      .hero-carousel .carousel-control-prev,
+      .hero-carousel .carousel-control-next {
+        width: 50px;
+        height: 50px;
+      }
+
+      .hero-carousel .carousel-control-prev {
+        left: 15px;
+      }
+
+      .hero-carousel .carousel-control-next {
+        right: 15px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-carousel .text-overlay {
+        padding: 25px 20px;
+        margin: 0 10px;
+      }
+
+      .hero-carousel .hero-title {
+        font-size: 1.5rem !important;
+      }
+
+      .hero-carousel .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-carousel .carousel-control-prev,
+      .hero-carousel .carousel-control-next {
+        width: 45px;
+        height: 45px;
+      }
+
+      .hero-carousel .carousel-indicators [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+      }
+    }
+
+    /* Focus styles for accessibility */
+    .hero-carousel .carousel-control-prev:focus,
+    .hero-carousel .carousel-control-next:focus,
+    .hero-carousel .carousel-indicators [data-bs-target]:focus {
+      outline: 3px solid var(--primary-yellow);
+      outline-offset: 2px;
+    }
+
+    .hero-carousel .btn:focus {
+      outline: 3px solid var(--primary-sky-blue);
+      outline-offset: 2px;
+    }
+
+    .card-container:hover .overlay {
+      opacity: 0;
+    }
+
+    .card-container:hover img {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .card-container {
+        height: 220px !important;
+      }
+    }
+
+    .full-overlay-title {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: #ffca28;
+    }
+
+    .full-overlay-title i {
+      font-size: 28px;
+      color: #ffca28;
+    }
+
+    .full-overlay-text {
+      color: #ffe082;
+    }
+
+    .section {
+      max-height: 50px;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 <body>
@@ -154,64 +372,90 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
   ?>
 
 
-
-
-  <div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
-    <div class="carousel-indicators d-flex align-items-center">
-      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active"
-        aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1"
-        aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2"
-        aria-label="Slide 3"></button>
-      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="3"
-        aria-label="Slide 4"></button>
-
-      <a href="category/gallery.php" class="btn more_image_btn ms-3" data-i18n="hero.button_text">+ अन्य तस्विर</a>
+  <!-- Hero Carousel Section -->
+  <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+        aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
     </div>
 
-    <div class="carousel-inner rounded-3 shadow-sm">
-      <div class="carousel-item active" data-bs-interval="3000">
-        <img src="images/front_wallpapers/ssbss_entry_gate.jpg" class="d-block w-100" alt=""
-          data-i18n="[alt]hero.slides.0.caption">
-        <div class="carousel-caption d-none d-md-block">
-          <h1 data-i18n="hero.slides.0.caption">विधालय प्रवेशद्वार</h1>
+    <!-- Carousel Inner -->
+    <div class="carousel-inner">
+      <!-- Slide 1 -->
+      <div class="carousel-item active" style="background-image: url('images/front_wallpapers/ssbss_entry_gate.jpg');">
+        <div class="carousel-caption">
+          <div class="text-overlay animate-fade-up">
+            <h1 class="hero-title display-2 fw-bold mb-4 text-white" data-i18n="hero.slides.0.caption">
+              विधालय प्रवेशद्वार
+            </h1>
+            <div class="hero-buttons">
+              <a href="gallery" class="btn btn-primary btn-lg me-3 px-5 py-3" data-i18n="hero.button_text">
+                + More
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="carousel-item" data-bs-interval="3000">
-        <img src="images/front_wallpapers/english medium.jpg" class="d-block w-100" alt=""
-          data-i18n="[alt]hero.slides.1.caption">
-        <div class="carousel-caption d-none d-md-block">
-          <h1 data-i18n="hero.slides.1.caption">विधालय प्राँगण</h1>
+      <!-- Slide 2 -->
+      <div class="carousel-item" style="background-image: url('images/front_wallpapers/from_administration.jpg');">
+        <div class="carousel-caption">
+          <div class="text-overlay">
+            <h1 class="hero-title display-3 fw-bold mb-4 text-white" data-i18n="hero.slides.1.caption">
+              विधालय प्राँगण
+            </h1>
+            <div class="hero-buttons">
+              <a href="gallery" class="btn btn-primary btn-lg me-3 px-5 py-3" data-i18n="hero.button_text">
+                + More
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="carousel-item" data-bs-interval="3000">
-        <img src="images/front_wallpapers/see_students.jpg" class="d-block w-100" alt=""
-          data-i18n="[alt]hero.slides.2.caption">
-        <div class="carousel-caption d-none d-md-block">
-          <h1 data-i18n="hero.slides.2.caption">शिक्षकसँग विधार्थीहरु</h1>
+      <!-- Slide 3 -->
+      <div class="carousel-item" style="background-image: url('images/front_wallpapers/school.jpg');">
+        <div class="carousel-caption">
+          <div class="text-overlay">
+            <h1 class="hero-title display-3 fw-bold mb-4 text-white" data-i18n="hero.slides.2.caption">
+              विद्यालयको स्वच्छ वातावरण
+            </h1>
+            <div class="hero-buttons">
+              <a href="gallery" class="btn btn-primary btn-lg me-3 px-5 py-3" data-i18n="hero.button_text">
+                + More
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="carousel-item" data-bs-interval="3000">
-        <img src="images/front_wallpapers/school.jpg" class="d-block w-100" alt=""
-          data-i18n="[alt]hero.slides.3.caption">
-        <div class="carousel-caption d-none d-md-block">
-          <h1 data-i18n="hero.slides.3.caption">विद्यालयको स्वच्छ वातावरण</h1>
+      <!-- Slide 4 -->
+      <div class="carousel-item" style="background-image: url('images/front_wallpapers/students.jpg');">
+        <div class="carousel-caption">
+          <div class="text-overlay">
+            <h1 class="hero-title display-3 fw-bold mb-4 text-white" data-i18n="hero.slides.3.caption">
+              शिक्षकसँग विधार्थीहरु
+            </h1>
+            <div class="hero-buttons">
+              <a href="gallery" class="btn btn-primary btn-lg me-3 px-5 py-3" data-i18n="hero.button_text">
+                + More
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-      data-bs-slide="prev">
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-      data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -220,7 +464,7 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
   <!-- About school and principal section -->
   <div class="container my-5">
-    <div class="row align-items-stretch">
+    <div class="row align-items-stretch g-4">
       <!-- About School Column -->
       <div class="col-sm-8">
         <div class="position-relative h-100">
@@ -233,7 +477,7 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
               <div class="col-md-5 p-4 d-flex">
                 <div class="position-relative w-100 rounded-4 overflow-hidden shadow" style="min-height: 100%;">
-                  <img src="images/front_wallpapers/new_school.jpg" alt="School" class="img-fluid h-100 w-100"
+                  <img src="images/english_block.jpg" alt="School" class="img-fluid h-100 w-100"
                     style="object-fit: cover; border-radius: 1rem;" data-i18n="[alt]school.name">
                   <div
                     class="position-absolute bottom-0 start-0 bg-warning text-dark px-3 py-1 rounded-top-end shadow-sm">
@@ -273,46 +517,24 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
       <!-- Principal Column -->
       <div class="col-sm-4">
-        <div class="card shadow border-0 h-100 bg-warning-subtle" style="border-radius: 1rem;">
-          <div class="card-body p-4 d-flex flex-column justify-content-between">
-
-            <!-- Principal Name and Title -->
-            <div>
-              <h2 class="fw-bold text-warning mb-1">
-                <?php echo $principal_name; ?>
-              </h2>
-              <h5 class="text-muted mb-3" data-i18n="common.principal">प्रधानअध्यापक</h5>
-
-              <!-- Wrapped Paragraph with floated image -->
-              <div class="position-relative">
-                <div class="position-relative" style="max-height: 215px; overflow: hidden;">
-                  <img src="<?php echo $principal_image_src; ?>"
-                    alt="<?php echo $principal_name ?: 'Principal Image'; ?>"
-                    class="float-start me-3 shadow-sm rounded-3" style="width: 110px; height: auto; object-fit: cover;">
-
-                  <p class="text-secondary" style="text-align: justify; font-size: 1rem;">
-                    <?php echo $few_words_by_principal; ?>
-                  </p>
-                  <!-- Gradient Fade -->
-                  <div class="position-absolute bottom-0 start-0 w-100"
-                    style="height: 40px; background: linear-gradient(to top, var(--bs-warning-bg-subtle), transparent); pointer-events: none;">
-                  </div>
-                </div>
-              </div>
-
-              <div class="clearfix"></div>
-            </div>
-
-
-            <!-- Read More Button -->
-            <div class="mt-3 text-start">
-              <button class="btn rounded-pill px-4 fw-semibold shadow-sm bg-info text-white" data-bs-toggle="modal"
-                data-bs-target="#principal_modal" data-i18n="button.read_more">
-                अझै पढ्नुहोस्
-              </button>
-            </div>
-
+        <div class="hstack section">
+          <div class="p-2 pt-4">
+            <p class="title" data-i18n="common.notice">सुचना</p>
           </div>
+          <div class="ms-auto"></div>
+          <a href="category/news.php" class="more_btn">
+            <i class="bi bi-plus-lg"></i>&nbsp;&nbsp;
+            <span data-i18n="common.more">अन्य</span>
+          </a>
+        </div><br>
+        <div class="row overflow_control">
+          <?php if ($noticeData && $noticeData->num_rows > 0): ?>
+            <?php while ($row = $noticeData->fetch_assoc()): ?>
+              <?= Card::get_notice_card($row) ?>
+            <?php endwhile; ?>
+          <?php else: ?>
+            <p>No notices found.</p>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -426,7 +648,7 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
 
   <!-- News and notices -->
-  <div class="container">
+  <div class="container" style="z-index:0;">
     <div class="row w-100">
       <div class="g-5 col-md-8">
 
@@ -460,9 +682,11 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
 
       <div class="g-5 col-md-4">
+        <!-- Download Section of notice board -->
+
         <div class="hstack section">
           <div class="p-2 pt-4">
-            <p class="title" data-i18n="common.notice">सुचना</p>
+            <p class="title" data-i18n="common.documents">कागजातहरू</p>
           </div>
           <div class="ms-auto"></div>
           <a href="category/news.php" class="more_btn">
@@ -470,42 +694,17 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
             <span data-i18n="common.more">अन्य</span>
           </a>
         </div><br>
-        <div class="row overflow_control">
-          <?php if ($noticeData && $noticeData->num_rows > 0): ?>
-            <?php while ($row = $noticeData->fetch_assoc()): ?>
-              <?= Card::get_notice_card($row) ?>
+
+        <div class="overflow_control">
+          <?php if ($documentData && $documentData->num_rows > 0): ?>
+            <?php while ($row = $documentData->fetch_assoc()): ?>
+              <?= Card::get_document_card($row) ?>
             <?php endwhile; ?>
           <?php else: ?>
-            <p>No notices found.</p>
+            <p>No documents found.</p>
           <?php endif; ?>
         </div>
 
-
-        <!-- Download Section of notice board -->
-        <div class="downloads">
-
-          <div class="hstack section">
-            <div class="p-2 pt-4">
-              <p class="title" data-i18n="common.documents">कागजातहरू</p>
-            </div>
-            <div class="ms-auto"></div>
-            <a href="category/news.php" class="more_btn">
-              <i class="bi bi-plus-lg"></i>&nbsp;&nbsp;
-              <span data-i18n="common.more">अन्य</span>
-            </a>
-          </div><br>
-
-          <div class="overflow_control">
-            <?php if ($documentData && $documentData->num_rows > 0): ?>
-              <?php while ($row = $documentData->fetch_assoc()): ?>
-                <?= Card::get_document_card($row) ?>
-              <?php endwhile; ?>
-            <?php else: ?>
-              <p>No documents found.</p>
-            <?php endif; ?>
-          </div>
-
-        </div>
       </div>
     </div>
   </div>
@@ -517,116 +716,106 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
     <h2 class="text-center display-6 fw-bold mb-4 text-warning" data-i18n="common.our_services">हाम्रा सुविधाहरु</h2>
 
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <!-- ICT Oriented Teaching -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="ICT Oriented Teaching"
-          data-bs-toggle="modal" data-bs-target="#service_ict">
-          <img src="images/front_wallpapers/ict_teaching.jpg"
-            alt="Students using computers in a modern ICT classroom" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-laptop-fill"></i>
-              ICT Oriented Teaching
-            </h5>
-            <p class="full-overlay-text">
-              Innovative ICT tools to enhance learning experience.
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/class_9_c_lab.jpg" class="img-fluid w-100 h-100" alt="ICT Lab"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2" data-i18n="services.0.title">२ वटा कम्प्युटर ल्याब</h5>
+            <p class="mb-0 px-3" data-i18n="services.0.description">
+              हाम्रो विधालयमा दुईवटा अत्याधुनिक कम्प्युटर ल्याब छन्, जहाँ विद्यार्थीहरूलाई व्यवहारिक रूपमा सूचना
+              प्रविधिको अध्ययन गराइन्छ।
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Science & Computer Labs -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="Science and Computer Labs"
-          data-bs-toggle="modal" data-bs-target="#service_labs">
-          <img src="images/front_wallpapers/science_lab.jpg"
-            alt="Well-equipped science laboratory with students performing experiments" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-flask-fill"></i>
-              Science & Computer Labs
-            </h5>
-            <p class="full-overlay-text">
-              Fully equipped physics, chemistry, biology & computer labs.
+      <!-- Card 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/chemistry_lab.jpg" class="img-fluid w-100 h-100" alt="Science Lab"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2">विज्ञान प्रयोगशाला</h5>
+            <p class="mb-0 px-3">
+              भौतिक, रसायन र जीव विज्ञानका लागि सुविधा सम्पन्न प्रयोगशालाहरूले विद्यार्थीलाई प्रयोगात्मक शिक्षामा सहयोग
+              पुर्‍याउँछन्।
             </p>
           </div>
         </div>
       </div>
 
-      <!-- School Bus -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="School Bus" data-bs-toggle="modal"
-          data-bs-target="#service_bus">
-          <img src="images/front_wallpapers/school_bus_yellow.jpg" alt="Yellow school bus parked outside school" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-bus-front-fill"></i>
-              School Bus
-            </h5>
-            <p class="full-overlay-text">
-              Safe and reliable transportation for students.
+      <!-- Card 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/nurshing_room.jpg" class="img-fluid w-100 h-100" alt="Nursing Room"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2">विधालय नर्स</h5>
+            <p class="mb-0 px-3">
+              विद्यालयमा दक्ष नर्सको व्यवस्था गरिएको छ जसले विद्यार्थीको स्वास्थ्य सुरक्षामा विशेष ध्यान दिन्छन्।
             </p>
           </div>
         </div>
       </div>
 
-      <!-- School Nurse -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="School Nurse" data-bs-toggle="modal"
-          data-bs-target="#service_nurse">
-          <img src="images/front_wallpapers/school_nurse_room.jpg" alt="School nurse room with medical supplies" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-heart-pulse-fill"></i>
-              School Nurse
-            </h5>
-            <p class="full-overlay-text">
-              Dedicated healthcare support on campus.
+      <!-- Card 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/smart_board.jpg" class="img-fluid w-100 h-100" alt="Smart Classroom"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2">प्रविधी मैत्री कक्षा</h5>
+            <p class="mb-0 px-3">
+              स्मार्ट बोर्ड र डिजिटल उपकरणमार्फत पढाइ हुने प्रविधि मैत्री कक्षाहरूले सिकाइलाई अझै प्रभावकारी बनाउँछन्।
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Library -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="Library" data-bs-toggle="modal"
-          data-bs-target="#service_library">
-          <img src="images/front_wallpapers/library_interior.jpg" alt="Cozy school library with shelves of books" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-book-fill"></i>
-              Library
-            </h5>
-            <p class="full-overlay-text">
-              A rich collection of books in a peaceful environment.
+      <!-- Card 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/school_bus.jpg" class="img-fluid w-100 h-100" alt="School Bus"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2">२ वटा विधालय बस</h5>
+            <p class="mb-0 px-3">
+              विद्यालयका आफ्नै दुई बसद्वारा विद्यार्थीहरूलाई सुरक्षित तथा नियमित यातायात सेवा उपलब्ध गराइएको छ।
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Well Furnished Classroom -->
-      <div class="col">
-        <div class="card-full-overlay" tabindex="0" role="button" aria-label="Well Furnished Classroom"
-          data-bs-toggle="modal" data-bs-target="#service_classroom">
-          <img src="images/front_wallpapers/well_furnished_classroom.jpg"
-            alt="Modern well-furnished classroom with desks and whiteboard" />
-          <div class="full-overlay-content">
-            <h5 class="full-overlay-title">
-              <i class="bi bi-columns-gap"></i>
-              Well Furnished Classroom
-            </h5>
-            <p class="full-overlay-text">
-              Comfortable and modern classrooms for effective learning.
+      <!-- Card 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card-container position-relative overflow-hidden rounded-4 shadow h-100"
+          style="cursor: pointer; max-height: 200px;">
+          <img src="images/from_administration.jpg" class="img-fluid w-100 h-100" alt="School Environment"
+            style="object-fit: cover; transition: transform 0.5s ease;">
+          <div
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 text-white">
+            <h5 class="fw-semibold text-warning mb-2">स्वच्छ विधालय वातावरण</h5>
+            <p class="mb-0 px-3">
+              विद्यालय परिसर सफा, हरियाली र सुरक्षित छ, जसले विद्यार्थीहरूलाई अनुशासित र स्वस्थ वातावरणमा अध्ययन गर्न
+              सहयोग पुर्‍याउँछ।
             </p>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
 
   </section>
 
@@ -653,8 +842,7 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
             <!-- Online Admission -->
             <div class="col">
-              <a href="category/more/admission"
-                class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
+              <a href="admission" class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
                 <i class="bi bi-pencil-square me-2 fs-4"></i><span data-i18n="common.online_admission">अनलाइन
                   भर्ना</span>
               </a>
@@ -662,15 +850,14 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
 
             <!-- Result -->
             <div class="col">
-              <a href="category/more/result"
-                class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
+              <a href="result" class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
                 <i class="bi bi-bar-chart-line-fill me-2 fs-4"></i><span data-i18n="common.result">परिक्षाफल</span>
               </a>
             </div>
 
             <!-- Contact -->
             <div class="col">
-              <a href="category/contact" class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
+              <a href="contact" class="btn w-100 py-3 rounded-pill bg-info text-white shadow-sm fw-semibold">
                 <i class="bi bi-telephone-fill me-2 fs-4"></i><span data-i18n="common.contact_us">सम्पर्क
                   गर्नुहोस्</span>
               </a>
@@ -807,37 +994,6 @@ $few_words_by_principal = "Lorem ipsum dolor sit amet, consectetur adipisicing e
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">बन्द गर्नुहोस्</button>
         </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Principal Full Message Modal -->
-  <div class="modal fade" id="principal_modal" tabindex="-1" aria-labelledby="principalModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg"
-        style="border-top: 4px solid #0d6efd; border-radius: 0.75rem; overflow: hidden;">
-
-        <!-- Modal Header -->
-        <div class="modal-header bg-primary text-white">
-          <div>
-            <h5 class="modal-title d-flex align-items-center gap-2 mb-0" id="principalModalLabel">
-              <i class="bi bi-person-badge-fill fs-4"></i>
-              <?php echo $principal_name; ?>
-            </h5>
-            <small class="text-light ps-4" style="font-size: 16px;">प्रधानअध्यापक</small>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body bg-warning-subtle text-dark p-4" style="text-align: justify; font-size: 18px;">
-          <p>
-            <i class="bi bi-quote fs-2 text-primary me-2"></i>
-            <?php echo $few_words_by_principal; ?>
-          </p>
-        </div>
-
       </div>
     </div>
   </div>

@@ -2,8 +2,8 @@
 include "scripts/php_scripts/header_and_footer.php";
 include "../../script/php_scripts/utilities/authentication.php";
 if ($auth->isLoggedIn() != "A") {
-    header("Location: ../../authentication/");
-    exit;
+	header("Location: ../../authentication/");
+	exit;
 }
 ?>
 <!DOCTYPE html>
@@ -21,101 +21,55 @@ if ($auth->isLoggedIn() != "A") {
 
 <body>
 	<?php
-		get_navbar("dashboard");
+	get_navbar("dashboard");
 	?>
 	<br><br><br>
 
 
-
-
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4 mb-3 mb-sm-0">
-				<div class="hstack gap-3">
-					<h5 class="p-2">Notification</h5>
-					<div class="p-2 ms-auto">
-						<div class="dropdown">
-							<button class="btn btn-secondary bg-light border-light" type="button"
-								data-bs-toggle="dropdown" aria-expanded="false">
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-three-dots"
-									viewBox="0 0 16 16">
-									<path
-										d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-								</svg>
-							</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Clear All</a></li>
-								<li><a class="dropdown-item" href="#">Block Notification</a></li>
-							</ul>
-						</div>
-					</div>
+	<div class="container py-4">
+		<!-- Welcome Message -->
+		<div class="card shadow-sm rounded-4 border-0 bg-light mb-4">
+			<div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+				<div>
+					<h4 class="fw-bold mb-1">👋 Welcome back, <span class="text-primary">Admin</span>!</h4>
+					<p class="text-muted mb-0" id="greetingMessage">Here's your dashboard overview.</p>
 				</div>
-				<div class="list-group gap-3" style="max-height:100vh; overflow-y:auto;">
-					<a href="#" class="list-group-item list-group-item-action bg-info" aria-current="true">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small>3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small>And some small print.</small>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action bg-info" aria-current="true">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small>3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small>And some small print.</small>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action bg-info">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small class="text-body-secondary">3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small class="text-body-secondary">And some muted small print.</small>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action bg-info">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small class="text-body-secondary">3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small class="text-body-secondary">And some muted small print.</small>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action bg-info">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small class="text-body-secondary">3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small class="text-body-secondary">And some muted small print.</small>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action bg-info">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">List group item heading</h5>
-							<small class="text-body-secondary">3 days ago</small>
-						</div>
-						<p class="mb-1">Some placeholder content in a paragraph.</p>
-						<small class="text-body-secondary">And some muted small print.</small>
-					</a>
+				<img src="../../images/authorities_img/unknown_person.jpg" alt="Admin Avatar" class="rounded-circle shadow ms-3" width="60"
+					height="60">
+			</div>
+		</div>
+
+		<!-- Quick Stats -->
+		<div class="row g-3">
+			<div class="col-sm-6 col-lg-3">
+				<div class="card text-white bg-primary shadow rounded-4 h-100">
+					<div class="card-body">
+						<h6 class="card-title">Total News</h6>
+						<h3 class="fw-bold"><span id="newsCount">0</span></h3>
+					</div>
 				</div>
 			</div>
-			<div class="col-sm-8">
-				<div class="charts row">
-					<div class="col col-sm-8">
-						<h5>Admission</h5>
-						<canvas id="myChart"></canvas>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card text-white bg-warning shadow rounded-4 h-100">
+					<div class="card-body">
+						<h6 class="card-title">Notices</h6>
+						<h3 class="fw-bold"><span id="noticeCount">0</span></h3>
 					</div>
-					<div class="col-sm-4">
-						<h5>Post</h5>
-						<canvas id="post"></canvas>
+				</div>
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card text-white bg-success shadow rounded-4 h-100">
+					<div class="card-body">
+						<h6 class="card-title">Documents</h6>
+						<h3 class="fw-bold"><span id="documentCount">0</span></h3>
 					</div>
-				</div><br>
-				<div class="row">
-					<h5>Web Traffic</h5>
-					<div class="col">
-						<canvas id="traffic" style="min-width:100%"></canvas>
+				</div>
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card text-white bg-danger shadow rounded-4 h-100">
+					<div class="card-body">
+						<h6 class="card-title">Admissions</h6>
+						<h3 class="fw-bold"><span id="admissionCount">0</span></h3>
 					</div>
 				</div>
 			</div>

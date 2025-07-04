@@ -45,12 +45,12 @@
     "submit": "Submit",
     "send": "Send"
   },
-  "input":{
+  "input": {
     "name": "Your Name",
     "email": "example@gmail.com",
     "message": "Type your message here"
   },
-  "labels":{
+  "labels": {
     "name": "Name",
     "email": "Email",
     "message": "Your Message",
@@ -87,30 +87,13 @@
         "caption": "School Premises"
       },
       {
-        "caption": "Students with Teacher"
+        "caption": "Clean School Environment"
       },
       {
-        "caption": "Clean School Environment"
+        "caption": "Students with Teacher"
       }
     ]
   },
-  "services": [
-    {
-      "title": "School Environment",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Spacious playground and clean environment.</li>\n  <li class=\"list-group-item\">Well-organized classrooms.</li>\n  <li class=\"list-group-item\">School-based health services.</li>\n  <li class=\"list-group-item\">24/7 CCTV surveillance system.</li>\n</ol>",
-      "image": "images/front_wallpapers/english medium.jpg"
-    },
-    {
-      "title": "Education System",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Six faculties including technical education.</li>\n  <li class=\"list-group-item\">Library with a wide collection of books.</li>\n  <li class=\"list-group-item\">Well-equipped laboratories for practical learning.</li>\n  <li class=\"list-group-item\">Scholarship distribution programs.</li>\n</ol>",
-      "image": "images/entrance_examination_ce.jpg"
-    },
-    {
-      "title": "Other Important Activities",
-      "description": "<ol class=\"list-group list-group-numbered\">\n  <li class=\"list-group-item\">Daily question-answer sessions and oratory practice.</li>\n  <li class=\"list-group-item\">Weekly sports activities.</li>\n  <li class=\"list-group-item\">Monthly subject-wise class tests.</li>\n  <li class=\"list-group-item\">Meetings among teachers, students, and parents.</li>\n</ol>",
-      "image": "images/smart_board.jpg"
-    }
-  ],
   "faculties": [
     {
       "title": "Engineering (Grade 9–12)",
@@ -154,7 +137,8 @@
       "name": "Homnath Poudel",
       "department": "Shanti Bhagawati",
       "position": "Head Teacher",
-      "image": "images/authorities_img/school_head_teacher.jpg"
+      "image": "images/authorities_img/school_head_teacher.jpg",
+      "message": "I began my journey at Shanti Bhagawati as an Information Officer and now serve proudly as the Head Teacher. As a Social Studies educator, I believe in shaping responsible citizens through knowledge and values. Together, let’s build a nurturing environment where every student thrives."
     },
     {
       "name": "Lekhnath Paudel",
@@ -209,6 +193,104 @@
       "department": "Nepali Medium",
       "position": "Junior Coordinator",
       "image": "images/authorities_img/unknown_person.jpg"
+    }
+  ],
+  "admission_form": {
+    "title": {
+      "personalDetails": "Personal Details",
+      "educationDetails": "Education Details"
+    },
+    "fields": {
+      "name": {
+        "placeholder": "Name",
+        "help": "Birth Cirtificate Name"
+      },
+      "dob": {
+        "help": "Your Birthday"
+      },
+      "gender": {
+        "label": "Gender Selection",
+        "options": {
+          "male": "Male",
+          "female": "Female",
+          "others": "Others"
+        }
+      },
+      "temp_address": {
+        "placeholder": "Current Address",
+        "help": "Your Current Address"
+      },
+      "permanent_address": {
+        "placeholder": "Permanent Address",
+        "help": "Your Permanent Address"
+      },
+      "phoneOrEmail": {
+        "placeholder": "Phone Or Email",
+        "help": "Your Contact Info"
+      },
+      "father_name": {
+        "placeholder": "Father's Name",
+        "help": "Your Father's Name"
+      },
+      "mother_name": {
+        "placeholder": "Mother's Name",
+        "help": "Your Mother's Name"
+      },
+      "father_contact": {
+        "placeholder": "Father's Contact No",
+        "help": "Father's Contact Info"
+      },
+      "mother_contact": {
+        "placeholder": "Father's Contact No",
+        "help": "Father's Contact Info"
+      },
+      "birth_certificate": {
+        "placeholder": "Previous Class Certificate",
+        "help": "Birth certificate."
+      },
+      "pre_school": {
+        "placeholder": "Prev. School Name",
+        "help": "Your Previous School"
+      },
+      "admit_class": {
+        "help": "Class that you want to admit."
+      },
+      "certificate": {
+        "placeholder": "Previous Class Certificate",
+        "help": "Previous Class certificate."
+      },
+      "admission_policy": {
+        "label": "I agree on SSBSS Admission Policy"
+      }
+    },
+    "buttons": {
+      "submit": "Admit Now"
+    }
+  },
+  "services": [
+    {
+      "title": "2 Computer Labs",
+      "description": "Our school has two modern computer labs where students are taught information technology through practical learning."
+    },
+    {
+      "title": "Science Laboratory",
+      "description": "Well-equipped laboratories for Physics, Chemistry, and Biology help students gain hands-on experience in science education."
+    },
+    {
+      "title": "School Nurse",
+      "description": "The school has a dedicated and trained nurse who ensures proper health care and safety for all students."
+    },
+    {
+      "title": "Tech-Friendly Classrooms",
+      "description": "Classrooms equipped with smart boards and digital tools make teaching and learning more engaging and effective."
+    },
+    {
+      "title": "2 School Buses",
+      "description": "The school operates two buses to provide safe and reliable transportation service for students."
+    },
+    {
+      "title": "Clean School Environment",
+      "description": "The school premises are clean, green, and secure, providing a disciplined and healthy environment for learning."
     }
   ]
 }
